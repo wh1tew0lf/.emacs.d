@@ -13643,6 +13643,7 @@ Created by Dave Benjamin <ramen@ramenfest.com> Dec 23 2005."
      (font-lock-type-face ((t (:foreground "yellow"))))
      (font-lock-variable-name-face ((t (:foreground "gold"))))
      (font-lock-warning-face ((t (:bold t :foreground "Pink" :weight bold))))
+	 (font-lock-preprocessor-face ((t (:foreground "black"))))
      (fringe ((t (:background "grey30"))))
      (header-line ((t (:box (:line-width -1 :style released-button) :background "grey20" :foreground "grey90" :box nil))))
      (highlight ((t (:background "darkolivegreen"))))
