@@ -11,6 +11,9 @@
 (cua-mode t)
 (setq x-select-enable-clipboard t)
 (menu-bar-mode -1)
+(scroll-bar-mode -1)
+(require 'yascroll)
+(global-yascroll-bar-mode 1)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -28,6 +31,12 @@
 (setq default-tab-width 4)
 (setq make-backup-files nil)
 (setq nlinum-format "%4d\u2502") ;;Lines numeration
+;; make the fringe thinner (default is 8 in pixels)
+(fringe-mode 4)
+
+(show-paren-mode 1)
+(setq show-paren-style 'expression)
+(global-hl-line-mode t)
 
 ;;Движение по окнам
 ;(global-set-key (kbd "s-<up>") 'windmove-up)
