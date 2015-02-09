@@ -13634,7 +13634,7 @@ Created by Dave Benjamin <ramen@ramenfest.com> Dec 23 2005."
      (fg:erc-color-face8 ((t (:foreground "yellow"))))
      (fg:erc-color-face9 ((t (:foreground "green"))))
      (fixed-pitch ((t (:family "courier"))))
-     (font-lock-builtin-face ((t (:foreground "LightSkyBlue" :underline t))))
+     (font-lock-builtin-face ((t (:foreground "LightSkyBlue" :underline nil))))
      (font-lock-comment-face ((t (:italic t :foreground "lightgreen" :slant oblique))))
      (font-lock-constant-face ((t (:foreground "Aquamarine"))))
      (font-lock-function-name-face ((t (:bold t :foreground "DodgerBlue" :weight bold))))
