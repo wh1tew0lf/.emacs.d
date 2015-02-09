@@ -11,6 +11,9 @@
 (cua-mode t)
 (setq x-select-enable-clipboard t)
 (menu-bar-mode -1)
+(scroll-bar-mode -1)
+(require 'yascroll)
+(global-yascroll-bar-mode 1)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -28,6 +31,12 @@
 (setq default-tab-width 4)
 (setq make-backup-files nil)
 (setq nlinum-format "%4d\u2502") ;;Lines numeration
+;; make the fringe thinner (default is 8 in pixels)
+(fringe-mode 4)
+
+(show-paren-mode 1)
+(setq show-paren-style 'expression)
+(global-hl-line-mode t)
 
 ;;Движение по окнам
 ;(global-set-key (kbd "s-<up>") 'windmove-up)
@@ -539,35 +548,6 @@
 
 (global-set-key [C-S-iso-lefttab] 'tabbar-backward-tab)
 (global-set-key [C-tab] 'tabbar-forward-tab)
-
-(set-face-attribute
- 'tabbar-default nil
- :background "gray20"
- :foreground "gray20"
- :box '(:line-width 1 :color "gray20" :style nil))
-(set-face-attribute
- 'tabbar-unselected nil
- :background "gray30"
- :foreground "white"
- :box '(:line-width 5 :color "gray30" :style nil))
-(set-face-attribute
- 'tabbar-selected nil
- :background "gray75"
- :foreground "black"
- :box '(:line-width 5 :color "gray75" :style nil))
-(set-face-attribute
- 'tabbar-highlight nil
- :background "white"
- :foreground "black"
- :underline nil
- :box '(:line-width 5 :color "white" :style nil))
-(set-face-attribute
- 'tabbar-button nil
- :box '(:line-width 1 :color "gray20" :style nil))
-(set-face-attribute
- 'tabbar-separator nil
- :background "gray20"
- :height 0.6)
 
 ;; Change padding of the tabs
 ;; we also need to set separator to avoid overlapping tabs by highlighted tabs
