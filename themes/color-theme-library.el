@@ -13673,7 +13673,7 @@ Created by Dave Benjamin <ramen@ramenfest.com> Dec 23 2005."
      (mode-line-inactive ((t (:background "#2b303b" :foreground "grey80" :box (:line-width -1 :color "grey40" :style nil) :weight light))))
      (mouse ((t (:background "black"))))
      (primary-selection ((t (:background "#323a43"))))
-     (region ((t (:background "#323a43"))))
+     (region ((t (:background "#424a53"))))
      (scroll-bar ((t (:background "323a43" :box (:line-width -1 :style nil)))))
      (secondary-selection ((t (:background "#323a43"))))
      (semantic-dirty-token-face ((t (:background "lightyellow"))))
@@ -13683,12 +13683,14 @@ Created by Dave Benjamin <ramen@ramenfest.com> Dec 23 2005."
      (senator-read-only-face ((t (:background "#664444"))))
      (show-paren-match-face ((t (:background "#323a43"))))
      (show-paren-mismatch-face ((t (:background "purple" :foreground "white"))))
+
      (speedbar-button-face ((t (:foreground "green3"))))
      (speedbar-directory-face ((t (:foreground "#65737f"))))
      (speedbar-file-face ((t (:foreground "#65737f"))))
      (speedbar-highlight-face ((t (:background "#323a43"))))
      (speedbar-selected-face ((t (:bold t :background "#343d46" :foreground "#d1e1e8" :underline nil :weight bold))))
      (speedbar-tag-face ((t (:foreground "yellow"))))
+
      (template-message-face ((t (:bold t :weight bold))))
      (tool-bar ((t (:background "grey75" :foreground "black" :box (:line-width 1 :style released-button)))))
      (tooltip ((t (:background "lightyellow" :foreground "black"))))
