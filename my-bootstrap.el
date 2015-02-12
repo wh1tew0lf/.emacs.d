@@ -76,7 +76,7 @@
 (global-set-key (kbd "M-s") 'shell)
 (global-set-key (kbd "M-g") 'goto-line)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-c b") 'show-buffer-file-name)
+(global-set-key (kbd "C-c b") 'show-buffer-file-name) ;???
 (global-set-key (kbd "M-k") 'calculator)
 
 (global-set-key (kbd "C-<mouse-4>") 'text-scale-increase)
@@ -197,7 +197,7 @@
 							  (kill-buffer)))
 
 
-(add-to-list 'load-path "/home/wh1/.emacs.d/el-get/package/elpa/php-mode-1.5.0/")
+(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/php-mode-1.5.0/")
 (require 'php-mode)
 
 (autoload 'php-imenu-create-index "php-imenu" nil t)
@@ -209,7 +209,7 @@
   ;;(setq php-imenu-alist-postprocessor (function reverse))
   (imenu-add-menubar-index))
 
-(add-to-list 'load-path "/home/wh1/.emacs.d/el-get/package/elpa/nlinum-1.5/")
+(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/nlinum-1.5/")
 (require 'nlinum)
 (global-nlinum-mode 1)
 (setq nlinum--width 4) ;;Lines numeration
@@ -232,7 +232,6 @@
 
 (add-hook 'php-mode-hook 
 		  (lambda()
-			
 			(setq c-default-style "whitesmith")
 			(defun ywb-php-lineup-arglist-intro (langelem)
 			  (save-excursion
@@ -242,7 +241,6 @@
 			  (save-excursion
 				(goto-char (cdr langelem))
 				(vector (current-column))))
-
 			(require 'php-electric)
 			(electric-pair-mode t)
 			(setq case-fold-search t)
@@ -681,64 +679,6 @@ That is, a string used to represent it on the tab bar."
 (global-unset-key (kbd "M-y"))
 (global-set-key (kbd "M-y") 'hlt-unhighlight-region)
 
-;; (add-to-list 'load-path "~/.emacs.d/mmm-mode/")
-;; (require 'mmm-auto)
-
-;; (add-hook 'mmm-mode-hook
-;; 		  (lambda()
-;; 			(auto-complete-mode 1)))
-
-;; ;;************************************************************
-;; ;; configure HTML editing
-;; ;;************************************************************
-
-;; (add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/css-mode-1.0/")
-;; (require 'css-mode)
-;; (require 'php-mode)
-;; ;; configure css-mode
-;; (autoload 'css-mode "css-mode")
-;; (add-to-list 'auto-mode-alist '("\\.css\\'" . css-mode))
-;; (setq cssm-indent-function #'cssm-c-style-indenter)
-;; (setq cssm-indent-level '2)
-;; ;;
-;; (add-hook 'php-mode-user-hook 'turn-on-font-lock)
-;; ;;
-;; (require 'mmm-mode)
-;; (setq mmm-global-mode 'maybe)
-
-;; ;; set up an mmm group for fancy html editing
-;; (mmm-add-group
-;;  'fancy-html
-;;  '((html-php-tagged
-;; 	:submode php-mode
-;; 	:face mmm-code-submode-face
-;; 	:front "<[?]php"
-;; 	:back "[?]>")
-;;    (html-css-attribute
-;; 	:submode css-mode
-;; 	:face mmm-declaration-submode-face
-;; 	:front "style=\""
-;; 	:back "\"")))
-
-;; ;; What files to invoke the new html-mode for?
-;; (add-to-list 'auto-mode-alist '("\\.inc\\'" . html-mode))
-;; (add-to-list 'auto-mode-alist '("\\.phtml\\'" . html-mode))
-;; (add-to-list 'auto-mode-alist '("\\.php[34]?\\'" . html-mode))
-;; (add-to-list 'auto-mode-alist '("\\.[sj]?html?\\'" . html-mode))
-;; (add-to-list 'auto-mode-alist '("\\.jsp\\'" . html-mode))
-
-
-;; ;; What features should be turned on in this html-mode?
-;; (add-to-list 'mmm-mode-ext-classes-alist '(html-mode nil html-js))
-;; (add-to-list 'mmm-mode-ext-classes-alist '(html-mode nil embedded-css))
-;; (add-to-list 'mmm-mode-ext-classes-alist '(html-mode nil fancy-html))
-
-;; ;; Not exactly related to editing HTML: enable editing help with mouse-3 in all sgml files
-;; (defun go-bind-markup-menu-to-mouse3 ()
-;;   (define-key sgml-mode-map [(down-mouse-3)] 'sgml-tags-menu))
-;; ;;
-;; (add-hook 'sgml-mode-hook 'go-bind-markup-menu-to-mouse3)
-
 ;;Free key-bindings
 ;; C-n
 ;; C-p
@@ -860,20 +800,6 @@ That is, a string used to represent it on the tab bar."
 			(delete-trailing-whitespace)
 			nil))
 
-;; (defun my-web-mode-hook ()
-;;   (setq web-mode-enable-auto-pairing nil))
-
-;; (add-hook 'web-mode-hook  'my-web-mode-hook)
-
-;; (defun sp-web-mode-is-code-context (id action context)
-;;   (when (and (eq action 'insert)
-;;              (not (or (get-text-property (point) 'part-side)
-;;                       (get-text-property (point) 'block-side))))
-	
-;;     t))
-
-;; (sp-local-pair 'web-mode "<" nil :when '(sp-web-mode-is-code-context))
-
 (setq web-mode-extra-snippets
       '(("erb" . (("name" . ("beg" . "end"))))
         ("php" . (("name" . ("beg" . "end"))
@@ -885,10 +811,6 @@ That is, a string used to represent it on the tab bar."
         ("php"  . (("open" "close")
                    ("open" "close")))
        ))
-
-;; (add-to-list 'load-path "~/.emacs.d/yasnippet")
-;; (require 'yasnippet)
-;; (yas-global-mode 1)
 
 (add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/nhexl-mode-0.1/")
 (defun uniquify-all-lines-region (start end)
