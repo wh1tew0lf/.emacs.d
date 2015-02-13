@@ -98,6 +98,11 @@
 	(yank-rectangle)))
 (global-set-key (kbd "s-v") 'yank-rectangle)
 
+(global-unset-key (kbd "<escape>"))
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+(setq tab-stop-list (number-sequence 4 120 4))
+
 ;;Поиск и замена
 (global-unset-key (kbd "M-f"))
 (global-unset-key (kbd "C-s"))
@@ -685,7 +690,6 @@ That is, a string used to represent it on the tab bar."
 ;; C-delete
 ;; C-c b
 ;; C-x C-o
-;; -- C-x C-l
 ;; C-x C-n
 ;; C-x C-t
 ;; C-x ;
