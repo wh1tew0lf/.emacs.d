@@ -34,4 +34,5 @@ tramp
 #Other git repositories
 /web-mode/
 /multiple-cursors.el/
+/vimpulse/
 /el-get/

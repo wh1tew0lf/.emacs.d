@@ -19,3 +19,13 @@ else
 	echo "Get multiple-cursors\n"
 	git clone git@github.com:magnars/multiple-cursors.el.git
 fi
+
+# vimpulse
+if [ -d ~/.emacs.d/vimpulse/ ]; then
+	echo "Updating vimpulse\n"
+	cd ~/.emacs.d/vimpulse/
+	git pull
+else
+	echo "Get vimpulse\n"
+	git clone git://gitorious.org/vimpulse/vimpulse.git
+fi
