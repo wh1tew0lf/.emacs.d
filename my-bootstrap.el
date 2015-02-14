@@ -12,8 +12,6 @@
 (setq x-select-enable-clipboard t)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
-(require 'yascroll)
-(global-yascroll-bar-mode 1)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -201,8 +199,55 @@
 							  (interactive)
 							  (kill-buffer)))
 
+;;el-get
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
 
-(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/php-mode-1.5.0/")
+(setq my:el-get-packages
+      '(auto-complete
+		autopair
+		cl-lib
+		dired+
+		dirtree
+		git-modes
+		magit
+		multiple-cursors
+		markdown-mode
+		php-eldoc
+		php-mode
+		php-mode-improved
+		popup
+		rainbow-delimiters
+		rainbow-mode
+		sr-speedbar
+		switch-window
+		tabbar
+		yascroll
+		vimpulse
+		web-mode))
+
+(el-get 'sync my:el-get-packages)
+
+;;(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
+(el-get 'sync my:el-get-packages)
+;;el-get end
+
+;;elpa
+(setq package-archives 
+	  '(("elpa" . "http://tromey.com/elpa/") 
+		("melpa" . "http://melpa.milkbox.net/packages/")
+		("gnu" . "http://elpa.gnu.org/packages/") 
+		("marmalade" . "http://marmalade-repo.org/packages/")))
+;;end-elpa
+
+(require 'yascroll)
+(global-yascroll-bar-mode 1)
+
 (require 'php-mode)
 
 (autoload 'php-imenu-create-index "php-imenu" nil t)
@@ -518,35 +563,7 @@
 ;bar
 ;(hbar . height)
 
-;;elpa
-(setq package-archives 
-	  '(("elpa" . "http://tromey.com/elpa/") 
-		("melpa" . "http://melpa.milkbox.net/packages/")
-		("gnu" . "http://elpa.gnu.org/packages/") 
-		("marmalade" . "http://marmalade-repo.org/packages/")))
-
-;;el-get
-;(url-retrieve
-; "https://raw.github.com/dimitri/el-get/master/el-get-install.el"
-; (lambda (s)
-;   (goto-char (point-max))
-;   (eval-print-last-sexp)))
-
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
-;;(unless (require 'el-get nil 'noerror)
-;;  (with-current-buffer
-;;      (url-retrieve-synchronously
-;;       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-;;    (goto-char (point-max))
-;;    (eval-print-last-sexp)))
-
-;;(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
-;;(el-get 'sync)
-;;el-get end
-
 ;; Tabbar
-(add-to-list 'load-path "~/.emacs.d/el-get/tabbar")
 (require 'tabbar)
 
 (global-set-key [C-S-iso-lefttab] 'tabbar-backward-tab)
@@ -613,7 +630,7 @@ That is, a string used to represent it on the tab bar."
 ;; speedbar settings
 (setq speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
 
-(add-to-list 'load-path "~/.emacs.d/el-get/sr-speedbar/")
+;(add-to-list 'load-path "~/.emacs.d/el-get/sr-speedbar/")
 
 ;; Some file extensions for speedbar showing
 ;;(dolist (extension '(".c" ".cc" ".c++" ".h" ".sh" 
@@ -659,11 +676,11 @@ That is, a string used to represent it on the tab bar."
 (setq ac-menu-height 20)
 (add-to-list 'ac-modes 'web-mode)
 
-(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/rainbow-delimiters-1.3.21/")
+;;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/rainbow-delimiters-1.3.21/")
 (require 'rainbow-delimiters)
 ;(global-rainbow-delimiters-mode)
 
-(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/rainbow-mode-0.9/")
+;;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/rainbow-mode-0.9/")
 (require 'rainbow-mode)
 ;(rainbow-turn-on)
 
@@ -743,10 +760,10 @@ That is, a string used to represent it on the tab bar."
                             (statement-cont . (first c-lineup-cascaded-calls +))))))))
 
 
-(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/markdown-mode-2.0/")
+;;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/markdown-mode-2.0/")
 (require 'markdown-mode)
 
-(add-to-list 'load-path "~/.emacs.d/web-mode/")
+;;(add-to-list 'load-path "~/.emacs.d/web-mode/")
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
@@ -847,4 +864,8 @@ If point was already at that position, move point to beginning of line."
 (require 'fill-column-indicator)
 (setq fci-rule-width 1)
 (setq fci-rule-color "darkblue")
+
+
+;;(add-to-list 'load-path "~/.emacs.d/vimpulse/")
+;;(require 'vimpulse)
 
