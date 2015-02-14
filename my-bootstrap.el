@@ -216,6 +216,7 @@
 		dirtree
 		git-modes
 		magit
+		multiple-cursors
 		markdown-mode
 		php-eldoc
 		php-mode
@@ -226,7 +227,9 @@
 		sr-speedbar
 		switch-window
 		tabbar
-		yascroll))
+		yascroll
+		vimpulse
+		web-mode))
 
 (el-get 'sync my:el-get-packages)
 
@@ -760,7 +763,7 @@ That is, a string used to represent it on the tab bar."
 ;;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/markdown-mode-2.0/")
 (require 'markdown-mode)
 
-(add-to-list 'load-path "~/.emacs.d/web-mode/")
+;;(add-to-list 'load-path "~/.emacs.d/web-mode/")
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
