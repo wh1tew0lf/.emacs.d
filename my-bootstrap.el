@@ -228,7 +228,7 @@
 		switch-window
 		tabbar
 		yascroll
-		vimpulse
+;;		vimpulse
 		web-mode))
 
 (el-get 'sync my:el-get-packages)
