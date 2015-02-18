@@ -630,14 +630,12 @@ That is, a string used to represent it on the tab bar."
 ;; speedbar settings
 (setq speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
 
-;(add-to-list 'load-path "~/.emacs.d/el-get/sr-speedbar/")
-
 ;; Some file extensions for speedbar showing
-;;(dolist (extension '(".c" ".cc" ".c++" ".h" ".sh" 
-;;					 ".py" ".pl" ".ruby" ".xml"
-;;					 ".htm" ".html" ".css" ".php"
-;;					 ".txt" ".md" ".js"))
-;;  (speedbar-add-supported-extension extension))
+(dolist (extension '(".c" ".cc" ".c++" ".h" ".sh" 
+					 ".py" ".pl" ".ruby" ".xml"
+					 ".htm" ".html" ".css" ".php"
+					 ".txt" ".md" ".js"))
+  (speedbar-add-supported-extension extension))
 
 (require 'sr-speedbar)
 (global-set-key (kbd "C-c s") 'sr-speedbar-toggle)
