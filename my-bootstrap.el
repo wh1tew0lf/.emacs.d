@@ -3,7 +3,7 @@
 ;;(load-file "~/.emacs.d/my-bootstrap.el")
 ;;(require 'color-theme)
 ;;(color-theme-initialize)
-;;(color-theme-deep-blue)
+;;(color-theme-my-test)
 
 
 (set-language-environment 'utf-8)
@@ -49,6 +49,9 @@
 (global-unset-key (kbd "C-<next>"))
 (global-unset-key (kbd "M-V"))
 (global-set-key (kbd "M-V") 'enlarge-window)
+
+(global-unset-key (kbd "C-t"))
+(global-set-key (kbd "C-t") 'find-tag)
 
 ;;Цветовые схемы
 ;(require 'color-theme)
