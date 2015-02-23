@@ -611,6 +611,7 @@ on beta156
 
 config.status:595: creating Makefile
 config.status:595: creating config.h
+config.status:837: config.h is unchanged
 
 ## ---------------- ##
 ## Cache variables. ##
