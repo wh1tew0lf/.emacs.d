@@ -82,14 +82,14 @@
 (global-set-key (kbd "C-=") 'text-scale-increase)
 (global-set-key (kbd "C-<mouse-5>") 'text-scale-decrease)
 (global-set-key (kbd "C--") 'text-scale-decrease)
-(global-set-key (kbd "C-0") (lambda() 
+(global-set-key (kbd "C-0") (lambda()
 							  (interactive)
 							  (text-scale-increase 0)))
 
 (global-set-key (kbd "C-x r") 'revert-buffer-with-coding-system)
 
 (global-set-key (kbd "s-x") 'kill-rectangle)
-(global-set-key (kbd "s-c") (lambda(start end) 
+(global-set-key (kbd "s-c") (lambda(start end)
 	(interactive "r")
 	(kill-rectangle start end)
 	(goto-char start)
@@ -130,6 +130,25 @@
 
 (global-set-key (kbd "C-s") 'save-buffer)
 
+
+(defun find-current-tag()
+  "Search for current tag at cursor position"
+  (interactive)
+  (let
+	  ((start 0)
+	   (end 0))
+	(save-excursion
+	  (left-word 1)
+	  (setf start (point))
+	  (right-word 1)
+	  (setf end (point))
+	  (message (buffer-substring start end)))
+	(find-tag (buffer-substring start end))))
+
+
+(global-unset-key (kbd "M-."))
+(global-set-key (kbd "M-.") 'find-current-tag)
+
 (require 'package)
 (setq package-enable-at-startup nil)
 (package-initialize)
@@ -150,7 +169,7 @@
 ;‘d’ – mark various entries for deletion (‘x’ – to delete them)
 ;‘e’ – edit the annotation for the current bookmark
 ;‘m’ – mark various entries for display and other operations, (‘v’ – to visit)
-;‘o’ – visit the current bookmark in another window, keeping the bookmark list open 
+;‘o’ – visit the current bookmark in another window, keeping the bookmark list open
 ;‘C-o’ – switch to the current bookmark in another window
 ;‘r’ – rename the current bookmark
 
@@ -190,12 +209,12 @@
 (reverse-input-method 'russian-computer)
 
 ;отключить переносы строк
-(add-hook 'org-mode-hook (lambda () 
-                           (auto-fill-mode -1))) 
+(add-hook 'org-mode-hook (lambda ()
+                           (auto-fill-mode -1)))
 (set-default 'truncate-lines t)
 
 (global-unset-key (kbd "C-w"))
-(global-set-key (kbd "C-w") (lambda() 
+(global-set-key (kbd "C-w") (lambda()
 							  (interactive)
 							  (kill-buffer)))
 
@@ -238,10 +257,10 @@
 ;;el-get end
 
 ;;elpa
-(setq package-archives 
-	  '(("elpa" . "http://tromey.com/elpa/") 
+(setq package-archives
+	  '(("elpa" . "http://tromey.com/elpa/")
 		("melpa" . "http://melpa.milkbox.net/packages/")
-		("gnu" . "http://elpa.gnu.org/packages/") 
+		("gnu" . "http://elpa.gnu.org/packages/")
 		("marmalade" . "http://marmalade-repo.org/packages/")))
 ;;end-elpa
 
@@ -280,7 +299,7 @@
 		  (delete-char (* (count 'arglist-cont-nonempty syntax)
 						  c-basic-offset))) )))
 
-(add-hook 'php-mode-hook 
+(add-hook 'php-mode-hook
 		  (lambda()
 			(setq c-default-style "whitesmith")
 			(defun ywb-php-lineup-arglist-intro (langelem)
@@ -313,7 +332,7 @@
 			;(flymake-mode-on)
 			(add-hook 'c-special-indent-hook 'uniindent-closure)
 			(setq indent-tabs-mode nil)))
-			
+
 (add-hook 'c-mode-hook
 		  (lambda()
 			(electric-pair-mode t)
@@ -327,8 +346,8 @@
 			(local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
 			(setq indent-tabs-mode nil)))
 
-(add-hook 'c++-mode-hook 
-		  (lambda() 
+(add-hook 'c++-mode-hook
+		  (lambda()
 			(electric-pair-mode t)
 			(c-toggle-auto-newline 1)
 			(setq c-basic-indent 2)
@@ -342,12 +361,12 @@
 
 ;;Настройки для CEDET
 
-(defun my-semantic-complete-self-insert(arg) 
+(defun my-semantic-complete-self-insert(arg)
   (interactive "p")
   (self-insert-command arg)
   (ac-complete-semantic))
 
-(defun enable-cedet() 
+(defun enable-cedet()
   (interactive)
   (setq cedet-root-path (file-name-as-directory "~/.emacs.d/cedet-bzr/trunk/"))
   (load-file (concat cedet-root-path "cedet-devel-load.el"))
@@ -367,7 +386,7 @@
   (setq stack-trace-on-error t)
 
   (global-ede-mode 1)                      ; Enable the Project management system
-  (semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion 
+  (semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion
   ;(global-srecode-minor-mode 1)            ; Enable template insertion menu
 
   (global-semanticdb-minor-mode 1) ;включает глобальную поддержку Semanticdb;
@@ -388,7 +407,7 @@
   (global-semantic-tag-folding-mode 1))
 
 ;; END - Настройки CEDET
-	
+
 (global-set-key (kbd "<f9>") 'compile)
 
 (defun toggle-fullscreen ()
@@ -403,7 +422,7 @@
 
 (defun my-duplicate-block-after()
   (interactive)
-  (let ((start (if mark-active (region-beginning) (point))) 
+  (let ((start (if mark-active (region-beginning) (point)))
 		(end (if mark-active (region-end) (point))))
 	(goto-char start)
 	(move-beginning-of-line 1)
@@ -431,7 +450,7 @@
 
 (defun my-duplicate-block-before()
   (interactive)
-  (let ((start (if mark-active (region-beginning) (point))) 
+  (let ((start (if mark-active (region-beginning) (point)))
 		(end (if mark-active (region-end) (point))))
 	(goto-char start)
 	(move-beginning-of-line 1)
@@ -457,7 +476,7 @@
 
 (defun my-move-block-down()
   (interactive)
-  (let ((start (if mark-active (region-beginning) (point))) 
+  (let ((start (if mark-active (region-beginning) (point)))
 		(end (if mark-active (region-end) (point)))
 		(is-block mark-active)
 		(length (buffer-size)))
@@ -468,7 +487,7 @@
 	(move-end-of-line 1)
 	(setf end (point))
 	(kill-region start end)
-	(when (> length end) 
+	(when (> length end)
 	  (delete-region start (1+ start))
 	  (move-end-of-line 1))
 	(open-line 1)
@@ -492,7 +511,7 @@
 
 (defun my-move-block-up()
   (interactive)
-  (let ((start (if mark-active (region-beginning) (point))) 
+  (let ((start (if mark-active (region-beginning) (point)))
 		(end (if mark-active (region-end) (point)))
 		(is-block mark-active))
 	(goto-char start)
@@ -502,7 +521,7 @@
 	(move-end-of-line 1)
 	(setf end (point))
 	(kill-region start end)
-	(when (> start 1) 
+	(when (> start 1)
 	  (delete-region (1- start) start)
 	  (move-beginning-of-line 1))
 	(open-line 1)
@@ -525,17 +544,17 @@
 
 (defun my-kill-region()
   (interactive)
-  (let ((start (if mark-active (region-beginning) (point))) 
+  (let ((start (if mark-active (region-beginning) (point)))
 		(end (if mark-active (region-end) (point))))
 	(goto-char start)
 	(move-beginning-of-line 1)
 	(setf start (point))
 	(goto-char end)
 	(move-end-of-line 1)
-	(setf end (1+ (point))) 
+	(setf end (1+ (point)))
 	(when (> end (1+ (buffer-size)))
 	  (setf end (1+ (buffer-size)))
-	  (when (> start 1) 
+	  (when (> start 1)
 		(setf start (1- start))))
 	(delete-region start end)))
 
@@ -588,7 +607,7 @@ That is, a string used to represent it on the tab bar."
        label (max 1 (/ (window-width)
                        (length (tabbar-view
                                 (tabbar-current-tabset)))))))))
- 
+
  (defun my-tabbar-buffer-groups () ;; customize to show all normal files in one group
    "Returns the name of the tab group names the current buffer belongs to.
  There are two groups: Emacs buffers (those whose name starts with '*', plus
@@ -598,7 +617,7 @@ That is, a string used to represent it on the tab bar."
                ((eq major-mode 'dired-mode) "emacs")
                (t "user"))))
  (setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
- 
+
 (setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
 
 ;; Add a buffer modification state indicator in the tab label, and place a
@@ -631,7 +650,7 @@ That is, a string used to represent it on the tab bar."
 (setq speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
 
 ;; Some file extensions for speedbar showing
-(dolist (extension '(".c" ".cc" ".c++" ".h" ".sh" 
+(dolist (extension '(".c" ".cc" ".c++" ".h" ".sh"
 					 ".py" ".pl" ".ruby" ".xml"
 					 ".htm" ".html" ".css" ".php"
 					 ".txt" ".md" ".js"))
@@ -639,12 +658,12 @@ That is, a string used to represent it on the tab bar."
 
 (require 'sr-speedbar)
 (global-set-key (kbd "C-c s") 'sr-speedbar-toggle)
-(global-set-key (kbd "C-x C-l") '(lambda () 
+(global-set-key (kbd "C-x C-l") '(lambda ()
 								   (interactive)
 								   (set 'speedbar-update-flag nil)
 								   (sr-speedbar-refresh-turn-off)))
 
-(custom-set-variables 
+(custom-set-variables
  '(sr-speedbar-right-side nil))
 
 (custom-set-variables '(speedbar-show-unknown-files t))
@@ -808,7 +827,7 @@ That is, a string used to represent it on the tab bar."
 ;;                    (setq emmet-use-css-transform t)
 ;;                  (setq emmet-use-css-transform nil)))))
 
-(add-hook 'web-mode-hook 
+(add-hook 'web-mode-hook
 		  '(lambda()
 			 (local-set-key (kbd "RET") 'newline-and-indent)
 			 (auto-complete-mode 1)
@@ -866,4 +885,3 @@ If point was already at that position, move point to beginning of line."
 
 ;;(add-to-list 'load-path "~/.emacs.d/vimpulse/")
 ;;(require 'vimpulse)
-
