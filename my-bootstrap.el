@@ -240,6 +240,7 @@
 		magit
 		multiple-cursors
 		markdown-mode
+		nlinum
 		php-eldoc
 		php-mode
 		php-mode-improved
@@ -254,9 +255,9 @@
 		web-mode))
 
 (el-get 'sync my:el-get-packages)
-
 ;;(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
-(el-get 'sync my:el-get-packages)
+(require 'el-get-elpa)
+;(el-get-elpa-build-local-recipes)
 ;;el-get end
 
 ;;elpa
@@ -281,7 +282,7 @@
   ;;(setq php-imenu-alist-postprocessor (function reverse))
   (imenu-add-menubar-index))
 
-(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/nlinum-1.5/")
+;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/nlinum-1.5/")
 (require 'nlinum)
 (global-nlinum-mode 1)
 (setq nlinum--width 4) ;;Lines numeration
