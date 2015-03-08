@@ -237,10 +237,12 @@
 		dired+
 		dirtree
 		git-modes
+		highlight
 		magit
 		multiple-cursors
 		markdown-mode
 		nlinum
+		nhexl-mode
 		php-eldoc
 		php-mode
 		php-mode-improved
@@ -682,7 +684,7 @@ That is, a string used to represent it on the tab bar."
 (setq tramp-default-method "ssh")
 (setq password-cache-expiry nil)
 
-(add-to-list 'load-path "~/.emacs.d/multiple-cursors.el/")
+;(add-to-list 'load-path "~/.emacs.d/multiple-cursors.el/")
 (require 'multiple-cursors)
 
 (global-unset-key (kbd "M-m"))
@@ -697,15 +699,12 @@ That is, a string used to represent it on the tab bar."
 (setq ac-menu-height 20)
 (add-to-list 'ac-modes 'web-mode)
 
-;;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/rainbow-delimiters-1.3.21/")
 (require 'rainbow-delimiters)
 ;(global-rainbow-delimiters-mode)
 
-;;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/rainbow-mode-0.9/")
 (require 'rainbow-mode)
 ;(rainbow-turn-on)
 
-;; (add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/diff-hl-1.5.3/")
 ;; (require 'diff-hl)
 ;; (global-diff-hl-mode)
 
@@ -715,7 +714,6 @@ That is, a string used to represent it on the tab bar."
 (global-unset-key (kbd "C-e"))
 (global-set-key (kbd "C-e") 'uncomment-region)
 
-(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/highlight-21.0/")
 (require 'highlight)
 (global-unset-key (kbd "C-y"))
 (global-set-key (kbd "C-y") 'hlt-highlight)
@@ -781,10 +779,8 @@ That is, a string used to represent it on the tab bar."
                             (statement-cont . (first c-lineup-cascaded-calls +))))))))
 
 
-;;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/markdown-mode-2.0/")
 (require 'markdown-mode)
 
-;;(add-to-list 'load-path "~/.emacs.d/web-mode/")
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
@@ -854,7 +850,7 @@ That is, a string used to represent it on the tab bar."
                    ("open" "close")))
        ))
 
-(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/nhexl-mode-0.1/")
+;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/nhexl-mode-0.1/")
 (defun uniquify-all-lines-region (start end)
   "Find duplicate lines in region START to END keeping first occurrence."
   (interactive "*r")
@@ -886,6 +882,5 @@ If point was already at that position, move point to beginning of line."
 (setq fci-rule-width 1)
 (setq fci-rule-color "darkblue")
 
-
-;;(add-to-list 'load-path "~/.emacs.d/vimpulse/")
+(require 'nhexl-mode)
 ;;(require 'vimpulse)
