@@ -271,6 +271,8 @@
 (global-yascroll-bar-mode 1)
 
 (require 'php-mode)
+(setq php-mode-warn-if-mumamo-off nil)
+(setq php-warned-bad-indent nil)
 
 (autoload 'php-imenu-create-index "php-imenu" nil t)
 ;; Add the index creation function to the php-mode-hook
