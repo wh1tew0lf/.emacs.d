@@ -259,7 +259,7 @@
 (el-get 'sync my:el-get-packages)
 ;;(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 (require 'el-get-elpa)
-;(el-get-elpa-build-local-recipes)
+;;(el-get-elpa-build-local-recipes)
 ;;el-get end
 
 ;;elpa
