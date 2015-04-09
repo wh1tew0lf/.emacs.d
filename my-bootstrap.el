@@ -234,6 +234,7 @@
       '(auto-complete
 		autopair
 		cl-lib
+		;cuda-mode
 		dired+
 		dirtree
 		git-modes
@@ -252,6 +253,7 @@
 		sr-speedbar
 		switch-window
 		tabbar
+	;tbemail
 		yascroll
 ;;		vimpulse
 		web-mode))
