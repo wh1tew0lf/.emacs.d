@@ -259,15 +259,9 @@
         web-mode))
 
 (el-get 'sync my:el-get-packages)
-<<<<<<< HEAD
-;; (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
-;; (require 'el-get-elpa)
-;; (el-get-elpa-build-local-recipes)
-=======
 ;;(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 (require 'el-get-elpa)
 ;;(el-get-elpa-build-local-recipes)
->>>>>>> a18e1aa1fd664ea973c228e64aab1f352ef8ed05
 ;;el-get end
 
 ;;elpa
