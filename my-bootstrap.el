@@ -224,52 +224,52 @@
 ;;el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
-  (with-current-buffer
-      (url-retrieve-synchronously
-       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-    (goto-char (point-max))
-    (eval-print-last-sexp)))
+ (with-current-buffer
+     (url-retrieve-synchronously
+      "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+   (goto-char (point-max))
+   (eval-print-last-sexp)))
 
 (setq my:el-get-packages
-      '(auto-complete
-		autopair
-		cl-lib
-		;cuda-mode
-		dired+
-		dirtree
-		git-modes
-		highlight
-		magit
-		multiple-cursors
-		markdown-mode
-		nlinum
-		nhexl-mode
-		php-eldoc
-		php-mode
-		php-mode-improved
-		popup
-		rainbow-delimiters
-		rainbow-mode
-		sr-speedbar
-		switch-window
-		tabbar
-	;tbemail
-		yascroll
-;;		vimpulse
-		web-mode))
+     '(auto-complete
+        autopair
+        cl-lib
+;;      cuda-mode
+        dired+
+        dirtree
+        git-modes
+        highlight
+        magit
+        multiple-cursors
+        markdown-mode
+        nlinum
+        nhexl-mode
+        php-eldoc
+        php-mode
+        php-mode-improved
+        popup
+        rainbow-delimiters
+        rainbow-mode
+        sr-speedbar
+        switch-window
+        tabbar
+;;      tbemail
+        yascroll
+;;      vimpulse
+        web-mode))
 
 (el-get 'sync my:el-get-packages)
-;;(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
-(require 'el-get-elpa)
-;(el-get-elpa-build-local-recipes)
+;; (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
+;; (require 'el-get-elpa)
+;; (el-get-elpa-build-local-recipes)
 ;;el-get end
 
 ;;elpa
-(setq package-archives
-	  '(("elpa" . "http://tromey.com/elpa/")
-		("melpa" . "http://melpa.milkbox.net/packages/")
-		("gnu" . "http://elpa.gnu.org/packages/")
-		("marmalade" . "http://marmalade-repo.org/packages/")))
+;; (setq package-archives
+;; 	  '(("elpa" . "http://tromey.com/elpa/")
+;; 		("melpa" . "http://melpa.milkbox.net/packages/")
+;; 		("gnu" . "http://elpa.gnu.org/packages/")
+;; 		("marmalade" . "http://marmalade-repo.org/packages/")))
 ;;end-elpa
 
 (require 'yascroll)
