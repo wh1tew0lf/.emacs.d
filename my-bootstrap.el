@@ -9,9 +9,35 @@
 (set-language-environment 'utf-8)
 (setq slime-net-coding-system 'utf-8-unix)
 (cua-mode t)
-(setq x-select-enable-clipboard t)
-(menu-bar-mode -1)
+(setq x-select-enable-clipboard t) ;;Общий с ОС буфер обмена:
 (scroll-bar-mode -1)
+(tooltip-mode      -1)
+(menu-bar-mode     -1) ;; отключаем графическое меню
+(tool-bar-mode     -1) ;; отключаем tool-bar
+(scroll-bar-mode   -1) ;; отключаем полосу прокрутки
+(blink-cursor-mode -1) ;; курсор не мигает
+(setq use-dialog-box     nil) ;; никаких графических диалогов и окон - все через минибуфер
+(setq redisplay-dont-pause t)  ;; лучшая отрисовка буфера
+(setq ring-bell-function 'ignore) ;; отключить звуковой сигнал
+(delete-selection-mode t) ;; возможность удалить выделенный текст при вводе поверх
+(electric-pair-mode    1) ;; автозакрытие {},[],() с переводом курсора внутрь скобок
+(electric-indent-mode -1) ;; отключить индентацию  electric-indent-mod'ом 
+
+(setq search-highlight        t)
+(setq query-replace-highlight t)
+
+;; IDO plugin
+(require 'ido)
+(ido-mode                      t)
+(icomplete-mode                t)
+(ido-everywhere                t)
+(setq ido-vitrual-buffers      t)
+(setq ido-enable-flex-matching t)
+
+(require 'bs)
+(require 'ibuffer)
+(defalias 'list-buffers 'ibuffer) ;; отдельный список буферов при нажатии C-x C-b
+(global-set-key (kbd "<f2>") 'bs-show) ;; запуск buffer selection кнопкой F2
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -35,6 +61,17 @@
 (show-paren-mode 1)
 (setq show-paren-style 'expression)
 (global-hl-line-mode t)
+
+;; Delete trailing whitespaces, format buffer and untabify when save buffer
+(defun format-current-buffer()
+    (indent-region (point-min) (point-max)))
+(defun untabify-current-buffer()
+    (if (not indent-tabs-mode)
+        (untabify (point-min) (point-max)))
+    nil)
+(add-to-list 'write-file-functions 'format-current-buffer)
+(add-to-list 'write-file-functions 'untabify-current-buffer)
+(add-to-list 'write-file-functions 'delete-trailing-whitespace)
 
 ;;Движение по окнам
 ;(global-set-key (kbd "s-<up>") 'windmove-up)
@@ -687,6 +724,7 @@ That is, a string used to represent it on the tab bar."
 (require 'tramp)
 (setq tramp-default-method "ssh")
 (setq password-cache-expiry nil)
+;;/remotehost:filename  RET (or /method:user@remotehost:filename)
 
 ;(add-to-list 'load-path "~/.emacs.d/multiple-cursors.el/")
 (require 'multiple-cursors)
