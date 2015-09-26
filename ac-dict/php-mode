@@ -1,3 +1,4 @@
+php
 and
 array
 as
@@ -7519,3 +7520,4 @@ zip_read
 zlib_decode
 zlib_encode
 zlib_get_coding_type
+DIRECTORY_SEPARATOR
