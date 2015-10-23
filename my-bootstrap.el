@@ -6,11 +6,17 @@
 ;;(color-theme-my-test)
 
 
+(setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
+(setq slime-lisp-implementations
+      '((sbcl ("sbcl" "--dynamic-space-size" "4096"))))
+
 (set-language-environment 'utf-8)
 (setq slime-net-coding-system 'utf-8-unix)
+(setq lisp-lambda-list-keyword-parameter-alignment t)
+(setq lisp-lambda-list-keyword-alignment t)
+(setq common-lisp-style-default 'modern)
 (cua-mode t)
 (setq x-select-enable-clipboard t) ;;Общий с ОС буфер обмена:
-(scroll-bar-mode -1)
 (tooltip-mode      -1)
 (menu-bar-mode     -1) ;; отключаем графическое меню
 (tool-bar-mode     -1) ;; отключаем tool-bar
@@ -21,7 +27,7 @@
 (setq ring-bell-function 'ignore) ;; отключить звуковой сигнал
 (delete-selection-mode t) ;; возможность удалить выделенный текст при вводе поверх
 (electric-pair-mode    1) ;; автозакрытие {},[],() с переводом курсора внутрь скобок
-(electric-indent-mode -1) ;; отключить индентацию  electric-indent-mod'ом 
+(electric-indent-mode -1) ;; отключить индентацию  electric-indent-mod'ом
 
 (setq search-highlight        t)
 (setq query-replace-highlight t)
@@ -47,6 +53,10 @@
  '(column-number-mode t)
  '(default-input-method "russian-computer")
  '(display-time-mode t)
+ '(ac-comphist-file (expand-file-name (concat (if (boundp 'user-emacs-directory)
+                                user-emacs-directory
+                              "~/.emacs.d/")
+                            "/my-ac-comphist.dat")))
  '(ede-project-directories (quote ()))
  '(tabbar-separator (quote (0.2)))
  '(tool-bar-mode nil))
@@ -64,20 +74,20 @@
 
 ;; Delete trailing whitespaces, format buffer and untabify when save buffer
 (defun format-current-buffer()
-    (indent-region (point-min) (point-max)))
+  (indent-region (point-min) (point-max)))
 (defun untabify-current-buffer()
-    (if (not indent-tabs-mode)
-        (untabify (point-min) (point-max)))
-    nil)
-(add-to-list 'write-file-functions 'format-current-buffer)
+  (if (not indent-tabs-mode)
+	  (untabify (point-min) (point-max)))
+  nil)
+;;(add-to-list 'write-file-functions 'format-current-buffer)
 (add-to-list 'write-file-functions 'untabify-current-buffer)
 (add-to-list 'write-file-functions 'delete-trailing-whitespace)
 
 ;;Движение по окнам
-;(global-set-key (kbd "s-<up>") 'windmove-up)
-;(global-set-key (kbd "s-<right>") 'windmove-right)
-;(global-set-key (kbd "s-<down>") 'windmove-down)
-;(global-set-key (kbd "s-<left>") 'windmove-left)
+;;(global-set-key (kbd "s-<up>") 'windmove-up)
+;;(global-set-key (kbd "s-<right>") 'windmove-right)
+;;(global-set-key (kbd "s-<down>") 'windmove-down)
+;;(global-set-key (kbd "s-<left>") 'windmove-left)
 
 (global-set-key (kbd "C-}") 'enlarge-window-horizontally)
 (global-set-key (kbd "C-{") 'shrink-window-horizontally)
@@ -91,11 +101,11 @@
 (global-set-key (kbd "C-t") 'find-tag)
 
 ;;Цветовые схемы
-;(require 'color-theme)
-;(color-theme-initialize)
-;(color-theme-deep-blue)
+;;(require 'color-theme)
+;;(color-theme-initialize)
+;;(color-theme-deep-blue)
 
-;(set-face-attribute 'default nil :font "Ubuntu Mono")
+;;(set-face-attribute 'default nil :font "Ubuntu Mono")
 
 ;; TlwgTypewriter
 ;; Ubuntu Mono
@@ -130,10 +140,10 @@
 
 (global-set-key (kbd "s-x") 'kill-rectangle)
 (global-set-key (kbd "s-c") (lambda(start end)
-	(interactive "r")
-	(kill-rectangle start end)
-	(goto-char start)
-	(yank-rectangle)))
+							  (interactive "r")
+							  (kill-rectangle start end)
+							  (goto-char start)
+							  (yank-rectangle)))
 (global-set-key (kbd "s-v") 'yank-rectangle)
 
 (global-unset-key (kbd "<escape>"))
@@ -143,7 +153,6 @@
 
 ;;Поиск и замена
 (global-unset-key (kbd "M-f"))
-(global-unset-key (kbd "C-s"))
 (global-unset-key (kbd "C-r"))
 
 (global-unset-key (kbd "M-d"))
@@ -167,8 +176,6 @@
 (global-set-key (kbd "C-a") 'mark-whole-buffer)
 
 (global-unset-key (kbd "C-w"))
-
-(global-set-key (kbd "C-s") 'save-buffer)
 
 
 (defun find-current-tag()
@@ -204,14 +211,14 @@
 (global-unset-key (kbd "C-."))
 (global-set-key (kbd "C-.") 'bookmark-jump)
 
-;‘a’ – show annotation for the current bookmark
-;‘A’ – show all annotations for your bookmarks
-;‘d’ – mark various entries for deletion (‘x’ – to delete them)
-;‘e’ – edit the annotation for the current bookmark
-;‘m’ – mark various entries for display and other operations, (‘v’ – to visit)
-;‘o’ – visit the current bookmark in another window, keeping the bookmark list open
-;‘C-o’ – switch to the current bookmark in another window
-;‘r’ – rename the current bookmark
+;;‘a’ – show annotation for the current bookmark
+;;‘A’ – show all annotations for your bookmarks
+;;‘d’ – mark various entries for deletion (‘x’ – to delete them)
+;;‘e’ – edit the annotation for the current bookmark
+;;‘m’ – mark various entries for display and other operations, (‘v’ – to visit)
+;;‘o’ – visit the current bookmark in another window, keeping the bookmark list open
+;;‘C-o’ – switch to the current bookmark in another window
+;;‘r’ – rename the current bookmark
 
 (defun revert-buffer-no-confirm ()
   "Revert buffer without confirmation."
@@ -248,7 +255,7 @@
 
 (reverse-input-method 'russian-computer)
 
-;отключить переносы строк
+										;отключить переносы строк
 (add-hook 'org-mode-hook (lambda ()
                            (auto-fill-mode -1)))
 (set-default 'truncate-lines t)
@@ -261,22 +268,22 @@
 ;;el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
- (with-current-buffer
-     (url-retrieve-synchronously
-      "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-   (goto-char (point-max))
-   (eval-print-last-sexp)))
+  (with-current-buffer
+	  (url-retrieve-synchronously
+	   "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+	(goto-char (point-max))
+	(eval-print-last-sexp)))
 
 (setq my:el-get-packages
-     '(auto-complete
+	  '(auto-complete
         autopair
         cl-lib
-;;      cuda-mode
         dired+
         dirtree
         git-modes
         highlight
         magit
+		minimap
         multiple-cursors
         markdown-mode
         nlinum
@@ -290,9 +297,8 @@
         sr-speedbar
         switch-window
         tabbar
-;;      tbemail
         yascroll
-;;      vimpulse
+		vlf
         web-mode))
 
 (el-get 'sync my:el-get-packages)
@@ -325,7 +331,7 @@
   ;;(setq php-imenu-alist-postprocessor (function reverse))
   (imenu-add-menubar-index))
 
-;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/nlinum-1.5/")
+;;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/nlinum-1.5/")
 (require 'nlinum)
 (global-nlinum-mode 1)
 (setq nlinum--width 4) ;;Lines numeration
@@ -357,7 +363,7 @@
 			  (save-excursion
 				(goto-char (cdr langelem))
 				(vector (current-column))))
-			(require 'php-electric)
+			;;(require 'php-electric)
 			(electric-pair-mode t)
 			(setq case-fold-search t)
 			(subword-mode 1)
@@ -376,7 +382,7 @@
 			(setf c-basic-offset 4)
 			(local-set-key (kbd "C-SPC") 'auto-complete)
 			(php-imenu-setup)
-			;(flymake-mode-on)
+										;(flymake-mode-on)
 			(add-hook 'c-special-indent-hook 'uniindent-closure)
 			(setq indent-tabs-mode nil)))
 
@@ -387,8 +393,8 @@
 			(setq c-basic-indent 2)
 			(setq tab-width 4)
 			(setf c-basic-offset 4)
-			;(local-set-key "." 'my-semantic-complete-self-insert)
-			;(local-set-key ">" 'my-semantic-complete-self-insert)
+										;(local-set-key "." 'my-semantic-complete-self-insert)
+										;(local-set-key ">" 'my-semantic-complete-self-insert)
 			(local-set-key (kbd "C-SPC") 'auto-complete)
 			(local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
 			(setq indent-tabs-mode nil)))
@@ -405,55 +411,6 @@
 			(local-set-key (kbd "C-SPC") 'auto-complete)
 			(local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
 			(setq indent-tabs-mode nil)))
-
-;;Настройки для CEDET
-
-(defun my-semantic-complete-self-insert(arg)
-  (interactive "p")
-  (self-insert-command arg)
-  (ac-complete-semantic))
-
-(defun enable-cedet()
-  (interactive)
-  (setq cedet-root-path (file-name-as-directory "~/.emacs.d/cedet-bzr/trunk/"))
-  (load-file (concat cedet-root-path "cedet-devel-load.el"))
-  (add-to-list 'load-path (concat cedet-root-path "contrib"))
-  (load-file (concat cedet-root-path "contrib/cedet-contrib-load.el"))
-  (require 'semantic/ia)
-  (require 'semantic/bovine/gcc)
-  (require 'wisent-php)
-
-  (defun my-cedet-hook ()
-	(add-to-list 'ac-sources 'ac-source-semantic-raw 'ac-source-semantic))
-  (add-hook 'c-mode-common-hook 'my-cedet-hook)
-  (add-hook 'c++-mode-common-hook 'my-cedet-hook)
-
-  (add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/ecb-snapshot-20120830")
-  (require 'ecb)
-  (setq stack-trace-on-error t)
-
-  (global-ede-mode 1)                      ; Enable the Project management system
-  (semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion
-  ;(global-srecode-minor-mode 1)            ; Enable template insertion menu
-
-  (global-semanticdb-minor-mode 1) ;включает глобальную поддержку Semanticdb;
-  (global-semantic-mru-bookmark-mode 1) ;включает режим автоматического запоминания информации о редактируемых тагах, так что вы можете перейти к ним позднее с помощью команды semantic-mrub-switch-tags;
-  (global-cedet-m3-minor-mode 1) ;активирует контекстное меню привязанное к правой клавише мыши;
-  (global-semantic-highlight-func-mode 1) ;активирует подстветку первой строки текущего тага (функции, класса и т.п.);
-  ;(global-semantic-stickyfunc-mode 1) ;активирует показ названия текущего тага в верхней строке буфера;
-  (global-semantic-decoration-mode 1) ;активирует использование стилей при показе тагов разных типов. Набор стилей определяется списком semantic-decoration-styles;
-
-  (global-semantic-idle-local-symbol-highlight-mode 1) ;включает подсветку вхождений локальных переменных чье имя совпадает с именем текущего тага;
-  (global-semantic-idle-scheduler-mode 0) ;деактивирует автоматический анализ кода в буферах когда Emacs "свободен" и ожидает ввода данных от пользователя (idle time);
-  ;(global-semantic-idle-completions-mode 1) ;активирует показ возможных дополнений имен во время ожидания ввода. Требует чтобы был включен global-semantic-idle-scheduler-mode;
-  (global-semantic-idle-summary-mode 1) ;активирует показ информации о текущем таге во время ожидания ввода. Требует чтобы был включен global-semantic-idle-scheduler-mode.
-
-  (global-set-key (kbd "s-d") 'semantic-ia-show-doc)
-  (global-set-key (kbd "s-/") 'semantic-ia-show-summary)
-
-  (global-semantic-tag-folding-mode 1))
-
-;; END - Настройки CEDET
 
 (global-set-key (kbd "<f9>") 'compile)
 
@@ -614,20 +571,20 @@
 (global-set-key (kbd "C-S-s") 'my-save-modified-buffers)
 
 (add-hook 'ediff-load-hook
-	(lambda ()
-    (set-face-foreground ediff-current-diff-face-B "blue")
-	(set-face-background ediff-current-diff-face-B "red")
-	(make-face-italic ediff-current-diff-face-B)))
+		  (lambda ()
+			(set-face-foreground ediff-current-diff-face-B "blue")
+			(set-face-background ediff-current-diff-face-B "red")
+			(make-face-italic ediff-current-diff-face-B)))
 
-;(set-default 'cursor-type 'bar)
-;(set-default 'cursor-in-non-selected-windows 'bar)
-;box
-;hollow
-;nil
-;bar
-;(bar . width)
-;bar
-;(hbar . height)
+;;(set-default 'cursor-type 'bar)
+;;(set-default 'cursor-in-non-selected-windows 'bar)
+;;box
+;;hollow
+;;nil
+;;bar
+;;(bar . width)
+;;bar
+;;(hbar . height)
 
 ;; Tabbar
 (require 'tabbar)
@@ -655,15 +612,15 @@ That is, a string used to represent it on the tab bar."
                        (length (tabbar-view
                                 (tabbar-current-tabset)))))))))
 
- (defun my-tabbar-buffer-groups () ;; customize to show all normal files in one group
-   "Returns the name of the tab group names the current buffer belongs to.
+(defun my-tabbar-buffer-groups () ;; customize to show all normal files in one group
+  "Returns the name of the tab group names the current buffer belongs to.
  There are two groups: Emacs buffers (those whose name starts with '*', plus
  dired buffers), and the rest.  This works at least with Emacs v24.2 using
  tabbar.el v1.7."
-   (list (cond ((string-equal "*" (substring (buffer-name) 0 1)) "emacs")
-               ((eq major-mode 'dired-mode) "emacs")
-               (t "user"))))
- (setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
+  (list (cond ((string-equal "*" (substring (buffer-name) 0 1)) "emacs")
+			  ((eq major-mode 'dired-mode) "emacs")
+			  (t "user"))))
+(setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
 
 (setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
 
@@ -726,7 +683,7 @@ That is, a string used to represent it on the tab bar."
 (setq password-cache-expiry nil)
 ;;/remotehost:filename  RET (or /method:user@remotehost:filename)
 
-;(add-to-list 'load-path "~/.emacs.d/multiple-cursors.el/")
+;;(add-to-list 'load-path "~/.emacs.d/multiple-cursors.el/")
 (require 'multiple-cursors)
 
 (global-unset-key (kbd "M-m"))
@@ -740,15 +697,20 @@ That is, a string used to represent it on the tab bar."
 (ac-config-default)
 (setq ac-menu-height 20)
 (add-to-list 'ac-modes 'web-mode)
+(require 'fuzzy)
+(setf ac-use-fuzzy t)
 
 (require 'rainbow-delimiters)
-;(global-rainbow-delimiters-mode)
+;;(global-rainbow-delimiters-mode)
 
 (require 'rainbow-mode)
-;(rainbow-turn-on)
+;;(rainbow-turn-on)
 
 ;; (require 'diff-hl)
 ;; (global-diff-hl-mode)
+
+;;(global-unset-key (kbd "<S-down-mouse-1>"))
+;;(global-set-key (kbd "<S-down-mouse-1>") 'mouse-set-region)
 
 (global-unset-key (kbd "M-c"))
 (global-set-key (kbd "M-c") 'comment-region)
@@ -779,8 +741,8 @@ That is, a string used to represent it on the tab bar."
 ;; M-b
 ;; M-r
 
-;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/flymake-0.4.16/")
-;(require 'flymake)
+;;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/flymake-0.4.16/")
+;;(require 'flymake)
 
 (global-set-key (kbd "<backtab>") 'un-indent-by-removing-4-spaces)
 (defun un-indent-by-removing-4-spaces ()
@@ -825,6 +787,7 @@ That is, a string used to represent it on the tab bar."
 
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[gj]sp\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
@@ -850,6 +813,7 @@ That is, a string used to represent it on the tab bar."
 
 (setq web-mode-comment-style 2)
 (setq web-mode-enable-current-element-highlight t)
+(setq web-mode-enable-heredoc-fontification t)
 
 (setq web-mode-ac-sources-alist
       '(("css" . (ac-source-words-in-buffer ac-source-css-property))
@@ -883,16 +847,17 @@ That is, a string used to represent it on the tab bar."
 (setq web-mode-extra-snippets
       '(("erb" . (("name" . ("beg" . "end"))))
         ("php" . (("name" . ("beg" . "end"))
-                  ("name" . ("beg" . "end"))))
+                  ("name" . ("beg" . "end"))
+				  ("dowhile" . ("<?php do { ?>\n\n<?php } while (|); ?>")))) ;; не работает!
 		))
 
 (setq web-mode-extra-auto-pairs
       '(("erb"  . (("open" "close")))
         ("php"  . (("open" "close")
                    ("open" "close")))
-       ))
+		))
 
-;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/nhexl-mode-0.1/")
+;;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/nhexl-mode-0.1/")
 (defun uniquify-all-lines-region (start end)
   "Find duplicate lines in region START to END keeping first occurrence."
   (interactive "*r")
@@ -912,11 +877,13 @@ That is, a string used to represent it on the tab bar."
 (defun smart-beginning-of-line ()
   "Move point to the first non-whitespace character on this line.
 If point was already at that position, move point to beginning of line."
-  (interactive) ; Use (interactive "^") in Emacs 23 to make shift-select work
+  (interactive "^") ; Use (interactive "^") in Emacs 23 to make shift-select work
   (let ((oldpos (point)))
     (back-to-indentation)
     (and (= oldpos (point))
          (beginning-of-line))))
+
+(put 'smart-beginning-of-line 'CUA 'move)
 
 (global-set-key [home] 'smart-beginning-of-line)
 
@@ -925,4 +892,18 @@ If point was already at that position, move point to beginning of line."
 (setq fci-rule-color "darkblue")
 
 (require 'nhexl-mode)
-;;(require 'vimpulse)
+
+(font-lock-add-keywords
+ nil
+ '(("\\<\\(FIXME\\|TODO\\|QUESTION\\|NOTE\\)"
+	1 font-lock-warning-face t)))
+
+;; (global-font-lock-mode -1)
+(setq jit-lock-defer-time 0.05)
+
+(require 'vlf-setup)
+(custom-set-variables
+ '(vlf-application 'dont-ask))
+
+(eval-after-load "vlf"
+  '(define-key vlf-prefix-map "\C-xv" vlf-mode-map))
