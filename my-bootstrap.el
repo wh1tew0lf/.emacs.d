@@ -6,6 +6,10 @@
 ;;(color-theme-my-test)
 
 
+(setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
+(setq slime-lisp-implementations
+      '((sbcl ("sbcl" "--dynamic-space-size" "4096"))))
+
 (set-language-environment 'utf-8)
 (setq slime-net-coding-system 'utf-8-unix)
 (setq lisp-lambda-list-keyword-parameter-alignment t)
@@ -13,7 +17,6 @@
 (setq common-lisp-style-default 'modern)
 (cua-mode t)
 (setq x-select-enable-clipboard t) ;;Общий с ОС буфер обмена:
-(scroll-bar-mode -1)
 (tooltip-mode      -1)
 (menu-bar-mode     -1) ;; отключаем графическое меню
 (tool-bar-mode     -1) ;; отключаем tool-bar
@@ -72,7 +75,7 @@
   (if (not indent-tabs-mode)
 	  (untabify (point-min) (point-max)))
   nil)
-(add-to-list 'write-file-functions 'format-current-buffer)
+;;(add-to-list 'write-file-functions 'format-current-buffer)
 (add-to-list 'write-file-functions 'untabify-current-buffer)
 (add-to-list 'write-file-functions 'delete-trailing-whitespace)
 
@@ -146,7 +149,6 @@
 
 ;;Поиск и замена
 (global-unset-key (kbd "M-f"))
-(global-unset-key (kbd "C-s"))
 (global-unset-key (kbd "C-r"))
 
 (global-unset-key (kbd "M-d"))
@@ -170,8 +172,6 @@
 (global-set-key (kbd "C-a") 'mark-whole-buffer)
 
 (global-unset-key (kbd "C-w"))
-
-(global-set-key (kbd "C-s") 'save-buffer)
 
 
 (defun find-current-tag()
@@ -274,12 +274,12 @@
 	  '(auto-complete
         autopair
         cl-lib
-		;;      cuda-mode
         dired+
         dirtree
         git-modes
         highlight
         magit
+		minimap
         multiple-cursors
         markdown-mode
         nlinum
@@ -293,9 +293,8 @@
         sr-speedbar
         switch-window
         tabbar
-		;;      tbemail
         yascroll
-		;;      vimpulse
+		vlf
         web-mode))
 
 (el-get 'sync my:el-get-packages)
@@ -335,19 +334,19 @@
 (setq nlinum--format "%%%dd\u2502") ;;Lines numeration
 ;;Для php
 
-;; (defun uniindent-closure ()
-;;   "Fix php-mode indent for closures"
-;;   (let ((syntax (mapcar 'car c-syntactic-context)))
-;; 	(if (and (member 'arglist-cont-nonempty syntax)
-;; 			 (or
-;; 			  (member 'statement-block-info syntax)
-;; 			  (member 'brace-list-intro syntax)
-;; 			  (member 'brace-list-close syntax)
-;; 			  (member 'block-close syntax)))
-;; 		(save-excursion
-;; 		  (beginning-of-line)
-;; 		  (delete-char (* (count 'arglist-cont-nonempty syntax)
-;; 						  c-basic-offset))) )))
+(defun uniindent-closure ()
+  "Fix php-mode indent for closures"
+  (let ((syntax (mapcar 'car c-syntactic-context)))
+	(if (and (member 'arglist-cont-nonempty syntax)
+			 (or
+			  (member 'statement-block-info syntax)
+			  (member 'brace-list-intro syntax)
+			  (member 'brace-list-close syntax)
+			  (member 'block-close syntax)))
+		(save-excursion
+		  (beginning-of-line)
+		  (delete-char (* (count 'arglist-cont-nonempty syntax)
+						  c-basic-offset))) )))
 
 (add-hook 'php-mode-hook
 		  (lambda()
@@ -408,55 +407,6 @@
 			(local-set-key (kbd "C-SPC") 'auto-complete)
 			(local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
 			(setq indent-tabs-mode nil)))
-
-;;Настройки для CEDET
-
-(defun my-semantic-complete-self-insert(arg)
-  (interactive "p")
-  (self-insert-command arg)
-  (ac-complete-semantic))
-
-(defun enable-cedet()
-  (interactive)
-  (setq cedet-root-path (file-name-as-directory "~/.emacs.d/cedet-bzr/trunk/"))
-  (load-file (concat cedet-root-path "cedet-devel-load.el"))
-  (add-to-list 'load-path (concat cedet-root-path "contrib"))
-  (load-file (concat cedet-root-path "contrib/cedet-contrib-load.el"))
-  (require 'semantic/ia)
-  (require 'semantic/bovine/gcc)
-  (require 'wisent-php)
-
-  (defun my-cedet-hook ()
-	(add-to-list 'ac-sources 'ac-source-semantic-raw 'ac-source-semantic))
-  (add-hook 'c-mode-common-hook 'my-cedet-hook)
-  (add-hook 'c++-mode-common-hook 'my-cedet-hook)
-
-  (add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/ecb-snapshot-20120830")
-  (require 'ecb)
-  (setq stack-trace-on-error t)
-
-  (global-ede-mode 1)                      ; Enable the Project management system
-  (semantic-load-enable-code-helpers)      ; Enable prototype help and smart completion
-										;(global-srecode-minor-mode 1)            ; Enable template insertion menu
-
-  (global-semanticdb-minor-mode 1) ;включает глобальную поддержку Semanticdb;
-  (global-semantic-mru-bookmark-mode 1) ;включает режим автоматического запоминания информации о редактируемых тагах, так что вы можете перейти к ним позднее с помощью команды semantic-mrub-switch-tags;
-  (global-cedet-m3-minor-mode 1) ;активирует контекстное меню привязанное к правой клавише мыши;
-  (global-semantic-highlight-func-mode 1) ;активирует подстветку первой строки текущего тага (функции, класса и т.п.);
-										;(global-semantic-stickyfunc-mode 1) ;активирует показ названия текущего тага в верхней строке буфера;
-  (global-semantic-decoration-mode 1) ;активирует использование стилей при показе тагов разных типов. Набор стилей определяется списком semantic-decoration-styles;
-
-  (global-semantic-idle-local-symbol-highlight-mode 1) ;включает подсветку вхождений локальных переменных чье имя совпадает с именем текущего тага;
-  (global-semantic-idle-scheduler-mode 0) ;деактивирует автоматический анализ кода в буферах когда Emacs "свободен" и ожидает ввода данных от пользователя (idle time);
-										;(global-semantic-idle-completions-mode 1) ;активирует показ возможных дополнений имен во время ожидания ввода. Требует чтобы был включен global-semantic-idle-scheduler-mode;
-  (global-semantic-idle-summary-mode 1) ;активирует показ информации о текущем таге во время ожидания ввода. Требует чтобы был включен global-semantic-idle-scheduler-mode.
-
-  (global-set-key (kbd "s-d") 'semantic-ia-show-doc)
-  (global-set-key (kbd "s-/") 'semantic-ia-show-summary)
-
-  (global-semantic-tag-folding-mode 1))
-
-;; END - Настройки CEDET
 
 (global-set-key (kbd "<f9>") 'compile)
 
@@ -755,6 +705,9 @@ That is, a string used to represent it on the tab bar."
 ;; (require 'diff-hl)
 ;; (global-diff-hl-mode)
 
+;;(global-unset-key (kbd "<S-down-mouse-1>"))
+;;(global-set-key (kbd "<S-down-mouse-1>") 'mouse-set-region)
+
 (global-unset-key (kbd "M-c"))
 (global-set-key (kbd "M-c") 'comment-region)
 
@@ -941,3 +894,13 @@ If point was already at that position, move point to beginning of line."
  nil
  '(("\\<\\(FIXME\\|TODO\\|QUESTION\\|NOTE\\)"
 	1 font-lock-warning-face t)))
+
+;; (global-font-lock-mode -1)
+(setq jit-lock-defer-time 0.05)
+
+(require 'vlf-setup)
+(custom-set-variables
+ '(vlf-application 'dont-ask))
+
+(eval-after-load "vlf"
+  '(define-key vlf-prefix-map "\C-xv" vlf-mode-map))
