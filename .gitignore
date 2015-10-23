@@ -37,3 +37,6 @@ tramp
 /vimpulse/
 /el-get/
 /ctags-5.8/*
+
+ac-comphist.dat
+my-ac-comphist.dat

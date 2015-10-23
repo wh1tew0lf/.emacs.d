@@ -53,6 +53,10 @@
  '(column-number-mode t)
  '(default-input-method "russian-computer")
  '(display-time-mode t)
+ '(ac-comphist-file (expand-file-name (concat (if (boundp 'user-emacs-directory)
+                                user-emacs-directory
+                              "~/.emacs.d/")
+                            "/my-ac-comphist.dat")))
  '(ede-project-directories (quote ()))
  '(tabbar-separator (quote (0.2)))
  '(tool-bar-mode nil))
@@ -359,7 +363,7 @@
 			  (save-excursion
 				(goto-char (cdr langelem))
 				(vector (current-column))))
-			(require 'php-electric)
+			;;(require 'php-electric)
 			(electric-pair-mode t)
 			(setq case-fold-search t)
 			(subword-mode 1)
@@ -888,7 +892,6 @@ If point was already at that position, move point to beginning of line."
 (setq fci-rule-color "darkblue")
 
 (require 'nhexl-mode)
-;;(require 'vimpulse)
 
 (font-lock-add-keywords
  nil
