@@ -388,21 +388,15 @@
 
 (add-hook 'c-mode-hook
 		  (lambda()
-			(electric-pair-mode t)
-			(c-toggle-auto-newline 1)
 			(setq c-basic-indent 2)
 			(setq tab-width 4)
 			(setf c-basic-offset 4)
-										;(local-set-key "." 'my-semantic-complete-self-insert)
-										;(local-set-key ">" 'my-semantic-complete-self-insert)
 			(local-set-key (kbd "C-SPC") 'auto-complete)
 			(local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
 			(setq indent-tabs-mode nil)))
 
 (add-hook 'c++-mode-hook
 		  (lambda()
-			(electric-pair-mode t)
-			(c-toggle-auto-newline 1)
 			(setq c-basic-indent 2)
 			(setq tab-width 4)
 			(setf c-basic-offset 4)
