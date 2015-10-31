@@ -96,14 +96,8 @@
 (global-unset-key (kbd "C-<next>"))
 (global-unset-key (kbd "M-V"))
 (global-set-key (kbd "M-V") 'enlarge-window)
-
-(global-unset-key (kbd "C-t"))
-(global-set-key (kbd "C-t") 'find-tag)
-
-;;Цветовые схемы
-;;(require 'color-theme)
-;;(color-theme-initialize)
-;;(color-theme-deep-blue)
+(global-unset-key (kbd "C-s"))
+(global-set-key (kbd "C-s") 'save-buffer)
 
 ;;(set-face-attribute 'default nil :font "Ubuntu Mono")
 
@@ -124,7 +118,6 @@
 (global-set-key (kbd "M-s") 'shell)
 (global-set-key (kbd "M-g") 'goto-line)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "C-c b") 'show-buffer-file-name) ;???
 (global-set-key (kbd "M-k") 'calculator)
 
 (global-set-key (kbd "C-<mouse-4>") 'text-scale-increase)
@@ -148,6 +141,20 @@
 
 (global-unset-key (kbd "<escape>"))
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+(global-unset-key (kbd "C-t"))
+(global-set-key (kbd "C-t") 'hlt-highlight-regexp-region)
+(global-unset-key (kbd "M-t"))
+(global-set-key (kbd "M-t") 'hlt-unhighlight-regexp-region)
+
+(global-unset-key (kbd "C-x t"))
+(global-set-key (kbd "C-x t") 'hlt-highlight-regexp-to-end)
+(global-unset-key (kbd "C-x T"))
+(global-set-key (kbd "C-x T") 'hlt-unhighlight-regexp-to-end)
+(global-unset-key (kbd "C-x C-t"))
+(global-set-key (kbd "C-x C-t") 'hlt-highlight-symbol)
+(global-unset-key (kbd "C-x C-T"))
+(global-set-key (kbd "C-x C-T") 'hlt-unhighlight-symbol)
 
 (setq tab-stop-list (number-sequence 4 120 4))
 
