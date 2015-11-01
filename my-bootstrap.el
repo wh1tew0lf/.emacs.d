@@ -5,10 +5,6 @@
 ;;(color-theme-initialize)
 ;;(color-theme-my-test)
 
-;; (setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
-;; (setq slime-lisp-implementations
-;;       '((sbcl ("sbcl" "--dynamic-space-size" "4096"))))
-
 (setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
 (setq slime-lisp-implementations
       '((sbcl ("sbcl" "--dynamic-space-size" "4096"))))
@@ -57,9 +53,9 @@
  '(default-input-method "russian-computer")
  '(display-time-mode t)
  '(ac-comphist-file (expand-file-name (concat (if (boundp 'user-emacs-directory)
-                                user-emacs-directory
-                              "~/.emacs.d/")
-                            "/my-ac-comphist.dat")))
+												  user-emacs-directory
+												"~/.emacs.d/")
+											  "/my-ac-comphist.dat")))
  '(ede-project-directories (quote ()))
  '(tabbar-separator (quote (0.2)))
  '(tool-bar-mode nil))
@@ -312,7 +308,7 @@
         web-mode))
 
 (el-get 'sync my:el-get-packages)
-;;(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
+(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 (require 'el-get-elpa)
 ;;(el-get-elpa-build-local-recipes)
 ;;el-get end
