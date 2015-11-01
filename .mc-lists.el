@@ -11,7 +11,9 @@
       '(
 		cua-exchange-point-and-mark
 		delete-window
+		keyboard-escape-quit
 		previous-buffer
 		scroll-right
+		shell
 		text-scale-increase
 		))
