@@ -5,6 +5,9 @@
 ;;(color-theme-initialize)
 ;;(color-theme-my-test)
 
+;; (setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
+;; (setq slime-lisp-implementations
+;;       '((sbcl ("sbcl" "--dynamic-space-size" "4096"))))
 
 (set-language-environment 'utf-8)
 (setq slime-net-coding-system 'utf-8-unix)
