@@ -153,8 +153,8 @@
 (global-set-key (kbd "C-x T") 'hlt-unhighlight-regexp-to-end)
 (global-unset-key (kbd "C-x C-t"))
 (global-set-key (kbd "C-x C-t") 'hlt-highlight-symbol)
-(global-unset-key (kbd "C-x C-T"))
-(global-set-key (kbd "C-x C-T") 'hlt-unhighlight-symbol)
+(global-unset-key (kbd "C-x C-S-t"))
+(global-set-key (kbd "C-x C-S-t") 'hlt-unhighlight-symbol)
 
 (setq tab-stop-list (number-sequence 4 120 4))
 
@@ -383,7 +383,7 @@
 			(c-set-offset 'block-close 0)
 			(c-set-offset 'defun-close 0)
 			(auto-complete-mode 1)
-			(c-toggle-auto-newline 1)
+			;;(c-toggle-auto-newline 1)
 			(setq c-basic-indent 2)
 			(setq tab-width 4)
 			(setf c-basic-offset 4)
@@ -395,18 +395,23 @@
 
 (add-hook 'c-mode-hook
 		  (lambda()
-			(setq c-basic-indent 2)
+			(setq c-default-style "whitesmith")
+			(setq indent-tabs-mode nil)
+			(setq c-basic-indent 4)
 			(setq tab-width 4)
 			(setf c-basic-offset 4)
-			(local-set-key (kbd "C-SPC") 'auto-complete)
-			(local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
+			(auto-complete-mode 1)
+			;;(local-set-key (kbd "C-SPC") 'auto-complete)
+			;;(local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
 			(setq indent-tabs-mode nil)))
 
 (add-hook 'c++-mode-hook
 		  (lambda()
+			(setq c-default-style "whitesmith")
 			(setq c-basic-indent 2)
 			(setq tab-width 4)
 			(setf c-basic-offset 4)
+			(auto-complete-mode 1)
 			(local-set-key "." my-semantic-complete-self-insert)
 			(local-set-key ">" my-semantic-complete-self-insert)
 			(local-set-key (kbd "C-SPC") 'auto-complete)
@@ -732,7 +737,6 @@ That is, a string used to represent it on the tab bar."
 ;; C-c b
 ;; C-x C-o
 ;; C-x C-n
-;; C-x C-t
 ;; C-x ;
 ;; C-x <
 ;; C-x h
@@ -788,7 +792,7 @@ That is, a string used to represent it on the tab bar."
 
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
+;; (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[gj]sp\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
@@ -799,8 +803,7 @@ That is, a string used to represent it on the tab bar."
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("/\\(views\\|html\\|templates\\)/.*\\.php\\'" . web-mode))
 
-(setq web-mode-engines-alist
-	  '(("php" . "\\.html\\'")))
+;; (setq web-mode-engines-alist '(("php" . "\\.html\\'")))
 
 (setq web-mode-markup-indent-offset 4)
 (setq web-mode-css-indent-offset 4)
