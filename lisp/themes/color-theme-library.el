@@ -173,7 +173,7 @@
      (mouse ((t (:background "black"))))
      (primary-selection ((t (:background "#323a43"))))
      (region ((t (:background "#424a53"))))
-     (scroll-bar ((t (:background "323a43" :box (:line-width -1 :style nil)))))
+     (scroll-bar ((t (:background "#323a43" :box (:line-width -1 :style nil)))))
      (secondary-selection ((t (:background "#323a43"))))
      (semantic-dirty-token-face ((t (:background "lightyellow"))))
      (semantic-unmatched-syntax-face ((t (:underline "red"))))

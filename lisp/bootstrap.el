@@ -1,10 +1,16 @@
-;; Content of .emacs
-;;(add-to-list 'load-path "~/.emacs.d/")
-;;(load-file "~/.emacs.d/my-bootstrap.el")
-;;(require 'color-theme)
-;;(color-theme-initialize)
-;;(color-theme-my-test)
+;; ---------------------Content of .emacs---------------------
+;; (package-initialize)
 
+;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
+;; (load-file "~/.emacs.d/lisp/bootstrap.el")
+;; (require 'color-theme)
+;; (color-theme-initialize)
+;; (color-theme-my-test)
+;; (put 'narrow-to-region 'disabled nil)
+
+;; -------------------END Content of .emacs--------------------
+
+;; Increase SBCL heap size for install some packages for data mining
 (setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
 (setq slime-lisp-implementations
       '((sbcl ("sbcl" "--dynamic-space-size" "4096"))))
@@ -17,19 +23,45 @@
 (cua-mode t)
 (setq x-select-enable-clipboard t) ;;Общий с ОС буфер обмена:
 (tooltip-mode      -1)
-(menu-bar-mode     -1) ;; отключаем графическое меню
-(tool-bar-mode     -1) ;; отключаем tool-bar
-(scroll-bar-mode   -1) ;; отключаем полосу прокрутки
-(blink-cursor-mode -1) ;; курсор не мигает
-(setq use-dialog-box     nil) ;; никаких графических диалогов и окон - все через минибуфер
-(setq redisplay-dont-pause t)  ;; лучшая отрисовка буфера
-(setq ring-bell-function 'ignore) ;; отключить звуковой сигнал
-(delete-selection-mode t) ;; возможность удалить выделенный текст при вводе поверх
-(electric-pair-mode    1) ;; автозакрытие {},[],() с переводом курсора внутрь скобок
-(electric-indent-mode -1) ;; отключить индентацию  electric-indent-mod'ом
+(menu-bar-mode     -1)				;; отключаем графическое меню
+(tool-bar-mode     -1)				;; отключаем tool-bar
+(scroll-bar-mode   -1)				;; отключаем полосу прокрутки
+(blink-cursor-mode -1)				;; курсор не мигает
+(setq use-dialog-box     nil)		;; никаких графических диалогов и окон - все через минибуфер
+(setq redisplay-dont-pause t)		;; лучшая отрисовка буфера
+(setq ring-bell-function 'ignore)	;; отключить звуковой сигнал
+(delete-selection-mode t)			;; возможность удалить выделенный текст при вводе поверх
+(electric-pair-mode    1)			;; автозакрытие {},[],() с переводом курсора внутрь скобок
+(electric-indent-mode -1)			;; отключить индентацию  electric-indent-mod'ом
+(setq inhibit-startup-message t)
+(fset 'yes-or-no-p 'y-or-n-p)
+(setq default-tab-width 4)
+(setq make-backup-files nil)
 
+(fringe-mode 4)						;; make the fringe thinner (default is 8 in pixels)
+(show-paren-mode 1)
+(setq show-paren-style 'expression)
+(global-hl-line-mode t)
 (setq search-highlight        t)
 (setq query-replace-highlight t)
+
+(custom-set-variables
+ '(column-number-mode t)
+ '(default-input-method "russian-computer")
+ '(display-time-mode t)
+ '(ac-comphist-file (expand-file-name
+					 (concat (if (boundp 'user-emacs-directory)
+								 user-emacs-directory
+							   "~/.emacs.d/")
+							 "/my-ac-comphist.dat")))
+ '(ede-project-directories (quote ()))
+ '(tabbar-separator (quote (0.2)))
+ '(tool-bar-mode nil))
+
+;; Require my factions file
+(if (not (file-exists-p (expand-file-name "~/.emacs.d/lisp/my-functions.elc")))
+	(byte-compile-file (expand-file-name "~/.emacs.d/lisp/my-functions.el")))
+(load-file (expand-file-name "~/.emacs.d/lisp/my-functions.elc"))
 
 ;; IDO plugin
 (require 'ido)
@@ -44,41 +76,6 @@
 (defalias 'list-buffers 'ibuffer) ;; отдельный список буферов при нажатии C-x C-b
 (global-set-key (kbd "<f2>") 'bs-show) ;; запуск buffer selection кнопкой F2
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(column-number-mode t)
- '(default-input-method "russian-computer")
- '(display-time-mode t)
- '(ac-comphist-file (expand-file-name (concat (if (boundp 'user-emacs-directory)
-												  user-emacs-directory
-												"~/.emacs.d/")
-											  "/my-ac-comphist.dat")))
- '(ede-project-directories (quote ()))
- '(tabbar-separator (quote (0.2)))
- '(tool-bar-mode nil))
-(setq inhibit-startup-message t)
-(fset 'yes-or-no-p 'y-or-n-p)
-(setq default-tab-width 4)
-(setq make-backup-files nil)
-(setq nlinum-format "%4d\u2502") ;;Lines numeration
-;; make the fringe thinner (default is 8 in pixels)
-(fringe-mode 4)
-
-(show-paren-mode 1)
-(setq show-paren-style 'expression)
-(global-hl-line-mode t)
-
-;; Delete trailing whitespaces, format buffer and untabify when save buffer
-(defun format-current-buffer()
-  (indent-region (point-min) (point-max)))
-(defun untabify-current-buffer()
-  (if (not indent-tabs-mode)
-	  (untabify (point-min) (point-max)))
-  nil)
-;;(add-to-list 'write-file-functions 'format-current-buffer)
 (add-to-list 'write-file-functions 'untabify-current-buffer)
 (add-to-list 'write-file-functions 'delete-trailing-whitespace)
 
@@ -206,7 +203,7 @@
 (setq package-enable-at-startup nil)
 (package-initialize)
 
-(require 'dedicated)
+;(require 'dedicated)
 (global-unset-key (kbd "C-$"))
 (global-set-key (kbd "C-$") 'dedicated-mode)
 
@@ -261,7 +258,7 @@
 
 (reverse-input-method 'russian-computer)
 
-										;отключить переносы строк
+;; отключить переносы строк
 (add-hook 'org-mode-hook (lambda ()
                            (auto-fill-mode -1)))
 (set-default 'truncate-lines t)
@@ -284,6 +281,7 @@
 	  '(auto-complete
         autopair
         cl-lib
+		dedicated
         dired+
         dirtree
         git-modes
@@ -292,6 +290,7 @@
 		minimap
         multiple-cursors
         markdown-mode
+		helm
         nlinum
         nhexl-mode
         php-eldoc
@@ -337,10 +336,9 @@
   ;;(setq php-imenu-alist-postprocessor (function reverse))
   (imenu-add-menubar-index))
 
-;;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/nlinum-1.5/")
 (require 'nlinum)
 (global-nlinum-mode 1)
-(setq nlinum--width 4) ;;Lines numeration
+(setq nlinum--width 4)				;;Lines numeration
 (setq nlinum--format "%%%dd\u2502") ;;Lines numeration
 ;;Для php
 
@@ -418,162 +416,14 @@
 			(setq indent-tabs-mode nil)))
 
 (global-set-key (kbd "<f9>") 'compile)
-
-(defun toggle-fullscreen ()
-  "Toggle full screen on X11"
-  (interactive)
-  (when (eq window-system 'x)
-    (set-frame-parameter
-     nil 'fullscreen
-     (when (not (frame-parameter nil 'fullscreen)) 'fullboth))))
-
 (global-set-key [f11] 'toggle-fullscreen)
 
-(defun my-duplicate-block-after()
-  (interactive)
-  (let ((start (if mark-active (region-beginning) (point)))
-		(end (if mark-active (region-end) (point))))
-	(goto-char start)
-	(move-beginning-of-line 1)
-	(setf start (point))
-	(goto-char end)
-	(move-end-of-line 1)
-	(setf end (point))
-	(kill-region start end)
-	(yank)
-	(open-line 1)
-	(next-line 1)
-	(setf start (point))
-	(yank)
-	(when kill-ring
-	  (setq kill-ring (cdr kill-ring)))
-	(when kill-ring-yank-pointer
-	  (setq kill-ring-yank-pointer kill-ring))
-	(setf end (point))
-	(goto-char start)
-	(set-mark-command nil)
-	(goto-char end)
-	(setq deactivate-mark nil)))
-
 (global-set-key (kbd "C-S-<down>") 'my-duplicate-block-after)
-
-(defun my-duplicate-block-before()
-  (interactive)
-  (let ((start (if mark-active (region-beginning) (point)))
-		(end (if mark-active (region-end) (point))))
-	(goto-char start)
-	(move-beginning-of-line 1)
-	(setf start (point))
-	(goto-char end)
-	(move-end-of-line 1)
-	(setf end (point))
-	(kill-region start end)
-	(yank)
-	(open-line 1)
-	(next-line 1)
-	(yank)
-	(when kill-ring
-	  (setq kill-ring (cdr kill-ring)))
-	(when kill-ring-yank-pointer
-	  (setq kill-ring-yank-pointer kill-ring))
-	(goto-char start)
-	(set-mark-command nil)
-	(goto-char end)
-	(setq deactivate-mark nil)))
-
 (global-set-key (kbd "C-S-<up>") 'my-duplicate-block-before)
-
-(defun my-move-block-down()
-  (interactive)
-  (let ((start (if mark-active (region-beginning) (point)))
-		(end (if mark-active (region-end) (point)))
-		(is-block mark-active)
-		(length (buffer-size)))
-	(goto-char start)
-	(move-beginning-of-line 1)
-	(setf start (point))
-	(goto-char end)
-	(move-end-of-line 1)
-	(setf end (point))
-	(kill-region start end)
-	(when (> length end)
-	  (delete-region start (1+ start))
-	  (move-end-of-line 1))
-	(open-line 1)
-	(next-line 1)
-	(setf start (point))
-	(yank)
-	(setf end (1- (point)))
-	(goto-char start)
-	(move-beginning-of-line 1)
-	(when kill-ring
-	  (setq kill-ring (cdr kill-ring)))
-	(when kill-ring-yank-pointer
-	  (setq kill-ring-yank-pointer kill-ring))
-	(when is-block
-	  (set-mark-command nil)
-	  (goto-char end)
-	  (move-end-of-line 1)
-	  (setq deactivate-mark nil))))
-
 (global-set-key (kbd "M-<down>") 'my-move-block-down)
-
-(defun my-move-block-up()
-  (interactive)
-  (let ((start (if mark-active (region-beginning) (point)))
-		(end (if mark-active (region-end) (point)))
-		(is-block mark-active))
-	(goto-char start)
-	(move-beginning-of-line 1)
-	(setf start (point))
-	(goto-char end)
-	(move-end-of-line 1)
-	(setf end (point))
-	(kill-region start end)
-	(when (> start 1)
-	  (delete-region (1- start) start)
-	  (move-beginning-of-line 1))
-	(open-line 1)
-	(setf start (point))
-	(yank)
-	(setf end (1- (point)))
-	(goto-char start)
-	(move-beginning-of-line 1)
-	(when kill-ring
-	  (setq kill-ring (cdr kill-ring)))
-	(when kill-ring-yank-pointer
-	  (setq kill-ring-yank-pointer kill-ring))
-	(when is-block
-	  (set-mark-command nil)
-	  (goto-char end)
-	  (move-end-of-line 1)
-	  (setq deactivate-mark nil))))
-
 (global-set-key (kbd "M-<up>") 'my-move-block-up)
-
-(defun my-kill-region()
-  (interactive)
-  (let ((start (if mark-active (region-beginning) (point)))
-		(end (if mark-active (region-end) (point))))
-	(goto-char start)
-	(move-beginning-of-line 1)
-	(setf start (point))
-	(goto-char end)
-	(move-end-of-line 1)
-	(setf end (1+ (point)))
-	(when (> end (1+ (buffer-size)))
-	  (setf end (1+ (buffer-size)))
-	  (when (> start 1)
-		(setf start (1- start))))
-	(delete-region start end)))
-
 (global-set-key (kbd "M-d") 'my-kill-region)
 (global-set-key (kbd "C-S-d") 'my-kill-region)
-
-(defun my-save-modified-buffers()
-  (interactive)
-  (save-some-buffers t))
-(global-set-key (kbd "C-S-s") 'my-save-modified-buffers)
 
 (add-hook 'ediff-load-hook
 		  (lambda ()
@@ -581,77 +431,15 @@
 			(set-face-background ediff-current-diff-face-B "red")
 			(make-face-italic ediff-current-diff-face-B)))
 
-;;(set-default 'cursor-type 'bar)
-;;(set-default 'cursor-in-non-selected-windows 'bar)
-;;box
-;;hollow
-;;nil
-;;bar
-;;(bar . width)
-;;bar
-;;(hbar . height)
-
 ;; Tabbar
 (require 'tabbar)
 
 (global-set-key [C-S-iso-lefttab] 'tabbar-backward-tab)
 (global-set-key [C-tab] 'tabbar-forward-tab)
-
-;; Change padding of the tabs
-;; we also need to set separator to avoid overlapping tabs by highlighted tabs
-
-;; adding spaces
-(defun tabbar-buffer-tab-label (tab)
-  "Return a label for TAB.
-That is, a string used to represent it on the tab bar."
-  (let ((label  (if tabbar--buffer-show-groups
-                    (format "[%s]  " (tabbar-tab-tabset tab))
-                  (format "%s  " (tabbar-tab-value tab)))))
-    ;; Unless the tab bar auto scrolls to keep the selected tab
-    ;; visible, shorten the tab label to keep as many tabs as possible
-    ;; in the visible area of the tab bar.
-    (if tabbar-auto-scroll-flag
-        label
-      (tabbar-shorten
-       label (max 1 (/ (window-width)
-                       (length (tabbar-view
-                                (tabbar-current-tabset)))))))))
-
-(defun my-tabbar-buffer-groups () ;; customize to show all normal files in one group
-  "Returns the name of the tab group names the current buffer belongs to.
- There are two groups: Emacs buffers (those whose name starts with '*', plus
- dired buffers), and the rest.  This works at least with Emacs v24.2 using
- tabbar.el v1.7."
-  (list (cond ((string-equal "*" (substring (buffer-name) 0 1)) "emacs")
-			  ((eq major-mode 'dired-mode) "emacs")
-			  (t "user"))))
 (setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
-
-(setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
-
-;; Add a buffer modification state indicator in the tab label, and place a
-;; space around the label to make it looks less crowd.
-(defadvice tabbar-buffer-tab-label (after fixup_tab_label_space_and_flag activate)
-  (setq ad-return-value
-		(if (and (buffer-modified-p (tabbar-tab-value tab))
-				 (buffer-file-name (tabbar-tab-value tab)))
-			(concat " + " (concat ad-return-value " "))
-		  (concat " " (concat ad-return-value " ")))))
-
-;; Called each time the modification state of the buffer changed.
-(defun ztl-modification-state-change ()
-  (tabbar-set-template tabbar-current-tabset nil)
-  (tabbar-display-update))
-
-;; First-change-hook is called BEFORE the change is made.
-(defun ztl-on-buffer-modification ()
-  (set-buffer-modified-p t)
-  (ztl-modification-state-change))
-
 (add-hook 'after-save-hook 'ztl-modification-state-change)
 (add-hook 'after-revert-hook 'ztl-modification-state-change)
 (add-hook 'first-change-hook 'ztl-on-buffer-modification)
-
 (tabbar-mode 1)
 ;; tabbar end
 
@@ -665,6 +453,7 @@ That is, a string used to represent it on the tab bar."
 					 ".txt" ".md" ".js"))
   (speedbar-add-supported-extension extension))
 
+(require 'helm)
 (require 'sr-speedbar)
 (global-set-key (kbd "C-c s") 'sr-speedbar-toggle)
 (global-set-key (kbd "C-x C-l") '(lambda ()
@@ -673,9 +462,8 @@ That is, a string used to represent it on the tab bar."
 								   (sr-speedbar-refresh-turn-off)))
 
 (custom-set-variables
- '(sr-speedbar-right-side nil))
-
-(custom-set-variables '(speedbar-show-unknown-files t))
+ '(sr-speedbar-right-side nil)
+ '(speedbar-show-unknown-files t))
 
 (setq speedbar-mode-hook '(lambda ()
 							(interactive)
@@ -688,9 +476,7 @@ That is, a string used to represent it on the tab bar."
 (setq password-cache-expiry nil)
 ;;/remotehost:filename  RET (or /method:user@remotehost:filename)
 
-;;(add-to-list 'load-path "~/.emacs.d/multiple-cursors.el/")
 (require 'multiple-cursors)
-
 (global-unset-key (kbd "M-m"))
 (global-set-key (kbd "M-m") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -711,9 +497,6 @@ That is, a string used to represent it on the tab bar."
 (require 'rainbow-mode)
 ;;(rainbow-turn-on)
 
-;; (require 'diff-hl)
-;; (global-diff-hl-mode)
-
 ;;(global-unset-key (kbd "<S-down-mouse-1>"))
 ;;(global-set-key (kbd "<S-down-mouse-1>") 'mouse-set-region)
 
@@ -729,46 +512,7 @@ That is, a string used to represent it on the tab bar."
 (global-unset-key (kbd "M-y"))
 (global-set-key (kbd "M-y") 'hlt-unhighlight-region)
 
-;;Free key-bindings
-;; C-n
-;; C-p
-;; C-delete
-;; C-c b
-;; C-x C-o
-;; C-x C-n
-;; C-x ;
-;; C-x <
-;; C-x h
-;; M->
-;; M-<
-;; M-@
-;; M-b
-;; M-r
-
-;;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/flymake-0.4.16/")
-;;(require 'flymake)
-
 (global-set-key (kbd "<backtab>") 'un-indent-by-removing-4-spaces)
-(defun un-indent-by-removing-4-spaces ()
-  "remove 4 spaces from beginning of of line"
-  (interactive)
-  (save-excursion
-    (save-match-data
-      (beginning-of-line)
-      ;; get rid of tabs at beginning of line
-      (when (looking-at "^\\s-+")
-        (untabify (match-beginning 0) (match-end 0)))
-      (when (looking-at "^    ")
-        (replace-match "")))))
-
-;; (defun speedbar-expand-all-lines ()
-;;   "Expand all items in the speedbar buffer.
-;;  But be careful: this opens all the files to parse them."
-;;   (interactive)
-;;   (goto-char (point-min))
-;;   (while (not (eobp))
-;; 	(forward-line)
-;; 	(speedbar-expand-line)))
 
 (eval-after-load "php-mode"
   '(progn
@@ -825,17 +569,6 @@ That is, a string used to represent it on the tab bar."
                   ac-source-words-in-same-mode-buffers
                   ac-source-dictionary))))
 
-;; (add-hook 'web-mode-before-auto-complete-hooks
-;;           '(lambda ()
-;;              (let ((web-mode-cur-language
-;;                     (web-mode-language-at-pos)))
-;;                (if (string= web-mode-cur-language "php")
-;;                    (yas-activate-extra-mode 'php-mode)
-;;                  (yas-deactivate-extra-mode 'php-mode))
-;;                (if (string= web-mode-cur-language "css")
-;;                    (setq emmet-use-css-transform t)
-;;                  (setq emmet-use-css-transform nil)))))
-
 (add-hook 'web-mode-hook
 		  '(lambda()
 			 (local-set-key (kbd "RET") 'newline-and-indent)
@@ -847,66 +580,27 @@ That is, a string used to represent it on the tab bar."
 			(delete-trailing-whitespace)
 			nil))
 
-(setq web-mode-extra-snippets
-      '(("erb" . (("name" . ("beg" . "end"))))
-        ("php" . (("name" . ("beg" . "end"))
-                  ("name" . ("beg" . "end"))
-				  ("dowhile" . ("<?php do { ?>\n\n<?php } while (|); ?>")))) ;; не работает!
-		))
-
 (setq web-mode-extra-auto-pairs
       '(("erb"  . (("open" "close")))
         ("php"  . (("open" "close")
                    ("open" "close")))
 		))
 
-;;(add-to-list 'load-path "~/.emacs.d/el-get/package/elpa/nhexl-mode-0.1/")
-(defun uniquify-all-lines-region (start end)
-  "Find duplicate lines in region START to END keeping first occurrence."
-  (interactive "*r")
-  (save-excursion
-	(let ((end (copy-marker end)))
-	  (while
-		  (progn
-			(goto-char start)
-			(re-search-forward "^\\(.*\\)\n\\(\\(.*\n\\)*\\)\\1\n" end t))
-		(replace-match "\\1\n\\2")))))
-
-(defun uniquify-all-lines-buffer ()
-  "Delete duplicate lines in buffer and keep first occurrence."
-  (interactive "*")
-  (uniquify-all-lines-region (point-min) (point-max)))
-
-(defun smart-beginning-of-line ()
-  "Move point to the first non-whitespace character on this line.
-If point was already at that position, move point to beginning of line."
-  (interactive "^") ; Use (interactive "^") in Emacs 23 to make shift-select work
-  (let ((oldpos (point)))
-    (back-to-indentation)
-    (and (= oldpos (point))
-         (beginning-of-line))))
 
 (put 'smart-beginning-of-line 'CUA 'move)
 
 (global-set-key [home] 'smart-beginning-of-line)
 
-(require 'fill-column-indicator)
-(setq fci-rule-width 1)
-(setq fci-rule-color "darkblue")
-
-(require 'nhexl-mode)
+;; (require 'nhexl-mode)
 
 (font-lock-add-keywords
- nil
+ 'c-mode
  '(("\\<\\(FIXME\\|TODO\\|QUESTION\\|NOTE\\)"
-	1 font-lock-warning-face t)))
+	1 font-lock-warning-face prepend)))
 
-;; (global-font-lock-mode -1)
+(font-lock-add-keywords
+ 'php-mode
+ '(("\\<\\(FIXME\\|TODO\\|QUESTION\\|NOTE\\)"
+	1 font-lock-warning-face prepend)))
+
 (setq jit-lock-defer-time 0.05)
-
-(require 'vlf-setup)
-(custom-set-variables
- '(vlf-application 'dont-ask))
-
-(eval-after-load "vlf"
-  '(define-key vlf-prefix-map "\C-xv" vlf-mode-map))
