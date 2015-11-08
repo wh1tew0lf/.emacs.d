@@ -309,7 +309,7 @@
 (el-get 'sync my:el-get-packages)
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 (require 'el-get-elpa)
-;;(el-get-elpa-build-local-recipes)
+;; (el-get-elpa-build-local-recipes)
 ;;el-get end
 
 ;;elpa
@@ -337,9 +337,10 @@
   (imenu-add-menubar-index))
 
 (require 'nlinum)
-(global-nlinum-mode 1)
 (setq nlinum--width 4)				;;Lines numeration
 (setq nlinum--format "%%%dd\u2502") ;;Lines numeration
+(setq nlinum-format  "%4d\u2502")
+(global-nlinum-mode 1)
 ;;Для php
 
 (defun uniindent-closure ()
