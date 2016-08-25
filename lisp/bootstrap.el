@@ -13,7 +13,7 @@
 ;; Increase SBCL heap size for install some packages for data mining
 (setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
 (setq slime-lisp-implementations
-      '((sbcl ("sbcl" "--dynamic-space-size" "4096"))))
+      '((sbcl ("/usr/local/bin/sbcl" "--dynamic-space-size" "4096"))))
 
 (set-language-environment 'utf-8)
 (setq slime-net-coding-system 'utf-8-unix)
@@ -94,6 +94,8 @@
 (global-set-key (kbd "M-V") 'enlarge-window)
 (global-unset-key (kbd "C-s"))
 (global-set-key (kbd "C-s") 'save-buffer)
+
+(define-key global-map (kbd "<S-down-mouse-1>") 'mouse-save-then-kill)
 
 ;;(set-face-attribute 'default nil :font "Ubuntu Mono")
 
@@ -278,7 +280,8 @@
 	(eval-print-last-sexp)))
 
 (setq my:el-get-packages
-	  '(auto-complete
+	  '(ac-php
+		auto-complete
         autopair
         cl-lib
 		dedicated
@@ -294,11 +297,13 @@
         nlinum
         nhexl-mode
         php-eldoc
+		php-extras
         php-mode
         php-mode-improved
         popup
         rainbow-delimiters
         rainbow-mode
+		slime
         sr-speedbar
         switch-window
         tabbar
@@ -421,6 +426,8 @@
 
 (global-set-key (kbd "C-S-<down>") 'my-duplicate-block-after)
 (global-set-key (kbd "C-S-<up>") 'my-duplicate-block-before)
+(global-unset-key (kbd "C-d"))
+(global-set-key (kbd "C-d") 'my-duplicate-block-before)
 (global-set-key (kbd "M-<down>") 'my-move-block-down)
 (global-set-key (kbd "M-<up>") 'my-move-block-up)
 (global-set-key (kbd "M-d") 'my-kill-region)
@@ -495,6 +502,7 @@ That is, a string used to represent it on the tab bar."
 
 (require 'helm)
 (require 'sr-speedbar)
+(global-unset-key (kbd "C-c s"))
 (global-set-key (kbd "C-c s") 'sr-speedbar-toggle)
 (global-set-key (kbd "C-x C-l") '(lambda ()
 								   (interactive)

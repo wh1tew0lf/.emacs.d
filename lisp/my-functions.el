@@ -20,10 +20,12 @@
 	(when kill-ring-yank-pointer
 	  (setq kill-ring-yank-pointer kill-ring))
 	(setf end (point))
-	(goto-char start)
-	(set-mark-command nil)
-	(goto-char end)
-	(setq deactivate-mark nil)))
+	;;If it is region - mark it for next duplicate block may-be
+	(when is-block
+	  (goto-char start)
+	  (set-mark-command nil)
+	  (goto-char end)
+	  (setq deactivate-mark nil))))
 
 (defun my-duplicate-block-before()
   (interactive)
@@ -46,9 +48,10 @@
 	(when kill-ring-yank-pointer
 	  (setq kill-ring-yank-pointer kill-ring))
 	(goto-char start)
-	(set-mark-command nil)
-	(goto-char end)
-	(setq deactivate-mark nil)))
+	(when is-block
+	  (set-mark-command nil)
+	  (goto-char end)
+	  (setq deactivate-mark nil))))
 
 (defun my-move-block-down()
   (interactive)
@@ -152,7 +155,6 @@
   (interactive)
   (save-some-buffers t))
 (global-set-key (kbd "C-S-s") 'my-save-modified-buffers)
-
 
 
 ;; Called each time the modification state of the buffer changed.
