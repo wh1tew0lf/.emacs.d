@@ -298,7 +298,7 @@
         nlinum
         nhexl-mode
         php-eldoc
-		php-extras
+		;php-extras
         php-mode
         php-mode-improved
         popup
