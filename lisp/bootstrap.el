@@ -289,6 +289,7 @@
         dirtree
         git-modes
         highlight
+		imenu+
         magit
 		minimap
         multiple-cursors
@@ -338,7 +339,7 @@
 (defun php-imenu-setup ()
   (setq imenu-create-index-function (function php-imenu-create-index))
   ;; uncomment if you prefer speedbar:
-  ;;(setq php-imenu-alist-postprocessor (function reverse))
+  (setq php-imenu-alist-postprocessor (function reverse))
   (imenu-add-menubar-index))
 
 (require 'nlinum)
@@ -377,6 +378,13 @@
 			(electric-pair-mode t)
 			(setq case-fold-search t)
 			(subword-mode 1)
+			(auto-complete-mode t)
+			(require 'ac-php)
+			(setq ac-sources  '(ac-source-php ) )
+			(yas-global-mode 1)
+			(define-key php-mode-map (kbd "C-]") 'ac-php-find-symbol-at-point)   ;goto define
+			(define-key php-mode-map (kbd "C-t") 'ac-php-location-stack-back)
+
 			(setq fill-column 78)
 			(c-set-offset 'arglist-cont 0)
 			(c-set-offset 'substatement-open 0)
