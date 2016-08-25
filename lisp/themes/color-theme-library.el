@@ -140,7 +140,7 @@
 	 (font-lock-preprocessor-face ((t (:foreground "gold"))))
      (fringe ((t (:background "#2b303b"))))
      (header-line ((t (:box (:line-width -1 :style released-button) :background "#232830" :foreground "grey90" :box nil))))
-     (highlight ((t (:background "#58d984"))))
+     (highlight ((t (:background "#3b404b"))))
 
 	 ;;web-mode-styles
 	 (web-mode-current-element-highlight-face ((t (:background "#232830"))))
@@ -211,6 +211,4 @@
 	 (tabbar-separator ((t (:background "#1c1f26" :height 0.6))))
 
      (zmacs-region ((t (:background "blue3")))))))
-
-
 ;;; color-theme-library.el ends here
