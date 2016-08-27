@@ -95,6 +95,8 @@
 (global-unset-key (kbd "C-s"))
 (global-set-key (kbd "C-s") 'save-buffer)
 
+(define-key global-map (kbd "<S-down-mouse-1>") 'mouse-save-then-kill)
+
 ;;(set-face-attribute 'default nil :font "Ubuntu Mono")
 
 ;; TlwgTypewriter
@@ -278,7 +280,8 @@
 	(eval-print-last-sexp)))
 
 (setq my:el-get-packages
-	  '(auto-complete
+	  '(ac-php
+		auto-complete
         autopair
         cl-lib
 		dedicated
@@ -286,6 +289,7 @@
         dirtree
         git-modes
         highlight
+		imenu+
         magit
 		minimap
         multiple-cursors
@@ -294,6 +298,7 @@
         nlinum
         nhexl-mode
         php-eldoc
+		;php-extras
         php-mode
         php-mode-improved
         popup
@@ -334,7 +339,7 @@
 (defun php-imenu-setup ()
   (setq imenu-create-index-function (function php-imenu-create-index))
   ;; uncomment if you prefer speedbar:
-  ;;(setq php-imenu-alist-postprocessor (function reverse))
+  (setq php-imenu-alist-postprocessor (function reverse))
   (imenu-add-menubar-index))
 
 (require 'nlinum)
@@ -373,6 +378,13 @@
 			(electric-pair-mode t)
 			(setq case-fold-search t)
 			(subword-mode 1)
+			(auto-complete-mode t)
+			(require 'ac-php)
+			(setq ac-sources  '(ac-source-php ) )
+			(yas-global-mode 1)
+			(define-key php-mode-map (kbd "C-]") 'ac-php-find-symbol-at-point)   ;goto define
+			(define-key php-mode-map (kbd "C-t") 'ac-php-location-stack-back)
+
 			(setq fill-column 78)
 			(c-set-offset 'arglist-cont 0)
 			(c-set-offset 'substatement-open 0)
@@ -422,6 +434,8 @@
 
 (global-set-key (kbd "C-S-<down>") 'my-duplicate-block-after)
 (global-set-key (kbd "C-S-<up>") 'my-duplicate-block-before)
+(global-unset-key (kbd "C-d"))
+(global-set-key (kbd "C-d") 'my-duplicate-block-before)
 (global-set-key (kbd "M-<down>") 'my-move-block-down)
 (global-set-key (kbd "M-<up>") 'my-move-block-up)
 (global-set-key (kbd "M-d") 'my-kill-region)
@@ -496,6 +510,7 @@ That is, a string used to represent it on the tab bar."
 
 (require 'helm)
 (require 'sr-speedbar)
+(global-unset-key (kbd "C-c s"))
 (global-set-key (kbd "C-c s") 'sr-speedbar-toggle)
 (global-set-key (kbd "C-x C-l") '(lambda ()
 								   (interactive)

@@ -140,7 +140,7 @@
 	 (font-lock-preprocessor-face ((t (:foreground "gold"))))
      (fringe ((t (:background "#2b303b"))))
      (header-line ((t (:box (:line-width -1 :style released-button) :background "#232830" :foreground "grey90" :box nil))))
-     (highlight ((t (:background "#323a43"))))
+     (highlight ((t (:background "#3b404b"))))
 
 	 ;;web-mode-styles
 	 (web-mode-current-element-highlight-face ((t (:background "#232830"))))
@@ -171,10 +171,10 @@
      (mode-line ((t (:background "#323a43" :foreground "black" :box (:line-width -1 :style nil)))))
      (mode-line-inactive ((t (:background "#2b303b" :foreground "grey80" :box (:line-width -1 :color "grey40" :style nil) :weight light))))
      (mouse ((t (:background "black"))))
-     (primary-selection ((t (:background "#323a43"))))
+     (primary-selection ((t (:background "#58d984"))))
      (region ((t (:background "#424a53"))))
      (scroll-bar ((t (:background "#323a43" :box (:line-width -1 :style nil)))))
-     (secondary-selection ((t (:background "#323a43"))))
+     (secondary-selection ((t (:background "#584b88"))))
      (semantic-dirty-token-face ((t (:background "lightyellow"))))
      (semantic-unmatched-syntax-face ((t (:underline "red"))))
      (senator-intangible-face ((t (:foreground "gray75"))))
@@ -211,6 +211,4 @@
 	 (tabbar-separator ((t (:background "#1c1f26" :height 0.6))))
 
      (zmacs-region ((t (:background "blue3")))))))
-
-
 ;;; color-theme-library.el ends here
