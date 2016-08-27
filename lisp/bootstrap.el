@@ -11,9 +11,9 @@
 ;; -------------------END Content of .emacs--------------------
 
 ;; Increase SBCL heap size for install some packages for data mining
-(setq inferior-lisp-program "sbcl --dynamic-space-size 4096")
-(setq slime-lisp-implementations
-      '((sbcl ("sbcl" "--dynamic-space-size" "4096"))))
+(setq inferior-lisp-program "/usr/local/bin/sbcl") ;--dynamic-space-size 4096
+;;(setq slime-lisp-implementations
+;;      '((sbcl ("/usr/local/bin/sbcl" "--dynamic-space-size" "4096"))))
 
 (set-language-environment 'utf-8)
 (setq slime-net-coding-system 'utf-8-unix)
@@ -299,6 +299,7 @@
         popup
         rainbow-delimiters
         rainbow-mode
+		slime
         sr-speedbar
         switch-window
         tabbar
