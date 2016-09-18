@@ -553,9 +553,6 @@ That is, a string used to represent it on the tab bar."
 (require 'rainbow-mode)
 ;;(rainbow-turn-on)
 
-;;(global-unset-key (kbd "<S-down-mouse-1>"))
-;;(global-set-key (kbd "<S-down-mouse-1>") 'mouse-set-region)
-
 (global-unset-key (kbd "M-c"))
 (global-set-key (kbd "M-c") 'comment-region)
 
