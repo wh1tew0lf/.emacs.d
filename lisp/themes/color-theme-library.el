@@ -26,6 +26,9 @@
 ;; Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
 ;; MA 02111-1307, USA.
 
+;;You can use `C-u C-x =’ to find out which faces are applied to the text at point (under the cursor).
+;;Alternatively, you can use ‘M-x describe-face RET’. The faces used are listed as the default value for completion.
+
 ;; Code:
 (eval-when-compile
   (require 'color-theme))
