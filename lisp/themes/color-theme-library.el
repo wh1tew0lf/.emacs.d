@@ -210,5 +210,13 @@
 	 (tabbar-button ((t (:box (:line-width 1 :color "#1c1f26" :style nil)))))
 	 (tabbar-separator ((t (:background "#1c1f26" :height 0.6))))
 
+	 (diredp-dir-name ((t (:background "#2b303b" :foreground "#b58dae"))))
+	 (diredp-file-name ((t (:background "#2b303b" :foreground "#b58dae"))))
+	 (diredp-file-suffix ((t (:background "#2b303b" :foreground "LightSkyBlue"))))
+	 (diredp-ignored-file-name ((t (:background "#2b303b" :foreground "#65737f"))))
+	 (diredp-dir-heading ((t (:background "#2b303b" :foreground "#b58dae"))))
+	 (diredp-compressed-file-suffix ((t (:background "#2b303b" :foreground "LightSkyBlue"))))
+	 (diredp-symlink ((t (:background "#2b303b" :foreground "LightSkyBlue"))))
+
      (zmacs-region ((t (:background "blue3")))))))
 ;;; color-theme-library.el ends here

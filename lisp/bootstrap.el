@@ -58,10 +58,18 @@
  '(tabbar-separator (quote (0.2)))
  '(tool-bar-mode nil))
 
-;; Require my factions file
+;; Require my functions file
 (if (not (file-exists-p (expand-file-name "~/.emacs.d/lisp/my-functions.elc")))
 	(byte-compile-file (expand-file-name "~/.emacs.d/lisp/my-functions.el")))
 (load-file (expand-file-name "~/.emacs.d/lisp/my-functions.elc"))
+
+;; Compile themes file
+(if (not (file-exists-p (expand-file-name "~/.emacs.d/lisp/color-theme.elc")))
+	(byte-compile-file (expand-file-name "~/.emacs.d/lisp/color-theme.el")))
+
+;; Compile themes file
+(if (not (file-exists-p (expand-file-name "~/.emacs.d/lisp/themes/color-theme-library.elc")))
+	(byte-compile-file (expand-file-name "~/.emacs.d/lisp/themes/color-theme-library.el")))
 
 ;; IDO plugin
 (require 'ido)
