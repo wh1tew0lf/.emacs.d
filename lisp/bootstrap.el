@@ -287,6 +287,8 @@
 	(goto-char (point-max))
 	(eval-print-last-sexp)))
 
+(setq with-editor-file-name-history-exclude 1) ;;something for magit
+
 (setq my:el-get-packages
 	  '(ac-php
 		auto-complete
