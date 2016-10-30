@@ -373,6 +373,10 @@
 		  (delete-char (* (count 'arglist-cont-nonempty syntax)
 						  c-basic-offset))) )))
 
+(setq default-major-mode 'text-mode)
+(add-hook 'text-mode-hook 'longlines-mode)
+(add-hook 'text-mode-hook '(lambda () (set-fill-column 120)))
+
 (add-hook 'php-mode-hook
 		  (lambda()
 			(setq c-default-style "whitesmith")
