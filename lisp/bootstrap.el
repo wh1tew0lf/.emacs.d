@@ -560,6 +560,7 @@ That is, a string used to represent it on the tab bar."
 (add-to-list 'ac-modes 'web-mode)
 (require 'fuzzy)
 (setf ac-use-fuzzy t)
+(setq ac-auto-start nil)
 
 (require 'rainbow-delimiters)
 ;;(global-rainbow-delimiters-mode)
