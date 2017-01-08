@@ -147,6 +147,7 @@
 
 	 ;;web-mode-styles
 	 (web-mode-current-element-highlight-face ((t (:background "#232830"))))
+	 (web-mode-html-tag-bracket-face ((t (:foreground "Snow4"))))
 	 ;;web-mode styles ends
 
      (isearch ((t (:background "#323a43" :foreground "brown4"))))
