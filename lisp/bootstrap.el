@@ -287,6 +287,8 @@
 	(goto-char (point-max))
 	(eval-print-last-sexp)))
 
+(setq with-editor-file-name-history-exclude 1) ;;something for magit
+
 (setq my:el-get-packages
 	  '(ac-php
 		auto-complete
@@ -370,6 +372,10 @@
 		  (beginning-of-line)
 		  (delete-char (* (count 'arglist-cont-nonempty syntax)
 						  c-basic-offset))) )))
+
+(setq default-major-mode 'text-mode)
+(add-hook 'text-mode-hook 'longlines-mode)
+(add-hook 'text-mode-hook '(lambda () (set-fill-column 120)))
 
 (add-hook 'php-mode-hook
 		  (lambda()
@@ -554,6 +560,7 @@ That is, a string used to represent it on the tab bar."
 (add-to-list 'ac-modes 'web-mode)
 (require 'fuzzy)
 (setf ac-use-fuzzy t)
+(setq ac-auto-start nil)
 
 (require 'rainbow-delimiters)
 ;;(global-rainbow-delimiters-mode)
