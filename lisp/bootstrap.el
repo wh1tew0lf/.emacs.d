@@ -291,6 +291,7 @@
 
 (setq my:el-get-packages
 	  '(ac-php
+		ac-slime
 		auto-complete
         autopair
         cl-lib
@@ -394,7 +395,7 @@
 			(subword-mode 1)
 			(auto-complete-mode t)
 			(require 'ac-php)
-			(setq ac-sources  '(ac-source-php ) )
+			(setq ac-sources '(ac-source-php))
 			(yas-global-mode 1)
 			(define-key php-mode-map (kbd "C-]") 'ac-php-find-symbol-at-point)   ;goto define
 			(define-key php-mode-map (kbd "C-t") 'ac-php-location-stack-back)
@@ -672,3 +673,13 @@ That is, a string used to represent it on the tab bar."
 	1 font-lock-warning-face prepend)))
 
 (setq jit-lock-defer-time 0.05)
+
+(defun slime-hook()
+  (auto-complete-mode t)
+  (local-set-key (kbd "C-SPC") 'auto-complete)
+  (set-up-slime-ac))
+
+(add-hook 'slime-mode-hook 'slime-hook)
+(add-hook 'slime-repl-mode-hook 'slime-hook)
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'slime-repl-mode))
