@@ -190,6 +190,11 @@
 
 (global-unset-key (kbd "C-w"))
 
+(add-hook 'dired-mode-hook
+		  (lambda()
+			(set (make-local-variable 'mouse-1-click-follows-link) nil)
+			(define-key dired-mode-map [mouse-1] 'dired-find-file)))
+
 
 (defun find-current-tag()
   "Search for current tag at cursor position"

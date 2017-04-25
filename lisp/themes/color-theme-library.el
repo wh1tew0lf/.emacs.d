@@ -214,7 +214,7 @@
 	 (tabbar-button ((t (:box (:line-width 1 :color "#1c1f26" :style nil)))))
 	 (tabbar-separator ((t (:background "#1c1f26" :height 0.6))))
 
-	 (diredp-dir-name ((t (:background "#2b303b" :foreground "#b58dae"))))
+	 (diredp-dir-name ((t (:background "#2b303b" :foreground "#b5ddde"))))
 	 (diredp-file-name ((t (:background "#2b303b" :foreground "#b58dae"))))
 	 (diredp-file-suffix ((t (:background "#2b303b" :foreground "LightSkyBlue"))))
 	 (diredp-ignored-file-name ((t (:background "#2b303b" :foreground "#65737f"))))
