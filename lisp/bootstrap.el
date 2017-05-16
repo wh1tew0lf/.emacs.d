@@ -655,8 +655,6 @@ That is, a string used to represent it on the tab bar."
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("/\\(views\\|html\\|templates\\)/.*\\.php\\'" . web-mode))
 
-;; (setq web-mode-engines-alist '(("php" . "\\.html\\'")))
-
 (setq web-mode-markup-indent-offset 4)
 (setq web-mode-css-indent-offset 4)
 (setq web-mode-code-indent-offset 4)
