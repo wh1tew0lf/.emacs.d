@@ -242,6 +242,19 @@
   "Revert buffer without confirmation."
   (interactive) (revert-buffer t t))
 
+
+(setq web-mode-markup-indent-offset 2)
+(setq web-mode-code-indent-offset 2)
+(setq web-mode-css-indent-offset 2)
+
+(defun re-format-html ()
+  "Reformat html source"
+  (interactive)
+  (sgml-mode)
+  (sgml-pretty-print (point-min) (point-max))
+  (web-mode)
+  (web-mode-buffer-indent))
+
 (global-set-key (kbd "C-r") 'revert-buffer-no-confirm)
 
 ;; little help ;;
@@ -295,7 +308,9 @@
 (setq with-editor-file-name-history-exclude 1) ;;something for magit
 
 (setq my:el-get-packages
-	  '(ac-php
+	  '(ac-html
+		ac-js2
+		ac-php
 		ac-slime
 		auto-complete
         autopair
@@ -312,8 +327,10 @@
         multiple-cursors
         markdown-mode
 		helm
+		longlines
         nlinum
         nhexl-mode
+		js2-mode
         php-eldoc
 		;php-extras
         php-mode
@@ -349,6 +366,15 @@
 (require 'php-mode)
 (setq php-mode-warn-if-mumamo-off nil)
 (setq php-warned-bad-indent nil)
+
+(defun setup-ac-for-haml ()
+  (setq ac-sources '(ac-source-haml-tag
+                     ac-source-haml-attr
+                     ac-source-haml-attrv))
+  ;; Enable auto complete mode
+  (auto-complete-mode))
+
+(add-hook 'haml-mode-hook 'setup-ac-for-haml)
 
 (autoload 'php-imenu-create-index "php-imenu" nil t)
 ;; Add the index creation function to the php-mode-hook
@@ -449,6 +475,8 @@
 			(local-set-key (kbd "C-SPC") 'auto-complete)
 			(local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
 			(setq indent-tabs-mode nil)))
+
+(add-hook 'js2-mode-hook 'ac-js2-mode)
 
 (global-set-key (kbd "<f9>") 'compile)
 (global-set-key [f11] 'toggle-fullscreen)
@@ -617,6 +645,12 @@ That is, a string used to represent it on the tab bar."
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+
+(add-to-list 'web-mode-ac-sources-alist
+             '("html" . (ac-source-html-tag
+                         ac-source-html-attr
+                         ac-source-html-attrv)))
 
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("/\\(views\\|html\\|templates\\)/.*\\.php\\'" . web-mode))
