@@ -693,7 +693,6 @@ That is, a string used to represent it on the tab bar."
                    ("open" "close")))
 		))
 
-
 (put 'smart-beginning-of-line 'CUA 'move)
 
 (global-set-key [home] 'smart-beginning-of-line)
