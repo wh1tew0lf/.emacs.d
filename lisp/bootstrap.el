@@ -306,6 +306,7 @@
         git-modes
         highlight
 		imenu+
+		json-mode
         magit
 		minimap
         multiple-cursors
