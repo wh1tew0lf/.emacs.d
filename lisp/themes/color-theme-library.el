@@ -185,6 +185,7 @@
      (senator-momentary-highlight-face ((t (:background "#2b303b"))))
      (senator-read-only-face ((t (:background "#664444"))))
      (show-paren-match-face ((t (:background "#323a43"))))
+     (show-paren-match ((t (:background "#323a43"))))
      (show-paren-mismatch-face ((t (:background "purple" :foreground "white"))))
 
      (speedbar-button-face ((t (:foreground "green3"))))

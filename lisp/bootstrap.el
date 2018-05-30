@@ -327,7 +327,7 @@
         multiple-cursors
         markdown-mode
 		helm
-		longlines
+		;longlines
         nlinum
         nhexl-mode
 		js2-mode
@@ -343,6 +343,7 @@
         switch-window
         tabbar
         yascroll
+		visual-fill-column
 		vlf
         web-mode))
 
