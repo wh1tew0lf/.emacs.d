@@ -332,7 +332,7 @@
         nhexl-mode
 		js2-mode
         php-eldoc
-		;php-extras
+		; php-extras
         php-mode
         php-mode-improved
         popup
@@ -352,13 +352,13 @@
 ;; (el-get-elpa-build-local-recipes)
 ;;el-get end
 
-;;elpa
+;; elpa
 ;; (setq package-archives
 ;; 	  '(("elpa" . "http://tromey.com/elpa/")
 ;; 		("melpa" . "http://melpa.milkbox.net/packages/")
 ;; 		("gnu" . "http://elpa.gnu.org/packages/")
 ;; 		("marmalade" . "http://marmalade-repo.org/packages/")))
-;;end-elpa
+;; end-elpa
 
 (require 'yascroll)
 (global-yascroll-bar-mode 1)
@@ -407,8 +407,8 @@
 						  c-basic-offset))) )))
 
 (setq default-major-mode 'text-mode)
-(add-hook 'text-mode-hook 'longlines-mode)
-(add-hook 'text-mode-hook '(lambda () (set-fill-column 120)))
+;(add-hook 'text-mode-hook 'longlines-mode)
+;(add-hook 'text-mode-hook '(lambda () (set-fill-column 120)))
 
 (add-hook 'php-mode-hook
 		  (lambda()
@@ -557,7 +557,7 @@ That is, a string used to represent it on the tab bar."
 					 ".txt" ".md" ".js"))
   (speedbar-add-supported-extension extension))
 
-(require 'helm)
+;;(require 'helm)
 (require 'sr-speedbar)
 (global-unset-key (kbd "C-c s"))
 (global-set-key (kbd "C-c s") 'sr-speedbar-toggle)
