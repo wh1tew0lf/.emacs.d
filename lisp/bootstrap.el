@@ -50,26 +50,26 @@
  '(default-input-method "russian-computer")
  '(display-time-mode t)
  '(ac-comphist-file (expand-file-name
-					 (concat (if (boundp 'user-emacs-directory)
-								 user-emacs-directory
-							   "~/.emacs.d/")
-							 "/my-ac-comphist.dat")))
+		     (concat (if (boundp 'user-emacs-directory)
+				 user-emacs-directory
+			       "~/.emacs.d/")
+			     "/my-ac-comphist.dat")))
  '(ede-project-directories (quote ()))
  '(tabbar-separator (quote (0.2)))
  '(tool-bar-mode nil))
 
 ;; Require my functions file
 (if (not (file-exists-p (expand-file-name "~/.emacs.d/lisp/my-functions.elc")))
-	(byte-compile-file (expand-file-name "~/.emacs.d/lisp/my-functions.el")))
+    (byte-compile-file (expand-file-name "~/.emacs.d/lisp/my-functions.el")))
 (load-file (expand-file-name "~/.emacs.d/lisp/my-functions.elc"))
 
 ;; Compile themes file
 (if (not (file-exists-p (expand-file-name "~/.emacs.d/lisp/color-theme.elc")))
-	(byte-compile-file (expand-file-name "~/.emacs.d/lisp/color-theme.el")))
+    (byte-compile-file (expand-file-name "~/.emacs.d/lisp/color-theme.el")))
 
 ;; Compile themes file
 (if (not (file-exists-p (expand-file-name "~/.emacs.d/lisp/themes/color-theme-library.elc")))
-	(byte-compile-file (expand-file-name "~/.emacs.d/lisp/themes/color-theme-library.el")))
+    (byte-compile-file (expand-file-name "~/.emacs.d/lisp/themes/color-theme-library.el")))
 
 ;; IDO plugin
 (require 'ido)
@@ -112,13 +112,6 @@
 ;; Liberation Mono
 ;; helv
 
-;; color-theme-deep-blue +
-;; color-theme-gray30 +
-;; color-theme-goldenrod ?
-;; color-theme-jonadabian-slate +
-;; color-theme-montz 0
-;; color-theme-pok-wog +
-;; color-theme-whateveryouwant шрифты
 
 ;;Горячие клавиши
 (global-set-key (kbd "M-s") 'shell)
@@ -132,17 +125,17 @@
 (global-set-key (kbd "C-<mouse-5>") 'text-scale-decrease)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 (global-set-key (kbd "C-0") (lambda()
-							  (interactive)
-							  (text-scale-increase 0)))
+			      (interactive)
+			      (text-scale-increase 0)))
 
 (global-set-key (kbd "C-x r") 'revert-buffer-with-coding-system)
 
 (global-set-key (kbd "s-x") 'kill-rectangle)
 (global-set-key (kbd "s-c") (lambda(start end)
-							  (interactive "r")
-							  (kill-rectangle start end)
-							  (goto-char start)
-							  (yank-rectangle)))
+			      (interactive "r")
+			      (kill-rectangle start end)
+			      (goto-char start)
+			      (yank-rectangle)))
 (global-set-key (kbd "s-v") 'yank-rectangle)
 
 (global-unset-key (kbd "<escape>"))
@@ -191,24 +184,24 @@
 (global-unset-key (kbd "C-w"))
 
 (add-hook 'dired-mode-hook
-		  (lambda()
-			(set (make-local-variable 'mouse-1-click-follows-link) nil)
-			(define-key dired-mode-map [mouse-1] 'dired-find-file)))
+	  (lambda()
+	    (set (make-local-variable 'mouse-1-click-follows-link) nil)
+	    (define-key dired-mode-map [mouse-1] 'dired-find-file)))
 
 
 (defun find-current-tag()
   "Search for current tag at cursor position"
   (interactive)
   (let
-	  ((start 0)
-	   (end 0))
-	(save-excursion
-	  (left-word 1)
-	  (setf start (point))
-	  (right-word 1)
-	  (setf end (point))
-	  (message (buffer-substring start end)))
-	(find-tag (buffer-substring start end))))
+      ((start 0)
+       (end 0))
+    (save-excursion
+      (left-word 1)
+      (setf start (point))
+      (right-word 1)
+      (setf end (point))
+      (message (buffer-substring start end)))
+    (find-tag (buffer-substring start end))))
 
 
 (global-unset-key (kbd "M-."))
@@ -218,7 +211,7 @@
 (setq package-enable-at-startup nil)
 (package-initialize)
 
-;(require 'dedicated)
+					;(require 'dedicated)
 (global-unset-key (kbd "C-$"))
 (global-set-key (kbd "C-$") 'dedicated-mode)
 
@@ -293,57 +286,56 @@
 
 (global-unset-key (kbd "C-w"))
 (global-set-key (kbd "C-w") (lambda()
-							  (interactive)
-							  (kill-buffer)))
+			      (interactive)
+			      (kill-buffer)))
 
 ;;el-get
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil 'noerror)
   (with-current-buffer
-	  (url-retrieve-synchronously
-	   "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-	(goto-char (point-max))
-	(eval-print-last-sexp)))
+      (url-retrieve-synchronously
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
 
 (setq with-editor-file-name-history-exclude 1) ;;something for magit
 
 (setq my:el-get-packages
-	  '(ac-html
-		ac-js2
-		ac-php
-		ac-slime
-		auto-complete
+      '(ac-html
+	ac-js2
+	ac-php
+	ac-slime
+	auto-complete
         autopair
         cl-lib
-		dedicated
+	dedicated
         dired+
         dirtree
         git-modes
         highlight
-		imenu+
-		json-mode
+	imenu+
+	json-mode
         magit
-		minimap
+	minimap
         multiple-cursors
         markdown-mode
-		helm
-		longlines
+	helm
         nlinum
         nhexl-mode
-		js2-mode
+	js2-mode
         php-eldoc
-		; php-extras
         php-mode
         php-mode-improved
         popup
         rainbow-delimiters
         rainbow-mode
-		slime
+	slime
         sr-speedbar
         switch-window
         tabbar
         yascroll
-		vlf
+	visual-fill-column
+	vlf
         web-mode))
 
 (el-get 'sync my:el-get-packages)
@@ -395,86 +387,86 @@
 (defun uniindent-closure ()
   "Fix php-mode indent for closures"
   (let ((syntax (mapcar 'car c-syntactic-context)))
-	(if (and (member 'arglist-cont-nonempty syntax)
-			 (or
-			  (member 'statement-block-info syntax)
-			  (member 'brace-list-intro syntax)
-			  (member 'brace-list-close syntax)
-			  (member 'block-close syntax)))
-		(save-excursion
-		  (beginning-of-line)
-		  (delete-char (* (count 'arglist-cont-nonempty syntax)
-						  c-basic-offset))) )))
+    (if (and (member 'arglist-cont-nonempty syntax)
+	     (or
+	      (member 'statement-block-info syntax)
+	      (member 'brace-list-intro syntax)
+	      (member 'brace-list-close syntax)
+	      (member 'block-close syntax)))
+	(save-excursion
+	  (beginning-of-line)
+	  (delete-char (* (count 'arglist-cont-nonempty syntax)
+			  c-basic-offset))) )))
 
 (setq default-major-mode 'text-mode)
-;(add-hook 'text-mode-hook 'longlines-mode)
-;(add-hook 'text-mode-hook '(lambda () (set-fill-column 120)))
+					;(add-hook 'text-mode-hook 'longlines-mode)
+					;(add-hook 'text-mode-hook '(lambda () (set-fill-column 120)))
 
 (add-hook 'php-mode-hook
-		  (lambda()
-			(setq c-default-style "whitesmith")
-			(defun ywb-php-lineup-arglist-intro (langelem)
-			  (save-excursion
-				(goto-char (cdr langelem))
-				(vector (+ (current-column) c-basic-offset))))
-			(defun ywb-php-lineup-arglist-close (langelem)
-			  (save-excursion
-				(goto-char (cdr langelem))
-				(vector (current-column))))
-			;;(require 'php-electric)
-			(electric-pair-mode t)
-			(setq case-fold-search t)
-			(subword-mode 1)
-			(auto-complete-mode t)
-			(require 'ac-php)
-			(setq ac-sources '(ac-source-php))
-			(yas-global-mode 1)
-			(define-key php-mode-map (kbd "C-]") 'ac-php-find-symbol-at-point)   ;goto define
-			(define-key php-mode-map (kbd "C-t") 'ac-php-location-stack-back)
+	  (lambda()
+	    (setq c-default-style "whitesmith")
+	    (defun ywb-php-lineup-arglist-intro (langelem)
+	      (save-excursion
+		(goto-char (cdr langelem))
+		(vector (+ (current-column) c-basic-offset))))
+	    (defun ywb-php-lineup-arglist-close (langelem)
+	      (save-excursion
+		(goto-char (cdr langelem))
+		(vector (current-column))))
+	    ;;(require 'php-electric)
+	    (electric-pair-mode t)
+	    (setq case-fold-search t)
+	    (subword-mode 1)
+	    (auto-complete-mode t)
+	    (require 'ac-php)
+	    (setq ac-sources '(ac-source-php))
+	    (yas-global-mode 1)
+	    (define-key php-mode-map (kbd "C-]") 'ac-php-find-symbol-at-point)   ;goto define
+	    (define-key php-mode-map (kbd "C-t") 'ac-php-location-stack-back)
 
-			(setq fill-column 78)
-			(c-set-offset 'arglist-cont 0)
-			(c-set-offset 'substatement-open 0)
-			(c-set-offset 'arglist-intro 'ywb-php-lineup-arglist-intro)
-			(c-set-offset 'case-label 2)
-			(c-set-offset 'arglist-close 'ywb-php-lineup-arglist-close)
-			(c-set-offset 'block-close 0)
-			(c-set-offset 'defun-close 0)
-			(auto-complete-mode 1)
-			;;(c-toggle-auto-newline 1)
-			(setq c-basic-indent 2)
-			(setq tab-width 4)
-			(setf c-basic-offset 4)
-			(local-set-key (kbd "C-SPC") 'auto-complete)
-			(php-imenu-setup)
-										;(flymake-mode-on)
-			(add-hook 'c-special-indent-hook 'uniindent-closure)
-			(setq indent-tabs-mode nil)))
+	    (setq fill-column 78)
+	    (c-set-offset 'arglist-cont 0)
+	    (c-set-offset 'substatement-open 0)
+	    (c-set-offset 'arglist-intro 'ywb-php-lineup-arglist-intro)
+	    (c-set-offset 'case-label 2)
+	    (c-set-offset 'arglist-close 'ywb-php-lineup-arglist-close)
+	    (c-set-offset 'block-close 0)
+	    (c-set-offset 'defun-close 0)
+	    (auto-complete-mode 1)
+	    ;;(c-toggle-auto-newline 1)
+	    (setq c-basic-indent 2)
+	    (setq tab-width 4)
+	    (setf c-basic-offset 4)
+	    (local-set-key (kbd "C-SPC") 'auto-complete)
+	    (php-imenu-setup)
+					;(flymake-mode-on)
+	    (add-hook 'c-special-indent-hook 'uniindent-closure)
+	    (setq indent-tabs-mode nil)))
 
 (add-hook 'c-mode-hook
-		  (lambda()
-			(setq c-default-style "whitesmith")
-			(setq indent-tabs-mode nil)
-			(setq c-basic-indent 4)
-			(setq tab-width 4)
-			(setf c-basic-offset 4)
-			(auto-complete-mode 1)
-			;;(local-set-key (kbd "C-SPC") 'auto-complete)
-			;;(local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
-			(setq indent-tabs-mode nil)))
+	  (lambda()
+	    (setq c-default-style "whitesmith")
+	    (setq indent-tabs-mode nil)
+	    (setq c-basic-indent 4)
+	    (setq tab-width 4)
+	    (setf c-basic-offset 4)
+	    (auto-complete-mode 1)
+	    ;;(local-set-key (kbd "C-SPC") 'auto-complete)
+	    ;;(local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
+	    (setq indent-tabs-mode nil)))
 
 (add-hook 'c++-mode-hook
-		  (lambda()
-			(setq c-default-style "whitesmith")
-			(setq c-basic-indent 2)
-			(setq tab-width 4)
-			(setf c-basic-offset 4)
-			(auto-complete-mode 1)
-			(local-set-key "." my-semantic-complete-self-insert)
-			(local-set-key ">" my-semantic-complete-self-insert)
-			(local-set-key (kbd "C-SPC") 'auto-complete)
-			(local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
-			(setq indent-tabs-mode nil)))
+	  (lambda()
+	    (setq c-default-style "whitesmith")
+	    (setq c-basic-indent 2)
+	    (setq tab-width 4)
+	    (setf c-basic-offset 4)
+	    (auto-complete-mode 1)
+	    (local-set-key "." my-semantic-complete-self-insert)
+	    (local-set-key ">" my-semantic-complete-self-insert)
+	    (local-set-key (kbd "C-SPC") 'auto-complete)
+	    (local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
+	    (setq indent-tabs-mode nil)))
 
 (add-hook 'js2-mode-hook 'ac-js2-mode)
 
@@ -491,10 +483,10 @@
 (global-set-key (kbd "C-S-d") 'my-kill-region)
 
 (add-hook 'ediff-load-hook
-		  (lambda ()
-			(set-face-foreground ediff-current-diff-face-B "blue")
-			(set-face-background ediff-current-diff-face-B "red")
-			(make-face-italic ediff-current-diff-face-B)))
+	  (lambda ()
+	    (set-face-foreground ediff-current-diff-face-B "blue")
+	    (set-face-background ediff-current-diff-face-B "red")
+	    (make-face-italic ediff-current-diff-face-B)))
 
 ;; Tabbar
 (require 'tabbar)
@@ -525,18 +517,18 @@ That is, a string used to represent it on the tab bar."
  dired buffers), and the rest.  This works at least with Emacs v24.2 using
  tabbar.el v1.7."
   (list (cond ((string-equal "*" (substring (buffer-name) 0 1)) "emacs")
-			  ((eq major-mode 'dired-mode) "emacs")
-			  (t "user"))))
+	      ((eq major-mode 'dired-mode) "emacs")
+	      (t "user"))))
 
 
 ;; Add a buffer modification state indicator in the tab label, and place a
 ;; space around the label to make it looks less crowd.
 (defadvice tabbar-buffer-tab-label (after fixup_tab_label_space_and_flag activate)
   (setq ad-return-value
-		(if (and (buffer-modified-p (tabbar-tab-value tab))
-				 (buffer-file-name (tabbar-tab-value tab)))
-			(concat " + " (concat ad-return-value " "))
-		  (concat " " (concat ad-return-value " ")))))
+	(if (and (buffer-modified-p (tabbar-tab-value tab))
+		 (buffer-file-name (tabbar-tab-value tab)))
+	    (concat " + " (concat ad-return-value " "))
+	  (concat " " (concat ad-return-value " ")))))
 
 (global-set-key [C-S-iso-lefttab] 'tabbar-backward-tab)
 (global-set-key [C-tab] 'tabbar-forward-tab)
@@ -552,9 +544,9 @@ That is, a string used to represent it on the tab bar."
 
 ;; Some file extensions for speedbar showing
 (dolist (extension '(".c" ".cc" ".c++" ".h" ".sh"
-					 ".py" ".pl" ".ruby" ".xml"
-					 ".htm" ".html" ".css" ".php"
-					 ".txt" ".md" ".js"))
+		     ".py" ".pl" ".ruby" ".xml"
+		     ".htm" ".html" ".css" ".php"
+		     ".txt" ".md" ".js"))
   (speedbar-add-supported-extension extension))
 
 ;;(require 'helm)
@@ -562,19 +554,19 @@ That is, a string used to represent it on the tab bar."
 (global-unset-key (kbd "C-c s"))
 (global-set-key (kbd "C-c s") 'sr-speedbar-toggle)
 (global-set-key (kbd "C-x C-l") '(lambda ()
-								   (interactive)
-								   (set 'speedbar-update-flag nil)
-								   (sr-speedbar-refresh-turn-off)))
+				   (interactive)
+				   (set 'speedbar-update-flag nil)
+				   (sr-speedbar-refresh-turn-off)))
 
 (custom-set-variables
  '(sr-speedbar-right-side nil)
  '(speedbar-show-unknown-files t))
 
 (setq speedbar-mode-hook '(lambda ()
-							(interactive)
-							(nlinum-mode 0)
-							(sr-speedbar-refresh-turn-off)
-							(setq speedbar-update-flag nil)))
+			    (interactive)
+			    (nlinum-mode 0)
+			    (sr-speedbar-refresh-turn-off)
+			    (setq speedbar-update-flag nil)))
 
 (require 'tramp)
 (setq tramp-default-method "ssh")
@@ -677,21 +669,21 @@ That is, a string used to represent it on the tab bar."
                   ac-source-dictionary))))
 
 (add-hook 'web-mode-hook
-		  '(lambda()
-			 (local-set-key (kbd "RET") 'newline-and-indent)
-			 (auto-complete-mode 1)
-			 (local-set-key (kbd "C-SPC") 'auto-complete)))
+	  '(lambda()
+	     (local-set-key (kbd "RET") 'newline-and-indent)
+	     (auto-complete-mode 1)
+	     (local-set-key (kbd "C-SPC") 'auto-complete)))
 
 (add-hook 'local-write-file-hooks
-		  (lambda ()
-			(delete-trailing-whitespace)
-			nil))
+	  (lambda ()
+	    (delete-trailing-whitespace)
+	    nil))
 
 (setq web-mode-extra-auto-pairs
       '(("erb"  . (("open" "close")))
         ("php"  . (("open" "close")
                    ("open" "close")))
-		))
+	))
 
 (put 'smart-beginning-of-line 'CUA 'move)
 
@@ -702,12 +694,12 @@ That is, a string used to represent it on the tab bar."
 (font-lock-add-keywords
  'c-mode
  '(("\\<\\(FIXME\\|TODO\\|QUESTION\\|NOTE\\)"
-	1 font-lock-warning-face prepend)))
+    1 font-lock-warning-face prepend)))
 
 (font-lock-add-keywords
  'php-mode
  '(("\\<\\(FIXME\\|TODO\\|QUESTION\\|NOTE\\)"
-	1 font-lock-warning-face prepend)))
+    1 font-lock-warning-face prepend)))
 
 (setq jit-lock-defer-time 0.05)
 
