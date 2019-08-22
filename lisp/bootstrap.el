@@ -114,7 +114,7 @@
 
 
 ;;Горячие клавиши
-(global-set-key (kbd "M-s") 'shell)
+(global-set-key (kbd "M-s") 'term)
 (global-set-key (kbd "M-g") 'goto-line)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "M-k") 'calculator)
@@ -595,8 +595,8 @@ That is, a string used to represent it on the tab bar."
 (require 'rainbow-mode)
 ;;(rainbow-turn-on)
 
-(global-unset-key (kbd "M-c"))
-(global-set-key (kbd "M-c") 'comment-region)
+(global-unset-key (kbd "C-/"))
+(global-set-key (kbd "C-/") 'comment-line)
 
 (global-unset-key (kbd "C-e"))
 (global-set-key (kbd "C-e") 'uncomment-region)
@@ -712,3 +712,25 @@ That is, a string used to represent it on the tab bar."
 (add-hook 'slime-repl-mode-hook 'slime-hook)
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-modes 'slime-repl-mode))
+
+(setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+      helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+      helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+      helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+      helm-ff-file-name-history-use-recentf t
+      helm-echo-input-in-header-line t)
+
+;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
+;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
+;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
+(global-unset-key (kbd "C-x c"))
+
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
+(add-hook 'shell-mode-hook 'my-shell-mode-hook)
+(defun my-shell-mode-hook ()
+  (setq comint-input-ring-file-name "~/.zsh_history")  ;; or bash_history
+  (comint-read-input-ring t))
+
+(require 'helm-config)
