@@ -308,6 +308,7 @@
 	auto-complete
         autopair
         cl-lib
+	company-mode
 	dedicated
         dired+
         dirtree
@@ -417,12 +418,12 @@
 	    (electric-pair-mode t)
 	    (setq case-fold-search t)
 	    (subword-mode 1)
-	    (auto-complete-mode t)
 	    (require 'ac-php)
 	    (setq ac-sources '(ac-source-php))
 	    (yas-global-mode 1)
 	    (define-key php-mode-map (kbd "C-]") 'ac-php-find-symbol-at-point)   ;goto define
 	    (define-key php-mode-map (kbd "C-t") 'ac-php-location-stack-back)
+	    (local-set-key ">" my-semantic-complete-self-insert)
 
 	    (setq fill-column 78)
 	    (c-set-offset 'arglist-cont 0)
@@ -432,7 +433,7 @@
 	    (c-set-offset 'arglist-close 'ywb-php-lineup-arglist-close)
 	    (c-set-offset 'block-close 0)
 	    (c-set-offset 'defun-close 0)
-	    (auto-complete-mode 1)
+	    (auto-complete-mode t)
 	    ;;(c-toggle-auto-newline 1)
 	    (setq c-basic-indent 2)
 	    (setq tab-width 4)
@@ -450,7 +451,7 @@
 	    (setq c-basic-indent 4)
 	    (setq tab-width 4)
 	    (setf c-basic-offset 4)
-	    (auto-complete-mode 1)
+	    (auto-complete-mode t)
 	    ;;(local-set-key (kbd "C-SPC") 'auto-complete)
 	    ;;(local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
 	    (setq indent-tabs-mode nil)))
@@ -461,14 +462,42 @@
 	    (setq c-basic-indent 2)
 	    (setq tab-width 4)
 	    (setf c-basic-offset 4)
-	    (auto-complete-mode 1)
+	    (auto-complete-mode t)
 	    (local-set-key "." my-semantic-complete-self-insert)
 	    (local-set-key ">" my-semantic-complete-self-insert)
 	    (local-set-key (kbd "C-SPC") 'auto-complete)
 	    (local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
 	    (setq indent-tabs-mode nil)))
 
-(add-hook 'js2-mode-hook 'ac-js2-mode)
+(add-hook 'css-mode-hook
+	  (lambda ()
+	    (local-set-key (kbd "C-SPC") 'auto-complete)
+	    (setq c-basic-indent 4)
+	    (setq tab-width 4)
+	    (setf c-basic-offset 4)
+	    (auto-complete-mode t)
+	    (setq indent-tabs-mode nil)))
+
+(defun my-ac-js2-setup-auto-complete-mode ()
+  "Setup ac-js2 to be used with auto-complete-mode."
+  (ac-define-source "js2"
+    '((candidates . ac-js2-ac-candidates)
+      (document . ac-js2-ac-document)
+      (prefix .  ac-js2-ac-prefix)
+      (requires . -1)))
+  (add-to-list 'ac-sources 'ac-source-js2)
+  (auto-complete-mode))
+
+(add-hook 'js2-mode-hook
+	  (lambda ()
+	    (local-set-key (kbd "C-SPC") 'auto-complete)
+	    (setq c-basic-indent 4)
+	    (setq tab-width 4)
+	    (setf c-basic-offset 4)
+	    (require 'ac-js2)
+	    (my-ac-js2-setup-auto-complete-mode)
+	    (auto-complete-mode t)
+	    (setq indent-tabs-mode nil)))
 
 (global-set-key (kbd "<f9>") 'compile)
 (global-set-key [f11] 'toggle-fullscreen)
@@ -734,3 +763,4 @@ That is, a string used to represent it on the tab bar."
   (comint-read-input-ring t))
 
 (require 'helm-config)
+(add-hook 'after-init-hook 'global-company-mode)
