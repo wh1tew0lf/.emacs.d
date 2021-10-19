@@ -6,8 +6,7 @@
 	    (setq tab-width 4)
 	    (setf c-basic-offset 4)
 	    (auto-complete-mode t)
-	    ;;(local-set-key (kbd "C-SPC") 'auto-complete)
-	    ;;(local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
+	    (local-set-key (kbd "C-SPC") 'auto-complete)
 	    (setq indent-tabs-mode nil)))
 
 (add-hook 'c++-mode-hook
@@ -17,10 +16,7 @@
 	    (setq tab-width 4)
 	    (setf c-basic-offset 4)
 	    (auto-complete-mode t)
-	    (local-set-key "." my-semantic-complete-self-insert)
-	    (local-set-key ">" my-semantic-complete-self-insert)
 	    (local-set-key (kbd "C-SPC") 'auto-complete)
-	    (local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
 	    (setq indent-tabs-mode nil)))
 
 (font-lock-add-keywords

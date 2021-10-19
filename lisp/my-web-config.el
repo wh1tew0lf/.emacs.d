@@ -1,7 +1,5 @@
 ;;Для php
 (require 'php-mode)
-(setq php-mode-warn-if-mumamo-off nil)
-(setq php-warned-bad-indent nil)
 
 (defun uniindent-closure ()
   "Fix php-mode indent for closures"
@@ -19,6 +17,8 @@
 
 (add-hook 'php-mode-hook
 	  (lambda()
+	    (setq php-mode-warn-if-mumamo-off nil)
+	    (setq php-warned-bad-indent nil)
 	    (setq c-default-style "whitesmith")
 	    (defun ywb-php-lineup-arglist-intro (langelem)
 	      (save-excursion
@@ -28,17 +28,14 @@
 	      (save-excursion
 		(goto-char (cdr langelem))
 		(vector (current-column))))
-	    ;;(require 'php-electric)
 	    (electric-pair-mode t)
 	    (setq case-fold-search t)
 	    (subword-mode 1)
 	    (require 'ac-php)
 	    (setq ac-sources '(ac-source-php))
 	    (yas-global-mode 1)
-	    (define-key php-mode-map (kbd "C-]") 'ac-php-find-symbol-at-point)   ;goto define
+	    (define-key php-mode-map (kbd "C-]") 'ac-php-find-symbol-at-point)
 	    (define-key php-mode-map (kbd "C-t") 'ac-php-location-stack-back)
-	    (local-set-key ">" my-semantic-complete-self-insert)
-
 	    (setq fill-column 78)
 	    (c-set-offset 'arglist-cont 0)
 	    (c-set-offset 'substatement-open 0)
@@ -48,13 +45,11 @@
 	    (c-set-offset 'block-close 0)
 	    (c-set-offset 'defun-close 0)
 	    (auto-complete-mode t)
-	    ;;(c-toggle-auto-newline 1)
 	    (setq c-basic-indent 2)
 	    (setq tab-width 4)
 	    (setf c-basic-offset 4)
 	    (local-set-key (kbd "C-SPC") 'auto-complete)
 	    (php-imenu-setup)
-					;(flymake-mode-on)
 	    (add-hook 'c-special-indent-hook 'uniindent-closure)
 	    (setq indent-tabs-mode nil)))
 

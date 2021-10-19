@@ -27,5 +27,4 @@
  (org-roam-db-autosync-mode))
 
 ;; отключить переносы строк
-(add-hook 'org-mode-hook (lambda ()
-                           (auto-fill-mode -1)))
+(add-hook 'org-mode-hook (lambda () (auto-fill-mode -1)))

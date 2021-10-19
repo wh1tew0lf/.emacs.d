@@ -6,7 +6,6 @@
 				   (set 'speedbar-update-flag nil)
 				   (sr-speedbar-refresh-turn-off)))
 
-
 (custom-set-variables
  '(sr-speedbar-right-side nil)
  '(speedbar-show-unknown-files t))
