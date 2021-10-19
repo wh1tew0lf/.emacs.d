@@ -109,12 +109,12 @@
     (byte-compile-file (expand-file-name "~/.emacs.d/lisp/themes/color-theme-library.el")))
 
 ;; IDO plugin
-(require 'ido)
-(ido-mode                      t)
-(icomplete-mode                t)
-(ido-everywhere                t)
-(setq ido-vitrual-buffers      t)
-(setq ido-enable-flex-matching t)
+;; (require 'ido)
+;; (ido-mode                      t)
+;; (icomplete-mode                t)
+;; (ido-everywhere                t)
+;; (setq ido-vitrual-buffers      t)
+;; (setq ido-enable-flex-matching t)
 
 (require 'bs)
 (require 'ibuffer)
@@ -312,7 +312,9 @@
     (goto-char (point-max))
     (eval-print-last-sexp)))
 (setq with-editor-file-name-history-exclude 1) ;;something for magit
-
+(add-to-list 'el-get-sources '(:name dash :type elpa))
+(add-to-list 'el-get-sources '(:name s :type elpa))
+(add-to-list 'el-get-sources '(:name f :type elpa))
 (setq my:el-get-packages
       '(ac-html
 	ac-js2
@@ -324,7 +326,6 @@
 	company-mode
 	dedicated
         dired+
-        dirtree
         git-modes
         highlight
 	json-mode
@@ -350,19 +351,18 @@
 	vlf
         web-mode))
 
+(require 'el-get-elpa)
+;; elpa
+(add-to-list 'package-archives '("elpa" . "http://tromey.com/elpa/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+;; end-elpa
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 (el-get 'sync my:el-get-packages)
-(require 'el-get-elpa)
+
 ;; (el-get-elpa-build-local-recipes)
 ;;el-get end
-
-;; elpa
-;; (setq package-archives
-;; 	  '(("elpa" . "http://tromey.com/elpa/")
-;; 		("melpa" . "http://melpa.milkbox.net/packages/")
-;; 		("gnu" . "http://elpa.gnu.org/packages/")
-;; 		("marmalade" . "http://marmalade-repo.org/packages/")))
-;; end-elpa
 
 (require 'package)
 (setq package-enable-at-startup nil)
@@ -437,10 +437,10 @@
 (setq scroll-conservatively 10000)
 (setq scroll-margin 1)
 
-(load-file (expand-file-name "~/.emacs.d/lisp/sbcl-settings.el"))
-(load-file (expand-file-name "~/.emacs.d/lisp/dev.el"))
-(load-file (expand-file-name "~/.emacs.d/lisp/web.el"))
-(load-file (expand-file-name "~/.emacs.d/lisp/org.el"))
-(load-file (expand-file-name "~/.emacs.d/lisp/tabbar.el"))
-(load-file (expand-file-name "~/.emacs.d/lisp/speedbar-config.el"))
+(load-file (expand-file-name "~/.emacs.d/lisp/my-sbcl-config.el"))
+(load-file (expand-file-name "~/.emacs.d/lisp/my-dev-config.el"))
+(load-file (expand-file-name "~/.emacs.d/lisp/my-web-config.el"))
+(load-file (expand-file-name "~/.emacs.d/lisp/my-org-config.el"))
+(load-file (expand-file-name "~/.emacs.d/lisp/my-tabbar-config.el"))
+(load-file (expand-file-name "~/.emacs.d/lisp/my-speedbar-config.el"))
 (load-file (expand-file-name "~/.emacs.d/lisp/my-helm-config.el"))
