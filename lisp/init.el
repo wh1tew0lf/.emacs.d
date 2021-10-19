@@ -327,7 +327,6 @@
         dirtree
         git-modes
         highlight
-	imenu+
 	json-mode
         magit
 	minimap
@@ -431,6 +430,12 @@
 (global-set-key [home] 'smart-beginning-of-line)
 
 (setq jit-lock-defer-time 0.05)
+(setq redisplay-dont-pause t)
+(setq mouse-wheel-scroll-amount '(2 ((shift) . 2)))
+(setq mouse-wheel-progressive-speed nil)
+(setq mouse-wheel-follow-mouse 't)
+(setq scroll-conservatively 10000)
+(setq scroll-margin 1)
 
 (load-file (expand-file-name "~/.emacs.d/lisp/sbcl-settings.el"))
 (load-file (expand-file-name "~/.emacs.d/lisp/dev.el"))
