@@ -13,10 +13,6 @@
 
 (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
 (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
-(add-hook 'shell-mode-hook 'my-shell-mode-hook)
-(defun my-shell-mode-hook ()
-  (setq comint-input-ring-file-name "~/.zsh_history")  ;; or bash_history
-  (comint-read-input-ring t))
+
 
 (require 'helm-config)
-(add-hook 'after-init-hook 'global-company-mode)

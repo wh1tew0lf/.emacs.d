@@ -1,10 +1,3 @@
-;; ---------------------Content of .emacs---------------------
-;; ; (package-initialize)
-;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
-;; (load-file "~/.emacs.d/lisp/init.el")
-
-;; -------------------END Content of .emacs--------------------
-
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-my-test)
@@ -16,7 +9,7 @@
  ;; If there is more than one, they won't work right.
  '(ac-comphist-file
    (expand-file-name
-    (concat
+ l   (concat
      (if
 	 (boundp
 	  (quote user-emacs-directory))
@@ -107,14 +100,6 @@
 ;; Compile themes file
 (if (not (file-exists-p (expand-file-name "~/.emacs.d/lisp/themes/color-theme-library.elc")))
     (byte-compile-file (expand-file-name "~/.emacs.d/lisp/themes/color-theme-library.el")))
-
-;; IDO plugin
-;; (require 'ido)
-;; (ido-mode                      t)
-;; (icomplete-mode                t)
-;; (ido-everywhere                t)
-;; (setq ido-vitrual-buffers      t)
-;; (setq ido-enable-flex-matching t)
 
 (require 'bs)
 (require 'ibuffer)
@@ -323,22 +308,17 @@
 	auto-complete
         autopair
         cl-lib
-	company-mode
 	dedicated
         dired+
         git-modes
         highlight
 	json-mode
         magit
-	minimap
         multiple-cursors
         markdown-mode
 	helm
-	helm-gtags
         nlinum
-        nhexl-mode
 	js2-mode
-        php-eldoc
         php-mode
         php-mode-improved
         popup
@@ -367,6 +347,8 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (package-initialize)
+
+(require 'vlf-setup)
 
 (require 'yascroll)
 (global-yascroll-bar-mode 1)
@@ -425,6 +407,11 @@
 
 (require 'markdown-mode)
 
+(add-hook 'shell-mode-hook 'my-shell-mode-hook)
+(defun my-shell-mode-hook ()
+  (setq comint-input-ring-file-name "~/.zsh_history")  ;; or bash_history
+  (comint-read-input-ring t))
+
 (put 'smart-beginning-of-line 'CUA 'move)
 
 (global-set-key [home] 'smart-beginning-of-line)
@@ -437,10 +424,12 @@
 (setq scroll-conservatively 10000)
 (setq scroll-margin 1)
 
+(add-hook 'after-init-hook 'global-company-mode)
+
 (load-file (expand-file-name "~/.emacs.d/lisp/my-sbcl-config.el"))
 (load-file (expand-file-name "~/.emacs.d/lisp/my-dev-config.el"))
 (load-file (expand-file-name "~/.emacs.d/lisp/my-web-config.el"))
 (load-file (expand-file-name "~/.emacs.d/lisp/my-org-config.el"))
 (load-file (expand-file-name "~/.emacs.d/lisp/my-tabbar-config.el"))
 (load-file (expand-file-name "~/.emacs.d/lisp/my-speedbar-config.el"))
-(load-file (expand-file-name "~/.emacs.d/lisp/my-helm-config.el"))
+;; (load-file (expand-file-name "~/.emacs.d/lisp/my-helm-config.el"))
