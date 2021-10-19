@@ -9,7 +9,7 @@
  ;; If there is more than one, they won't work right.
  '(ac-comphist-file
    (expand-file-name
- l   (concat
+    (concat
      (if
 	 (boundp
 	  (quote user-emacs-directory))
@@ -56,8 +56,13 @@
 (setq default-tab-width 4)
 (setq make-backup-files nil)
 
+;; Чтобы отлаживать если что-то не так работает
+(setq debug-on-quit t)
+(setq debug-on-error t)
+
+(set-default 'truncate-lines t)
+
 (setq ns-pop-up-frames nil)
-(windmove-default-keybindings)
 
 (fringe-mode 4)						;; make the fringe thinner (default is 8 in pixels)
 (show-paren-mode 1)
@@ -101,20 +106,14 @@
 (if (not (file-exists-p (expand-file-name "~/.emacs.d/lisp/themes/color-theme-library.elc")))
     (byte-compile-file (expand-file-name "~/.emacs.d/lisp/themes/color-theme-library.el")))
 
-(require 'bs)
-(require 'ibuffer)
-(defalias 'list-buffers 'ibuffer) ;; отдельный список буферов при нажатии C-x C-b
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(global-set-key (kbd "<f2>") 'bs-show) ;; запуск buffer selection кнопкой F2
-
 (add-to-list 'write-file-functions 'untabify-current-buffer)
 (add-to-list 'write-file-functions 'delete-trailing-whitespace)
 
 ;;Движение по окнам
-;;(global-set-key (kbd "s-<up>") 'windmove-up)
-;;(global-set-key (kbd "s-<right>") 'windmove-right)
-;;(global-set-key (kbd "s-<down>") 'windmove-down)
-;;(global-set-key (kbd "s-<left>") 'windmove-left)
+(global-set-key (kbd "M-s-<up>") 'windmove-up)
+(global-set-key (kbd "M-s-<right>") 'windmove-right)
+(global-set-key (kbd "M-s-<down>") 'windmove-down)
+(global-set-key (kbd "M-s-<left>") 'windmove-left)
 
 (global-set-key (kbd "C-}") 'enlarge-window-horizontally)
 (global-set-key (kbd "C-{") 'shrink-window-horizontally)
@@ -280,9 +279,6 @@
 
 (reverse-input-method 'russian-computer)
 
-
-(set-default 'truncate-lines t)
-
 (global-unset-key (kbd "C-w"))
 (global-set-key (kbd "C-w") (lambda()
 			      (interactive)
@@ -297,9 +293,12 @@
     (goto-char (point-max))
     (eval-print-last-sexp)))
 (setq with-editor-file-name-history-exclude 1) ;;something for magit
+
 (add-to-list 'el-get-sources '(:name dash :type elpa))
 (add-to-list 'el-get-sources '(:name s :type elpa))
 (add-to-list 'el-get-sources '(:name f :type elpa))
+(add-to-list 'el-get-sources '(:name yasnippet :type elpa))
+
 (setq my:el-get-packages
       '(ac-html
 	ac-js2
@@ -311,14 +310,14 @@
 	dedicated
         dired+
         git-modes
+	helm
         highlight
+	js2-mode
 	json-mode
         magit
         multiple-cursors
         markdown-mode
-	helm
         nlinum
-	js2-mode
         php-mode
         php-mode-improved
         popup
@@ -424,12 +423,10 @@
 (setq scroll-conservatively 10000)
 (setq scroll-margin 1)
 
-(add-hook 'after-init-hook 'global-company-mode)
-
 (load-file (expand-file-name "~/.emacs.d/lisp/my-sbcl-config.el"))
 (load-file (expand-file-name "~/.emacs.d/lisp/my-dev-config.el"))
 (load-file (expand-file-name "~/.emacs.d/lisp/my-web-config.el"))
 (load-file (expand-file-name "~/.emacs.d/lisp/my-org-config.el"))
 (load-file (expand-file-name "~/.emacs.d/lisp/my-tabbar-config.el"))
 (load-file (expand-file-name "~/.emacs.d/lisp/my-speedbar-config.el"))
-;; (load-file (expand-file-name "~/.emacs.d/lisp/my-helm-config.el"))
+(load-file (expand-file-name "~/.emacs.d/lisp/my-helm-config.el"))
