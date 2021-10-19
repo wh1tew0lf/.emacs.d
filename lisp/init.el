@@ -1,8 +1,7 @@
 ;; ---------------------Content of .emacs---------------------
-;; (package-initialize)
 
 ;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
-;; (load-file "~/.emacs.d/lisp/bootstrap.el")
+;; (load-file "~/.emacs.d/lisp/init.el")
 ;; (require 'color-theme)
 ;; (color-theme-initialize)
 ;; (color-theme-my-test)
@@ -10,10 +9,7 @@
 
 ;; -------------------END Content of .emacs--------------------
 
-;; Increase SBCL heap size for install some packages for data mining
-(setq inferior-lisp-program "/usr/local/bin/sbcl") ;--dynamic-space-size 4096
-;;(setq slime-lisp-implementations
-;;      '((sbcl ("/usr/local/bin/sbcl" "--dynamic-space-size" "4096"))))
+
 
 (set-language-environment 'utf-8)
 (setq slime-net-coding-system 'utf-8-unix)
@@ -37,6 +33,9 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq default-tab-width 4)
 (setq make-backup-files nil)
+
+(setq ns-pop-up-frames nil)
+(windmove-default-keybindings)
 
 (fringe-mode 4)						;; make the fringe thinner (default is 8 in pixels)
 (show-paren-mode 1)
@@ -82,6 +81,7 @@
 (require 'bs)
 (require 'ibuffer)
 (defalias 'list-buffers 'ibuffer) ;; отдельный список буферов при нажатии C-x C-b
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "<f2>") 'bs-show) ;; запуск buffer selection кнопкой F2
 
 (add-to-list 'write-file-functions 'untabify-current-buffer)
@@ -112,11 +112,9 @@
 ;; Liberation Mono
 ;; helv
 
-
 ;;Горячие клавиши
 (global-set-key (kbd "M-s") 'term)
 (global-set-key (kbd "M-g") 'goto-line)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "M-k") 'calculator)
 
 (global-set-key (kbd "C-<mouse-4>") 'text-scale-increase)
@@ -207,11 +205,6 @@
 (global-unset-key (kbd "M-."))
 (global-set-key (kbd "M-.") 'find-current-tag)
 
-(require 'package)
-(setq package-enable-at-startup nil)
-(package-initialize)
-
-					;(require 'dedicated)
 (global-unset-key (kbd "C-$"))
 (global-set-key (kbd "C-$") 'dedicated-mode)
 
@@ -251,7 +244,7 @@
 (global-set-key (kbd "C-r") 'revert-buffer-no-confirm)
 
 ;; little help ;;
-;; C-x <RET> r CHARSET - коировку буфера изменить
+;; C-x <RET> r CHARSET - кодировку буфера изменить
 
 ;;русские буквы автоматически транслируются в соответствующие английские.
 (defun reverse-input-method (input-method)
@@ -297,7 +290,6 @@
        "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
     (goto-char (point-max))
     (eval-print-last-sexp)))
-
 (setq with-editor-file-name-history-exclude 1) ;;something for magit
 
 (setq my:el-get-packages
@@ -321,6 +313,7 @@
         multiple-cursors
         markdown-mode
 	helm
+	helm-gtags
         nlinum
         nhexl-mode
 	js2-mode
@@ -339,8 +332,8 @@
 	vlf
         web-mode))
 
-(el-get 'sync my:el-get-packages)
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
+(el-get 'sync my:el-get-packages)
 (require 'el-get-elpa)
 ;; (el-get-elpa-build-local-recipes)
 ;;el-get end
@@ -353,30 +346,12 @@
 ;; 		("marmalade" . "http://marmalade-repo.org/packages/")))
 ;; end-elpa
 
+(require 'package)
+(setq package-enable-at-startup nil)
+(package-initialize)
+
 (require 'yascroll)
 (global-yascroll-bar-mode 1)
-
-(require 'php-mode)
-(setq php-mode-warn-if-mumamo-off nil)
-(setq php-warned-bad-indent nil)
-
-(defun setup-ac-for-haml ()
-  (setq ac-sources '(ac-source-haml-tag
-                     ac-source-haml-attr
-                     ac-source-haml-attrv))
-  ;; Enable auto complete mode
-  (auto-complete-mode))
-
-(add-hook 'haml-mode-hook 'setup-ac-for-haml)
-
-(autoload 'php-imenu-create-index "php-imenu" nil t)
-;; Add the index creation function to the php-mode-hook
-(add-hook 'php-mode-user-hook 'php-imenu-setup)
-(defun php-imenu-setup ()
-  (setq imenu-create-index-function (function php-imenu-create-index))
-  ;; uncomment if you prefer speedbar:
-  (setq php-imenu-alist-postprocessor (function reverse))
-  (imenu-add-menubar-index))
 
 (require 'nlinum)
 (setq nlinum--width 4)				;;Lines numeration
@@ -400,104 +375,6 @@
 			  c-basic-offset))) )))
 
 (setq default-major-mode 'text-mode)
-					;(add-hook 'text-mode-hook 'longlines-mode)
-					;(add-hook 'text-mode-hook '(lambda () (set-fill-column 120)))
-
-(add-hook 'php-mode-hook
-	  (lambda()
-	    (setq c-default-style "whitesmith")
-	    (defun ywb-php-lineup-arglist-intro (langelem)
-	      (save-excursion
-		(goto-char (cdr langelem))
-		(vector (+ (current-column) c-basic-offset))))
-	    (defun ywb-php-lineup-arglist-close (langelem)
-	      (save-excursion
-		(goto-char (cdr langelem))
-		(vector (current-column))))
-	    ;;(require 'php-electric)
-	    (electric-pair-mode t)
-	    (setq case-fold-search t)
-	    (subword-mode 1)
-	    (require 'ac-php)
-	    (setq ac-sources '(ac-source-php))
-	    (yas-global-mode 1)
-	    (define-key php-mode-map (kbd "C-]") 'ac-php-find-symbol-at-point)   ;goto define
-	    (define-key php-mode-map (kbd "C-t") 'ac-php-location-stack-back)
-	    (local-set-key ">" my-semantic-complete-self-insert)
-
-	    (setq fill-column 78)
-	    (c-set-offset 'arglist-cont 0)
-	    (c-set-offset 'substatement-open 0)
-	    (c-set-offset 'arglist-intro 'ywb-php-lineup-arglist-intro)
-	    (c-set-offset 'case-label 2)
-	    (c-set-offset 'arglist-close 'ywb-php-lineup-arglist-close)
-	    (c-set-offset 'block-close 0)
-	    (c-set-offset 'defun-close 0)
-	    (auto-complete-mode t)
-	    ;;(c-toggle-auto-newline 1)
-	    (setq c-basic-indent 2)
-	    (setq tab-width 4)
-	    (setf c-basic-offset 4)
-	    (local-set-key (kbd "C-SPC") 'auto-complete)
-	    (php-imenu-setup)
-					;(flymake-mode-on)
-	    (add-hook 'c-special-indent-hook 'uniindent-closure)
-	    (setq indent-tabs-mode nil)))
-
-(add-hook 'c-mode-hook
-	  (lambda()
-	    (setq c-default-style "whitesmith")
-	    (setq indent-tabs-mode nil)
-	    (setq c-basic-indent 4)
-	    (setq tab-width 4)
-	    (setf c-basic-offset 4)
-	    (auto-complete-mode t)
-	    ;;(local-set-key (kbd "C-SPC") 'auto-complete)
-	    ;;(local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
-	    (setq indent-tabs-mode nil)))
-
-(add-hook 'c++-mode-hook
-	  (lambda()
-	    (setq c-default-style "whitesmith")
-	    (setq c-basic-indent 2)
-	    (setq tab-width 4)
-	    (setf c-basic-offset 4)
-	    (auto-complete-mode t)
-	    (local-set-key "." my-semantic-complete-self-insert)
-	    (local-set-key ">" my-semantic-complete-self-insert)
-	    (local-set-key (kbd "C-SPC") 'auto-complete)
-	    (local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
-	    (setq indent-tabs-mode nil)))
-
-(add-hook 'css-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "C-SPC") 'auto-complete)
-	    (setq c-basic-indent 4)
-	    (setq tab-width 4)
-	    (setf c-basic-offset 4)
-	    (auto-complete-mode t)
-	    (setq indent-tabs-mode nil)))
-
-(defun my-ac-js2-setup-auto-complete-mode ()
-  "Setup ac-js2 to be used with auto-complete-mode."
-  (ac-define-source "js2"
-    '((candidates . ac-js2-ac-candidates)
-      (document . ac-js2-ac-document)
-      (prefix .  ac-js2-ac-prefix)
-      (requires . -1)))
-  (add-to-list 'ac-sources 'ac-source-js2)
-  (auto-complete-mode))
-
-(add-hook 'js2-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "C-SPC") 'auto-complete)
-	    (setq c-basic-indent 4)
-	    (setq tab-width 4)
-	    (setf c-basic-offset 4)
-	    (require 'ac-js2)
-	    (my-ac-js2-setup-auto-complete-mode)
-	    (auto-complete-mode t)
-	    (setq indent-tabs-mode nil)))
 
 (global-set-key (kbd "<f9>") 'compile)
 (global-set-key [f11] 'toggle-fullscreen)
@@ -638,109 +515,18 @@ That is, a string used to represent it on the tab bar."
 
 (global-set-key (kbd "<backtab>") 'un-indent-by-removing-4-spaces)
 
-(eval-after-load "php-mode"
-  '(progn
-     (c-add-style
-      "pear"
-      '((c-basic-offset . 4)
-        (c-offsets-alist . ((block-open . -)
-                            (block-close . 0)
-                            (topmost-intro-cont . (first c-lineup-cascaded-calls
-                                                         php-lineup-arglist-intro))
-                            (brace-list-intro . +)
-                            (brace-list-entry . c-lineup-cascaded-calls)
-                            (arglist-close . php-lineup-arglist-close)
-                            (arglist-intro . php-lineup-arglist-intro)
-                            (knr-argdecl . [0])
-                            (statement-cont . (first c-lineup-cascaded-calls +))))))))
-
-
 (require 'markdown-mode)
-
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.[gj]sp\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-
-(add-to-list 'web-mode-ac-sources-alist
-             '("html" . (ac-source-html-tag
-                         ac-source-html-attr
-                         ac-source-html-attrv)))
-
-(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("/\\(views\\|html\\|templates\\)/.*\\.php\\'" . web-mode))
-
-(setq web-mode-markup-indent-offset 4)
-(setq web-mode-css-indent-offset 4)
-(setq web-mode-code-indent-offset 4)
-
-(setq web-mode-style-padding 1)
-(setq web-mode-script-padding 1)
-(setq web-mode-block-padding 0)
-
-(setq web-mode-enable-auto-pairing t)
-
-(setq web-mode-comment-style 2)
-(setq web-mode-enable-current-element-highlight t)
-(setq web-mode-enable-heredoc-fontification t)
-
-(setq web-mode-ac-sources-alist
-      '(("css" . (ac-source-words-in-buffer ac-source-css-property))
-        ("html" . (ac-source-words-in-buffer ac-source-abbrev))
-        ("php" . (ac-source-words-in-buffer
-                  ac-source-words-in-same-mode-buffers
-                  ac-source-dictionary))))
-
-(add-hook 'web-mode-hook
-	  '(lambda()
-	     (local-set-key (kbd "RET") 'newline-and-indent)
-	     (auto-complete-mode 1)
-	     (local-set-key (kbd "C-SPC") 'auto-complete)))
-
-(add-hook 'local-write-file-hooks
-	  (lambda ()
-	    (delete-trailing-whitespace)
-	    nil))
-
-(setq web-mode-extra-auto-pairs
-      '(("erb"  . (("open" "close")))
-        ("php"  . (("open" "close")
-                   ("open" "close")))
-	))
 
 (put 'smart-beginning-of-line 'CUA 'move)
 
 (global-set-key [home] 'smart-beginning-of-line)
-
-;; (require 'nhexl-mode)
 
 (font-lock-add-keywords
  'c-mode
  '(("\\<\\(FIXME\\|TODO\\|QUESTION\\|NOTE\\)"
     1 font-lock-warning-face prepend)))
 
-(font-lock-add-keywords
- 'php-mode
- '(("\\<\\(FIXME\\|TODO\\|QUESTION\\|NOTE\\)"
-    1 font-lock-warning-face prepend)))
-
 (setq jit-lock-defer-time 0.05)
-
-(defun slime-hook()
-  (auto-complete-mode t)
-  (local-set-key (kbd "C-SPC") 'auto-complete)
-  (set-up-slime-ac))
-
-(add-hook 'slime-mode-hook 'slime-hook)
-(add-hook 'slime-repl-mode-hook 'slime-hook)
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'slime-repl-mode))
 
 (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
       helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
@@ -764,3 +550,8 @@ That is, a string used to represent it on the tab bar."
 
 (require 'helm-config)
 (add-hook 'after-init-hook 'global-company-mode)
+
+(load-file (expand-file-name "~/.emacs.d/lisp/sbcl-settings.el"))
+(load-file (expand-file-name "~/.emacs.d/lisp/dev.el"))
+(load-file (expand-file-name "~/.emacs.d/lisp/web.el"))
+(load-file (expand-file-name "~/.emacs.d/lisp/org.el"))
