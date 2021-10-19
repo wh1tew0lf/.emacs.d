@@ -1,6 +1,21 @@
+;;Для php
 (require 'php-mode)
 (setq php-mode-warn-if-mumamo-off nil)
 (setq php-warned-bad-indent nil)
+
+(defun uniindent-closure ()
+  "Fix php-mode indent for closures"
+  (let ((syntax (mapcar 'car c-syntactic-context)))
+    (if (and (member 'arglist-cont-nonempty syntax)
+	     (or
+	      (member 'statement-block-info syntax)
+	      (member 'brace-list-intro syntax)
+	      (member 'brace-list-close syntax)
+	      (member 'block-close syntax)))
+	(save-excursion
+	  (beginning-of-line)
+	  (delete-char (* (count 'arglist-cont-nonempty syntax)
+			  c-basic-offset))) )))
 
 (add-hook 'php-mode-hook
 	  (lambda()
@@ -168,3 +183,16 @@
  'php-mode
  '(("\\<\\(FIXME\\|TODO\\|QUESTION\\|NOTE\\)"
     1 font-lock-warning-face prepend)))
+
+(setq web-mode-markup-indent-offset 2)
+(setq web-mode-code-indent-offset 2)
+(setq web-mode-css-indent-offset 2)
+
+(defun re-format-html ()
+  "Reformat html source"
+  (interactive)
+  (sgml-mode)
+  (sgml-pretty-print (point-min) (point-max))
+  (web-mode)
+  (web-mode-buffer-indent))
+(add-to-list 'ac-modes 'web-mode)

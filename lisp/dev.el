@@ -22,3 +22,8 @@
 	    (local-set-key (kbd "C-SPC") 'auto-complete)
 	    (local-set-key (kbd "s-SPC") 'semantic-ia-complete-symbol-menu)
 	    (setq indent-tabs-mode nil)))
+
+(font-lock-add-keywords
+ 'c-mode
+ '(("\\<\\(FIXME\\|TODO\\|QUESTION\\|NOTE\\)"
+    1 font-lock-warning-face prepend)))

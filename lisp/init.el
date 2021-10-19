@@ -1,14 +1,43 @@
 ;; ---------------------Content of .emacs---------------------
-
+;; ; (package-initialize)
 ;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 ;; (load-file "~/.emacs.d/lisp/init.el")
-;; (require 'color-theme)
-;; (color-theme-initialize)
-;; (color-theme-my-test)
-;; (put 'narrow-to-region 'disabled nil)
 
 ;; -------------------END Content of .emacs--------------------
 
+(require 'color-theme)
+(color-theme-initialize)
+(color-theme-my-test)
+(put 'narrow-to-region 'disabled nil)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ac-comphist-file
+   (expand-file-name
+    (concat
+     (if
+	 (boundp
+	  (quote user-emacs-directory))
+	 user-emacs-directory "~/.emacs.d/")
+     "/my-ac-comphist.dat")))
+ '(column-number-mode t)
+ '(default-input-method "russian-computer")
+ '(display-time-mode t)
+ '(ede-project-directories (quote nil))
+ '(org-agenda-files (quote ("~/Documents/zettelkasten/test.org")))
+ '(package-selected-packages (quote (use-package vlf rainbow-mode nlinum minimap)))
+ '(speedbar-show-unknown-files t)
+ '(sr-speedbar-right-side nil)
+ '(tabbar-separator (quote (0.2)))
+ '(tool-bar-mode nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 
 
 (set-language-environment 'utf-8)
@@ -61,6 +90,15 @@
 (if (not (file-exists-p (expand-file-name "~/.emacs.d/lisp/my-functions.elc")))
     (byte-compile-file (expand-file-name "~/.emacs.d/lisp/my-functions.el")))
 (load-file (expand-file-name "~/.emacs.d/lisp/my-functions.elc"))
+
+(global-set-key (kbd "C-S-<down>") 'my-duplicate-block-after)
+(global-set-key (kbd "C-S-<up>") 'my-duplicate-block-before)
+(global-unset-key (kbd "C-d"))
+(global-set-key (kbd "C-d") 'my-duplicate-block-before)
+(global-set-key (kbd "M-<down>") 'my-move-block-down)
+(global-set-key (kbd "M-<up>") 'my-move-block-up)
+(global-set-key (kbd "M-d") 'my-kill-region)
+(global-set-key (kbd "C-S-d") 'my-kill-region)
 
 ;; Compile themes file
 (if (not (file-exists-p (expand-file-name "~/.emacs.d/lisp/color-theme.elc")))
@@ -186,7 +224,6 @@
 	    (set (make-local-variable 'mouse-1-click-follows-link) nil)
 	    (define-key dired-mode-map [mouse-1] 'dired-find-file)))
 
-
 (defun find-current-tag()
   "Search for current tag at cursor position"
   (interactive)
@@ -200,7 +237,6 @@
       (setf end (point))
       (message (buffer-substring start end)))
     (find-tag (buffer-substring start end))))
-
 
 (global-unset-key (kbd "M-."))
 (global-set-key (kbd "M-.") 'find-current-tag)
@@ -227,19 +263,6 @@
 (defun revert-buffer-no-confirm ()
   "Revert buffer without confirmation."
   (interactive) (revert-buffer t t))
-
-
-(setq web-mode-markup-indent-offset 2)
-(setq web-mode-code-indent-offset 2)
-(setq web-mode-css-indent-offset 2)
-
-(defun re-format-html ()
-  "Reformat html source"
-  (interactive)
-  (sgml-mode)
-  (sgml-pretty-print (point-min) (point-max))
-  (web-mode)
-  (web-mode-buffer-indent))
 
 (global-set-key (kbd "C-r") 'revert-buffer-no-confirm)
 
@@ -272,9 +295,7 @@
 
 (reverse-input-method 'russian-computer)
 
-;; отключить переносы строк
-(add-hook 'org-mode-hook (lambda ()
-                           (auto-fill-mode -1)))
+
 (set-default 'truncate-lines t)
 
 (global-unset-key (kbd "C-w"))
@@ -321,8 +342,6 @@
         php-mode
         php-mode-improved
         popup
-        rainbow-delimiters
-        rainbow-mode
 	slime
         sr-speedbar
         switch-window
@@ -358,121 +377,17 @@
 (setq nlinum--format "%%%dd\u2502") ;;Lines numeration
 (setq nlinum-format  "%4d\u2502")
 (global-nlinum-mode 1)
-;;Для php
-
-(defun uniindent-closure ()
-  "Fix php-mode indent for closures"
-  (let ((syntax (mapcar 'car c-syntactic-context)))
-    (if (and (member 'arglist-cont-nonempty syntax)
-	     (or
-	      (member 'statement-block-info syntax)
-	      (member 'brace-list-intro syntax)
-	      (member 'brace-list-close syntax)
-	      (member 'block-close syntax)))
-	(save-excursion
-	  (beginning-of-line)
-	  (delete-char (* (count 'arglist-cont-nonempty syntax)
-			  c-basic-offset))) )))
 
 (setq default-major-mode 'text-mode)
 
 (global-set-key (kbd "<f9>") 'compile)
 (global-set-key [f11] 'toggle-fullscreen)
 
-(global-set-key (kbd "C-S-<down>") 'my-duplicate-block-after)
-(global-set-key (kbd "C-S-<up>") 'my-duplicate-block-before)
-(global-unset-key (kbd "C-d"))
-(global-set-key (kbd "C-d") 'my-duplicate-block-before)
-(global-set-key (kbd "M-<down>") 'my-move-block-down)
-(global-set-key (kbd "M-<up>") 'my-move-block-up)
-(global-set-key (kbd "M-d") 'my-kill-region)
-(global-set-key (kbd "C-S-d") 'my-kill-region)
-
 (add-hook 'ediff-load-hook
 	  (lambda ()
 	    (set-face-foreground ediff-current-diff-face-B "blue")
 	    (set-face-background ediff-current-diff-face-B "red")
 	    (make-face-italic ediff-current-diff-face-B)))
-
-;; Tabbar
-(require 'tabbar)
-
-;; Change padding of the tabs
-;; we also need to set separator to avoid overlapping tabs by highlighted tabs
-
-;; adding spaces
-(defun tabbar-buffer-tab-label (tab)
-  "Return a label for TAB.
-That is, a string used to represent it on the tab bar."
-  (let ((label  (if tabbar--buffer-show-groups
-                    (format "[%s]  " (tabbar-tab-tabset tab))
-                  (format "%s  " (tabbar-tab-value tab)))))
-    ;; Unless the tab bar auto scrolls to keep the selected tab
-    ;; visible, shorten the tab label to keep as many tabs as possible
-    ;; in the visible area of the tab bar.
-    (if tabbar-auto-scroll-flag
-        label
-      (tabbar-shorten
-       label (max 1 (/ (window-width)
-                       (length (tabbar-view
-                                (tabbar-current-tabset)))))))))
-
-(defun my-tabbar-buffer-groups () ;; customize to show all normal files in one group
-  "Returns the name of the tab group names the current buffer belongs to.
- There are two groups: Emacs buffers (those whose name starts with '*', plus
- dired buffers), and the rest.  This works at least with Emacs v24.2 using
- tabbar.el v1.7."
-  (list (cond ((string-equal "*" (substring (buffer-name) 0 1)) "emacs")
-	      ((eq major-mode 'dired-mode) "emacs")
-	      (t "user"))))
-
-
-;; Add a buffer modification state indicator in the tab label, and place a
-;; space around the label to make it looks less crowd.
-(defadvice tabbar-buffer-tab-label (after fixup_tab_label_space_and_flag activate)
-  (setq ad-return-value
-	(if (and (buffer-modified-p (tabbar-tab-value tab))
-		 (buffer-file-name (tabbar-tab-value tab)))
-	    (concat " + " (concat ad-return-value " "))
-	  (concat " " (concat ad-return-value " ")))))
-
-(global-set-key [C-S-iso-lefttab] 'tabbar-backward-tab)
-(global-set-key [C-tab] 'tabbar-forward-tab)
-(setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)
-(add-hook 'after-save-hook 'ztl-modification-state-change)
-(add-hook 'after-revert-hook 'ztl-modification-state-change)
-(add-hook 'first-change-hook 'ztl-on-buffer-modification)
-(tabbar-mode 1)
-;; tabbar end
-
-;; speedbar settings
-(setq speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
-
-;; Some file extensions for speedbar showing
-(dolist (extension '(".c" ".cc" ".c++" ".h" ".sh"
-		     ".py" ".pl" ".ruby" ".xml"
-		     ".htm" ".html" ".css" ".php"
-		     ".txt" ".md" ".js"))
-  (speedbar-add-supported-extension extension))
-
-;;(require 'helm)
-(require 'sr-speedbar)
-(global-unset-key (kbd "C-c s"))
-(global-set-key (kbd "C-c s") 'sr-speedbar-toggle)
-(global-set-key (kbd "C-x C-l") '(lambda ()
-				   (interactive)
-				   (set 'speedbar-update-flag nil)
-				   (sr-speedbar-refresh-turn-off)))
-
-(custom-set-variables
- '(sr-speedbar-right-side nil)
- '(speedbar-show-unknown-files t))
-
-(setq speedbar-mode-hook '(lambda ()
-			    (interactive)
-			    (nlinum-mode 0)
-			    (sr-speedbar-refresh-turn-off)
-			    (setq speedbar-update-flag nil)))
 
 (require 'tramp)
 (setq tramp-default-method "ssh")
@@ -490,16 +405,10 @@ That is, a string used to represent it on the tab bar."
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 (ac-config-default)
 (setq ac-menu-height 20)
-(add-to-list 'ac-modes 'web-mode)
+
 (require 'fuzzy)
 (setf ac-use-fuzzy t)
 (setq ac-auto-start nil)
-
-(require 'rainbow-delimiters)
-;;(global-rainbow-delimiters-mode)
-
-(require 'rainbow-mode)
-;;(rainbow-turn-on)
 
 (global-unset-key (kbd "C-/"))
 (global-set-key (kbd "C-/") 'comment-line)
@@ -521,37 +430,12 @@ That is, a string used to represent it on the tab bar."
 
 (global-set-key [home] 'smart-beginning-of-line)
 
-(font-lock-add-keywords
- 'c-mode
- '(("\\<\\(FIXME\\|TODO\\|QUESTION\\|NOTE\\)"
-    1 font-lock-warning-face prepend)))
-
 (setq jit-lock-defer-time 0.05)
-
-(setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-      helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-      helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-      helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-      helm-ff-file-name-history-use-recentf t
-      helm-echo-input-in-header-line t)
-
-;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
-;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
-;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-unset-key (kbd "C-x c"))
-
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
-(add-hook 'shell-mode-hook 'my-shell-mode-hook)
-(defun my-shell-mode-hook ()
-  (setq comint-input-ring-file-name "~/.zsh_history")  ;; or bash_history
-  (comint-read-input-ring t))
-
-(require 'helm-config)
-(add-hook 'after-init-hook 'global-company-mode)
 
 (load-file (expand-file-name "~/.emacs.d/lisp/sbcl-settings.el"))
 (load-file (expand-file-name "~/.emacs.d/lisp/dev.el"))
 (load-file (expand-file-name "~/.emacs.d/lisp/web.el"))
 (load-file (expand-file-name "~/.emacs.d/lisp/org.el"))
+(load-file (expand-file-name "~/.emacs.d/lisp/tabbar.el"))
+(load-file (expand-file-name "~/.emacs.d/lisp/speedbar-config.el"))
+(load-file (expand-file-name "~/.emacs.d/lisp/my-helm-config.el"))
