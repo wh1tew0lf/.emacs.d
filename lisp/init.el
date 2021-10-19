@@ -19,7 +19,6 @@
  '(default-input-method "russian-computer")
  '(display-time-mode t)
  '(ede-project-directories (quote nil))
- '(org-agenda-files (quote ("~/Documents/zettelkasten/test.org")))
  '(package-selected-packages (quote (use-package vlf rainbow-mode nlinum minimap)))
  '(speedbar-show-unknown-files t)
  '(sr-speedbar-right-side nil)
