@@ -297,6 +297,7 @@
 (add-to-list 'el-get-sources '(:name s :type elpa))
 (add-to-list 'el-get-sources '(:name f :type elpa))
 (add-to-list 'el-get-sources '(:name yasnippet :type elpa))
+(add-to-list 'el-get-sources '(:name exec-path-from-shell :type elpa))
 
 (setq my:el-get-packages
       '(ac-html
@@ -308,6 +309,7 @@
         cl-lib
 	dedicated
         dired+
+	exec-path-from-shell
         git-modes
 	helm
         highlight
