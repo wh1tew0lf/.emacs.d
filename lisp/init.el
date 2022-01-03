@@ -200,8 +200,6 @@
 
 (global-set-key (kbd "C-a") 'mark-whole-buffer)
 
-(global-unset-key (kbd "C-w"))
-
 (add-hook 'dired-mode-hook
 	  (lambda()
 	    (set (make-local-variable 'mouse-1-click-follows-link) nil)
@@ -253,6 +251,7 @@
 ;; C-x <RET> r CHARSET - кодировку буфера изменить
 
 ;;русские буквы автоматически транслируются в соответствующие английские.
+;; TODO это багует в helm-find-file, после нажатия на backspace заменяет одну букву на латиницу
 (defun reverse-input-method (input-method)
   "Build the reverse mapping of single letters from INPUT-METHOD."
   (interactive
@@ -278,8 +277,8 @@
 
 (reverse-input-method 'russian-computer)
 
-(global-unset-key (kbd "C-w"))
-(global-set-key (kbd "C-w") (lambda()
+(global-unset-key (kbd "C-x w"))
+(global-set-key (kbd "C-x w") (lambda()
 			      (interactive)
 			      (kill-buffer)))
 
@@ -396,8 +395,8 @@
 (global-set-key (kbd "C-e") 'uncomment-region)
 
 (require 'highlight)
-(global-unset-key (kbd "C-y"))
-(global-set-key (kbd "C-y") 'hlt-highlight)
+(global-unset-key (kbd "C-x y"))
+(global-set-key (kbd "C-x y") 'hlt-highlight)
 (global-unset-key (kbd "M-y"))
 (global-set-key (kbd "M-y") 'hlt-unhighlight-region)
 

@@ -145,10 +145,10 @@
      (header-line ((t (:box (:line-width -1 :style released-button) :background "#232830" :foreground "grey90" :box nil))))
      (highlight ((t (:background "#3b404b"))))
 
-	 ;;web-mode-styles
-	 (web-mode-current-element-highlight-face ((t (:background "#232830"))))
-	 (web-mode-html-tag-bracket-face ((t (:foreground "Snow4"))))
-	 ;;web-mode styles ends
+     ;;web-mode-styles
+     (web-mode-current-element-highlight-face ((t (:background "#232830"))))
+     (web-mode-html-tag-bracket-face ((t (:foreground "Snow4"))))
+     ;;web-mode styles ends
 
      (isearch ((t (:background "#323a43" :foreground "brown4"))))
      (isearch-lazy-highlight-face ((t (:background "#323a43"))))

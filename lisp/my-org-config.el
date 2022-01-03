@@ -9,11 +9,6 @@
  :ensure t
  :init
  (setq org-roam-v2-ack t)
- (setq org-roam-mode-section-functions
-       (list #'org-roam-backlinks-section
-	     #'org-roam-reflinks-section
-	     #'org-roam-unlinked-references-section
-	     ))
  :custom
  (org-roam-directory "~/Documents/zettelkasten/wissen")
  (org-roam-complete-everywhere)
@@ -24,7 +19,14 @@
 	("C-M-i" . completion-at-point))
  :config
  (org-roam-setup)
+ (setq org-roam-mode-section-functions
+       (list #'org-roam-backlinks-section
+	     #'org-roam-reflinks-section
+	     #'org-roam-unlinked-references-section
+	     ))
  (org-roam-db-autosync-mode))
 
 ;; отключить переносы строк
-(add-hook 'org-mode-hook (lambda () (auto-fill-mode -1)))
+(add-hook 'org-mode-hook (lambda ()
+			   (progn
+			     (auto-fill-mode -1))))
