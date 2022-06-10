@@ -19,7 +19,7 @@
  '(default-input-method "russian-computer")
  '(display-time-mode t)
  '(ede-project-directories (quote nil))
- '(package-selected-packages (quote (use-package vlf rainbow-mode nlinum minimap)))
+ '(package-selected-packages (quote (use-package vlf)))
  '(speedbar-show-unknown-files t)
  '(sr-speedbar-right-side nil)
  '(tabbar-separator (quote (0.2)))
@@ -42,7 +42,7 @@
 (tooltip-mode      -1)
 (menu-bar-mode     -1)				;; отключаем графическое меню
 (tool-bar-mode     -1)				;; отключаем tool-bar
-(scroll-bar-mode   -1)				;; отключаем полосу прокрутки
+;(scroll-bar-mode   -1)				;; отключаем полосу прокрутки
 (blink-cursor-mode -1)				;; курсор не мигает
 (setq use-dialog-box     nil)		;; никаких графических диалогов и окон - все через минибуфер
 (setq redisplay-dont-pause t)		;; лучшая отрисовка буфера
@@ -69,19 +69,6 @@
 (global-hl-line-mode t)
 (setq search-highlight        t)
 (setq query-replace-highlight t)
-
-(custom-set-variables
- '(column-number-mode t)
- '(default-input-method "russian-computer")
- '(display-time-mode t)
- '(ac-comphist-file (expand-file-name
-		     (concat (if (boundp 'user-emacs-directory)
-				 user-emacs-directory
-			       "~/.emacs.d/")
-			     "/my-ac-comphist.dat")))
- '(ede-project-directories (quote ()))
- '(tabbar-separator (quote (0.2)))
- '(tool-bar-mode nil))
 
 ;; Require my functions file
 (if (not (file-exists-p (expand-file-name "~/.emacs.d/lisp/my-functions.elc")))
@@ -301,34 +288,33 @@
 
 (setq my:el-get-packages
       '(ac-html
-	ac-js2
-	ac-php
-	ac-slime
-	auto-complete
+        ac-js2
+        ac-php
+        ac-slime
+        auto-complete
         autopair
         cl-lib
-	dedicated
+        dedicated
         dired+
-	exec-path-from-shell
+        exec-path-from-shell
         git-modes
-	helm
+        helm
         highlight
-	js2-mode
-	json-mode
+        js2-mode
+        json-mode
         magit
         multiple-cursors
         markdown-mode
-        nlinum
         php-mode
         php-mode-improved
         popup
-	slime
+        slime
         sr-speedbar
         switch-window
         tabbar
-        yascroll
-	visual-fill-column
-	vlf
+        ;yascroll
+        visual-fill-column
+        vlf
         web-mode))
 
 (require 'el-get-elpa)
@@ -350,14 +336,8 @@
 
 (require 'vlf-setup)
 
-(require 'yascroll)
-(global-yascroll-bar-mode 1)
-
-(require 'nlinum)
-(setq nlinum--width 4)				;;Lines numeration
-(setq nlinum--format "%%%dd\u2502") ;;Lines numeration
-(setq nlinum-format  "%4d\u2502")
-(global-nlinum-mode 1)
+;(require 'yascroll)
+;(global-yascroll-bar-mode 1)
 
 (setq default-major-mode 'text-mode)
 
@@ -416,8 +396,7 @@
 
 (global-set-key [home] 'smart-beginning-of-line)
 
-(setq jit-lock-defer-time 0.05)
-(setq redisplay-dont-pause t)
+(setq jit-lock-defer-time 0.1)
 (setq mouse-wheel-scroll-amount '(2 ((shift) . 2)))
 (setq mouse-wheel-progressive-speed nil)
 (setq mouse-wheel-follow-mouse 't)
