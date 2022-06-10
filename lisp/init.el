@@ -33,7 +33,7 @@
 
 
 (set-language-environment 'utf-8)
-(setq slime-net-coding-system 'utf-8-unix)
+;(setq slime-net-coding-system 'utf-8-unix)
 (setq lisp-lambda-list-keyword-parameter-alignment t)
 (setq lisp-lambda-list-keyword-alignment t)
 (setq common-lisp-style-default 'modern)
@@ -289,9 +289,8 @@
       '(ac-html
         ac-js2
         ac-php
-        ac-slime
         auto-complete
-        autopair
+		autopair
         cl-lib
         dedicated
         dired+
@@ -301,13 +300,12 @@
         highlight
         js2-mode
         json-mode
-        magit
+        ;magit
         multiple-cursors
         markdown-mode
         php-mode
         php-mode-improved
         popup
-        slime
         sr-speedbar
         switch-window
         tabbar
@@ -333,10 +331,6 @@
 (setq package-enable-at-startup nil)
 (package-initialize)
 
-(require 'vlf-setup)
-
-;(require 'yascroll)
-;(global-yascroll-bar-mode 1)
 
 (setq default-major-mode 'text-mode)
 

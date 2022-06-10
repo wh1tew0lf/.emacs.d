@@ -12,7 +12,6 @@
 
 (setq speedbar-mode-hook '(lambda ()
 			    (interactive)
-			    (nlinum-mode 0)
 			    (sr-speedbar-refresh-turn-off)
 			    (setq speedbar-update-flag nil)))
 ;; speedbar settings
