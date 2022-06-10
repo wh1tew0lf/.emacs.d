@@ -208,6 +208,15 @@
      (widget-inactive-face ((t (:foreground "light gray"))))
      (widget-single-line-field-face ((t (:background "dim gray"))))
 
+     (org-level-1 ((t (:bold t :weight bold :underline nil :foreground "#eccc87" :box (:line-width 1 :color "#eccc87" :style nil)))))
+     (org-level-2 ((t (:bold t :weight bold :underline t :foreground "#eccc87"))))
+     (org-level-3 ((t (:bold t :weight bold :underline nil :foreground "#eccc87"))))
+     (org-level-4 ((t (:bold nil :weight normal :foreground "light gray"))))
+     (org-level-5 ((t (:bold nil :weight normal :foreground "#b58dae"))))
+     (org-level-6 ((t (:bold nil :weight normal :foreground "dim gray"))))
+     (org-level-7 ((t (:bold nil :weight normal :foreground "DarkGray"))))
+     (org-level-8 ((t (:bold nil :weight normal :foreground "DarkGray"))))
+
      (tabbar-default ((t (:background "#1c1f26" :foreground "#65737f" :box (:line-width 1 :color "#1c1f26" :style nil)))))
 	 (tabbar-unselected ((t (:background "#1c1f26" :foreground "#65737f" :box (:line-width 5 :color "#1c1f26" :style nil)))))
 	 (tabbar-selected ((t (:background "#2b303b" :foreground "#dfe1e8" :box (:line-width 5 :color "#2b303b" :style nil)))))

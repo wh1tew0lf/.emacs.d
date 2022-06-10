@@ -395,6 +395,7 @@
 
 (global-set-key [home] 'smart-beginning-of-line)
 
+
 (setq jit-lock-defer-time 0.1)
 (setq mouse-wheel-scroll-amount '(2 ((shift) . 2)))
 (setq mouse-wheel-progressive-speed nil)

@@ -32,4 +32,5 @@
 ;; отключить переносы строк
 (add-hook 'org-mode-hook (lambda ()
 			   (progn
+			     (setq org-image-actual-width nil)
 			     (auto-fill-mode -1))))
