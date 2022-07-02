@@ -7,6 +7,13 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
+(setq org-fontify-done-headline t)
+(set-face-attribute 'org-agenda-done nil :strike-through t)
+(set-face-attribute 'org-done nil :strike-through t)
+(set-face-attribute 'org-headline-done nil
+                    :strike-through t
+                    :foreground "light gray")
+
 (use-package
  org-roam
  :ensure t
