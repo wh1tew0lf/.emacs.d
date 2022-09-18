@@ -310,6 +310,7 @@
         switch-window
         tabbar
         ;yascroll
+	use-package
         visual-fill-column
         vlf
         web-mode))
