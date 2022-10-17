@@ -36,8 +36,16 @@
 	     ))
  (org-roam-db-autosync-mode))
 
+(global-unset-key (kbd "C-x C-a"))
+(global-set-key (kbd "C-x C-a") 'org-agenda)
+
 ;; отключить переносы строк
 (add-hook 'org-mode-hook (lambda ()
 			   (progn
 			     (setq org-image-actual-width nil)
+			     (setq
+			      org-enable-priority-comands t
+			      org-highest-priority ?A
+			      org-default-priority ?C
+			      org-lowest-priority ?F)
 			     (auto-fill-mode -1))))
