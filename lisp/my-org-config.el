@@ -46,6 +46,21 @@
 			     (setq
 			      org-enable-priority-comands t
 			      org-highest-priority ?A
-			      org-default-priority ?C
+			      org-default-priority ?E
 			      org-lowest-priority ?F)
 			     (auto-fill-mode -1))))
+
+;; TODO
+(add-hook 'org-latex-ook (lambda ()
+			   (custom-set-variables
+			    ;; чтобы при экспорте файлов в PDF всё остальное удалялось
+			    (setq org-latex-logfiles-extensions
+				  (quote
+				   ("lof" "lot" "tex~" "aux" "idx" "log" "out"
+				    "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk"
+				    "blg" "brf" "fls" "entoc" "ps" "spl" "bbl")))
+			    ;; подключение доп пакетов, чтобы в pdf можно было экспортировать.
+			    ;; + установи пакеты: apt-get install texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra texlive-lang-cyrillic
+			    (add-to-list 'org-export-latex-packages-alist '("" "cmap" t))
+			    (add-to-list 'org-export-latex-packages-alist '("english,russian" "babel" t))
+			    )))
