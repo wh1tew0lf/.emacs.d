@@ -42,6 +42,7 @@
 ;; отключить переносы строк
 (add-hook 'org-mode-hook (lambda ()
 			   (progn
+			     (visual-line-mode t)
 			     (setq org-image-actual-width nil)
 			     (setq
 			      org-enable-priority-comands t
