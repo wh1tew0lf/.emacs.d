@@ -7,6 +7,7 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
+(setq org-log-done 'time) ;; use TODO="DONE"&CLOSED>="<-1w>"
 (setq org-fontify-done-headline t)
 (set-face-attribute 'org-agenda-done nil :strike-through t)
 (set-face-attribute 'org-done nil :strike-through t)
